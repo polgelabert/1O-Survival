@@ -1,0 +1,60 @@
+1O-Survival
+Anna Garcia, Joan Valverde, Alex Aguilera, Pol Gelabert
+
+CLASES:
+
+
+PUNTO:
+	- int x
+	- int y
+
+	metodos:
+	     -get,set,constructor, calcular distancia
+
+
+PLAYER:
+	- String nombre
+	- int vida
+ 	- inventario
+	- int seguidores
+	- punto posicionActual
+	- int mapaActual (identificador del mapa que se encuentra el Modelo.Player)
+	
+	metodosPLAYER: 
+	     - interactuar
+	     - actualizarPosicion
+	     - 
+
+
+INVENTARIO:
+	- int pesoMax
+	- list Objetos
+
+	metodosINVENTARIO:
+	    - addObjeto
+	    - sacarObjeto
+
+OBJETO:
+	- Strring/int id
+	- int peso
+	- int tama�oObjCelda
+
+
+MAPA:	
+	- [][] mapa (matriz mapa)
+	. id idMapa
+
+	metodosMAPA:
+	     - moverUsuario
+	     
+
+JUEGOS (import class MAPA):
+	- [][] mapa
+
+	metodos:
+	     - iniciarJuego
+ 	     - finJuego
+
+
+
+
