@@ -1,7 +1,7 @@
 
-package Vista;
+package vista;
 
-import Modelo.Player;
+import modelo.Player;
 
 public class Main {
 

@@ -19,7 +19,7 @@ PLAYER:
  	- inventario
 	- int seguidores
 	- punto posicionActual
-	- int mapaActual (identificador del mapa que se encuentra el Modelo.Player)
+	- int mapaActual (identificador del mapa que se encuentra el modelo.Player)
 	
 	metodosPLAYER: 
 	     - interactuar
@@ -80,7 +80,7 @@ PLAYER:
  	- inventario
 	- int seguidores
 	- punto posicionActual
-	- int mapaActual (identificador del mapa que se encuentra el Modelo.Player)
+	- int mapaActual (identificador del mapa que se encuentra el modelo.Player)
 	
 	metodosPLAYER: 
 	     - interactuar

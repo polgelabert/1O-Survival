@@ -1,10 +1,12 @@
-package Modelo;
+package modelo;
 
 public class Punto {
 
     int x;
     int y;
 
+
+    public Punto(){}
 
     public Punto(int x, int y) {
         this.x = x;
