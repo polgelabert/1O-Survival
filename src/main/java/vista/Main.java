@@ -1,9 +1,11 @@
 
-package Vista;
+package vista;
 
-import Modelo.Mapa;
-import Modelo.Player;
 
+
+
+import modelo.Objeto;
+import modelo.Player;
 
 import java.awt.*;
 
@@ -11,15 +13,10 @@ public class Main {
 
 
     public static void main(String[] args) {
-
-
-        Player p = new Player();
-        p.setVida(50);
-        Integer res = p.getVida() - 40;
-        System.out.println(res);
-
-        Mapa m = new Mapa();
-
+        Player us = new Player("Joan", 100,0,0);
+        Objeto newObject = new Objeto("Banco","Objeto para añadir a la barricada y evitar el paso de los policias",15,4);
+        boolean addedObj = us.getInventarioUser().añadirObjeto(newObject);
+        boolean tt = us.getInventarioUser().sacarObjeto(newObject);
 
     }
 }

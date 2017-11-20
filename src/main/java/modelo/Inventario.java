@@ -21,6 +21,47 @@ public class Inventario {
         this.pesoMax = pesoMax;
         this.listaObjetos = listaObjetos;
     }
+    public Boolean añadirObjeto(Objeto o){
+        boolean añadido;
+        int pesoActual=0;
+        if(listaObjetos==null){
+
+            listaObjetos=new ArrayList<>();
+
+        }
+
+        for(Objeto obj: listaObjetos){
+            pesoActual = pesoActual + obj.getPeso();
+
+        }
+        if(pesoActual + o.getPeso() <= this.pesoMax){
+            listaObjetos.add(o);
+            añadido = true;
+
+        }
+        else{
+            añadido = false;
+
+        }
+
+        return añadido;
+    }
+    public Boolean sacarObjeto(Objeto b){
+
+        boolean encontrado = false;
+        for(Objeto o: listaObjetos){
+            if (b==o)
+            {
+                encontrado = true;
+                listaObjetos.remove(o);
+                break;
+
+            }
+
+        }
+        return encontrado;
+
+    }
 
 
 
