@@ -91,18 +91,27 @@ public class Player {
 /////   Metodos   /////
 
     public void addObjeto (Objeto objeto) {
-        inventarioUser.getListaObjetos().add(objeto);
+        inventarioUser.añadirObjeto(objeto);
     }
 
+    //POR QUE HAY 2 METODOS IGUALES? Y LOS DOS IGUAL DE "MAL" ESCRITOS. EL DE ARRIBA ESTABA COMO EL DE ABAJO
+    /**
+     * Inserta objeto en inventario de usuario
+     * @param o
+     */
+    public void insertarObjeto(Objeto o) {
+        //this.getInventarioUser().getListaObjetos().add(o);
+        inventarioUser.añadirObjeto(o);
+    }
 
     /**
      * @param player
      * @return boolean
      * Comprueba si dos players son iguales. No se compara ni posicionActual ni mapaActual
      */
-    public boolean usuarioEsIgual(Player player) {
-
-        if (player.nombre == this.nombre && player.vida == this.vida && player.votos == this.votos && player.seguidores == this.seguidores) {
+    public boolean usuarioEsIgual(Player player) {//NO ENTIENDO EN QUE NOS BENEFICIA ESTE METODO Y LA FORMA EN LA QUE ESTA HECHO
+                        //Usar equals para comparar strings
+        if (player.nombre.equals(this.nombre) && player.vida == this.vida && player.votos == this.votos && player.seguidores == this.seguidores) {
 
             for(Objeto o : player.getInventarioUser().getListaObjetos()) {
                 for(int i=0; i< player.getInventarioUser().getListaObjetos().size(); i++){
@@ -131,13 +140,7 @@ public class Player {
         this.posicionActual = user.posicionActual;
     }
 
-    /**
-     * Inserta objeto en inventario de usuario
-     * @param o
-     */
-    public void insertarObjeto(Objeto o) {
-        this.getInventarioUser().getListaObjetos().add(o);
-    }
+
 
     /**
      * Busca y retorna un objeto de la lista de objetos del inventario.
@@ -148,13 +151,13 @@ public class Player {
      */
     public Objeto getObjeto(String nombreObjeto) throws UsuarioSinObjetosException, ObjetoNoEncontradoException {
 
-        for (Objeto o: this.getInventarioUser().getListaObjetos()) {
+        for (Objeto o: inventarioUser.getListaObjetos()) {
             if (o.getNombreObjeto().equals(nombreObjeto)) {
                 return o;
             }
         }
-
-        if (this.getInventarioUser().getListaObjetos().size() != 0) throw new ObjetoNoEncontradoException();
+        //no entiendo porque siempre usais this.getInventario en vez de inventarioUser,quiza soy yo que no me entero
+        if (inventarioUser.getListaObjetos().size() != 0) throw new ObjetoNoEncontradoException();
         throw new UsuarioSinObjetosException();
     }
 
@@ -164,15 +167,18 @@ public class Player {
      * @return true si son iguales
      */
     public boolean listaEsIgual (List<Objeto> listaObjConsult){
-
+//Mas de lo mismo, de que nos sirve comparar dos inventario? :O
         boolean resp = false;
         int m = 0;
-        for (int n = 0; n< listaObjConsult.size(); n++) {
+        if(listaObjConsult.size()==inventarioUser.getListaObjetos().size()){
+//aun si quereis hacer el metodo, un primer paso es mirar si son igual de largas las listas(?) te ahorras errores y comparar 2 listas que si no son igual de largas no seran iguales
+            for (int n = 0; n< listaObjConsult.size(); n++) {
 
-            if (listaObjConsult.get(m).getNombreObjeto() == this.getInventarioUser().getListaObjetos().get(m).getNombreObjeto() && listaObjConsult.get(m).getDescripcionObjeto() == this.getInventarioUser().getListaObjetos().get(m).getDescripcionObjeto() && listaObjConsult.get(m).getPeso() == this.getInventarioUser().getListaObjetos().get(m).getPeso() && listaObjConsult.get(m).getTamanoObjCelda() == this.getInventarioUser().getListaObjetos().get(m).getTamanoObjCelda() && listaObjConsult.get(m).getPosicionObjeto().x == this.getInventarioUser().getListaObjetos().get(m).getPosicionObjeto().x && listaObjConsult.get(m).getPosicionObjeto().y == this.getInventarioUser().getListaObjetos().get(m).getPosicionObjeto().y) {
-                resp = true;
-            } else {
-                m = m+1;
+                if (listaObjConsult.get(m).getNombreObjeto() == this.getInventarioUser().getListaObjetos().get(m).getNombreObjeto() && listaObjConsult.get(m).getDescripcionObjeto() == this.getInventarioUser().getListaObjetos().get(m).getDescripcionObjeto() && listaObjConsult.get(m).getPeso() == this.getInventarioUser().getListaObjetos().get(m).getPeso() && listaObjConsult.get(m).getTamanoObjCelda() == this.getInventarioUser().getListaObjetos().get(m).getTamanoObjCelda() && listaObjConsult.get(m).getPosicionObjeto().x == this.getInventarioUser().getListaObjetos().get(m).getPosicionObjeto().x && listaObjConsult.get(m).getPosicionObjeto().y == this.getInventarioUser().getListaObjetos().get(m).getPosicionObjeto().y) {
+                    resp = true;
+                } else {
+                    m = m+1;
+                }
             }
         }
 

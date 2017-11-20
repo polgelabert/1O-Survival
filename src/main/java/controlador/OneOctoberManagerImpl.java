@@ -59,6 +59,7 @@ public class OneOctoberManagerImpl implements OneOctoberManager {
 
         log.info("Inicio consultarUsuario: " + nombreUser);
         Player user = getUser(nombreUser);
+        //getUser ya lanza la excepcion. Ademas, getUser retorna el user este o no (despues del ContainsKey), devolvera null?
         if( user == null) throw new UsuarioNoExisteException();
 
         log.info("Fin consultarUsuario: " + nombreUser + " con éxito.");
