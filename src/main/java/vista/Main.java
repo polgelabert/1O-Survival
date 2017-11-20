@@ -7,8 +7,6 @@ package vista;
 import modelo.Objeto;
 import modelo.Player;
 
-import java.awt.*;
-
 public class Main {
 
 

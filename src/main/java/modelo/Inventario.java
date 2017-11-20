@@ -26,7 +26,7 @@ public class Inventario {
         int pesoActual=0;
         if(listaObjetos==null){
 
-            listaObjetos=new ArrayList<>();
+            listaObjetos=new ArrayList<Objeto>();
 
         }
 
