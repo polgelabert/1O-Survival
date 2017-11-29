@@ -26,6 +26,8 @@ public class Inventario {
             pesoActual=pesoActual+o.getPeso();
         }
     }
+
+
     public Boolean añadirObjeto(Objeto o){
         boolean añadido;
         if(listaObjetos==null){
@@ -41,6 +43,7 @@ public class Inventario {
         */
         if(pesoActual + o.getPeso() <= this.pesoMax){
             listaObjetos.add(o);
+            pesoActual=pesoActual+o.getPeso();
             añadido = true;
 
         }
@@ -50,7 +53,8 @@ public class Inventario {
 
         return añadido;
     }
-    //POR QUE SE LLAMA SACAROBJETO SI DEVUELVE UN BOOL Y NO UN OBJETO? COMO ELIMINAR OBJETO AUN PASA
+
+    //EliminarObjeto
     public Boolean sacarObjeto(Objeto b){
 
         boolean encontrado = false;
@@ -60,7 +64,6 @@ public class Inventario {
                 encontrado = true;
                 listaObjetos.remove(o);
                 break;
-
             }
 
         }
@@ -71,6 +74,12 @@ public class Inventario {
 
 
 
+
+
+
+
+
+/////     GETS  Y SETS    //////
 
     public int getPesoMax() {
         return pesoMax;

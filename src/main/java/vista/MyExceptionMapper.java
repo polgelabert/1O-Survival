@@ -10,7 +10,7 @@ public class MyExceptionMapper implements ExceptionMapper<Exception> {
     public Response toResponse(Exception ex) {
         //return Response.status(400).entity(ex.getCode()).type("text/plain").build();
         //return Response.status(400).entity(Exceptions.getStackTraceAsString(ex)).type("text/plain").build();
-        return Response.status(400).entity(ex.getMessage()).type("text/plain").build();
+        return Response.status(400).entity(ex.getMessage()).type("application/json").build();
     }
 
 }

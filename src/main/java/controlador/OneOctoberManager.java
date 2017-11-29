@@ -15,25 +15,14 @@ public interface OneOctoberManager {
 
     List<Player> consultarListaUsuarios() throws ListaUsuariosVaciaException;
 
-    void modificarUsuario (String nombreUser, Player user2) throws UsuarioNoExisteException;
-
     boolean eliminarUsuario (String nombreUser) throws UsuarioNoExisteException;
 
+    List<Objeto> consultarInventarioDeUsuario(String nombre) throws UsuarioNoExisteException, UsuarioSinObjetosException;
 
-
-    void anadirObjetoAUsuario(String nombre, Objeto objeto) throws UsuarioNoExisteException, UsuarioSinObjetosException, ObjetoNoEncontradoException;
-
-    Objeto consultarObjetoDeUsuario(String nombre, String nombreObjeto) throws UsuarioNoExisteException, UsuarioSinObjetosException, ObjetoNoEncontradoException;
-
-    List<Objeto> consultarListaObjetosDeUsuario(String nombre) throws UsuarioNoExisteException, UsuarioSinObjetosException;
-
-    boolean eliminarObjetoDeUsuario(String nombreUser, String nombreObjeto) throws UsuarioNoExisteException, UsuarioSinObjetosException, ObjetoNoEncontradoException;
-
-
+    PlayerTO playerTO (Player user);
 
 
     public void reset();
-
 
 
 

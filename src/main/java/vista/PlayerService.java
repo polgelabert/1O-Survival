@@ -17,7 +17,7 @@ import java.util.List;
 
 @Path("/game")
 @Singleton
-public class JSONService {
+public class PlayerService {
 
 
     public OneOctoberManager oneOct = OneOctoberManagerImpl.getInstance();
@@ -27,8 +27,7 @@ public class JSONService {
     Objeto objeto;
 
 
-
-    public JSONService() throws UsuarioYaExisteException {
+    public PlayerService() throws UsuarioYaExisteException {
 
         try {
             user = new Player("pol", 200, 50, 1 );
@@ -60,7 +59,7 @@ public class JSONService {
      * @throws UsuarioNoExisteException
      */
     @GET
-    @Path("/player/{nombreUser}")
+    @Path("/player/{nombreUser}/all")
     @Produces(MediaType.APPLICATION_JSON)
     public Player consultarUsuarioInJSON(@PathParam("nombreUser") String nombreUser) throws UsuarioNoExisteException {
 
@@ -76,6 +75,22 @@ public class JSONService {
     }
 
     @GET
+    @Path("/player/{nombreUser}")
+    @Produces(MediaType.APPLICATION_JSON)
+    public PlayerTO consultarUsuarioTOInJSON(@PathParam("nombreUser") String nombreUser) throws UsuarioNoExisteException {
+
+        try {
+
+            return new PlayerTO(oneOct.consultarUsuario(nombreUser));
+
+        } catch (Exception e) {
+            throw e;
+        }
+
+    }
+
+
+    @GET
     @Path("/listaUsuarios")
     @Produces(MediaType.APPLICATION_JSON)
     public List<Player> consultarListaDeUsuarioInJSON() throws ListaUsuariosVaciaException {
@@ -88,7 +103,8 @@ public class JSONService {
         }
     }
 
-    @GET
+
+    /*@GET
     @Path("/player/{nombreUser}/{nombreObjeto}")
     @Produces({MediaType.APPLICATION_JSON,MediaType.TEXT_PLAIN})
     public Objeto consultarObjetoDeUsuarioInJSON(@PathParam("nombreUser") String nombreUser, @PathParam("nombreObjeto") String nombreObjeto) throws UsuarioNoExisteException, ObjetoNoEncontradoException, UsuarioSinObjetosException {
@@ -100,15 +116,15 @@ public class JSONService {
         } catch (Exception e) {
             throw e;
         }
-    }
+    }*/
 
     @GET
-    @Path("/player/{nombreUser}/listaObjetos")
+    @Path("/player/{nombreUser}/inventario")
     @Produces(MediaType.APPLICATION_JSON)
     public List<Objeto> consultarListaObjetosDeUsuarioInJSON(@PathParam("nombreUser") String nombreUser) throws UsuarioNoExisteException, UsuarioSinObjetosException {
 
         try {
-            return oneOct.consultarListaObjetosDeUsuario(nombreUser);
+            return oneOct.consultarInventarioDeUsuario(nombreUser);
 
         } catch (Exception e) {
             throw e;
@@ -116,21 +132,15 @@ public class JSONService {
 
     }
 
-/*
-    public Player crearUsuarioInJSON() {
-        Player user = new Player("carlos", 100, 0, 0);
-        return user;
-    }
-*/
 
     @POST
     @Path("/newPlayer")
     @Produces(MediaType.TEXT_PLAIN)
-    //@Produces(MediaType.APPLICATION_JSON)
+    @Consumes(MediaType.APPLICATION_JSON)
     //public Response crearUsuarioInJSON(@QueryParam("user") Player user) throws UsuarioYaExisteException {
-    public Response crearUsuarioInJSON() throws UsuarioYaExisteException {
+    public Response crearUsuarioInJSON(Player user) throws UsuarioYaExisteException {
         try {
-            user = new Player("carlos", 100, 0, 0);
+
             boolean res = oneOct.crearUsuario(user);
 
             return Response.status(201).entity(1).build();
@@ -142,13 +152,13 @@ public class JSONService {
         }
     }
 
-    @POST
-    @Path("/removePlayer")
+    @DELETE
+    @Path("/removePlayer/{nombreUser}")
     @Produces(MediaType.TEXT_PLAIN)
-    public Response eliminarUsuarioInJSON() throws UsuarioNoExisteException, ListaUsuariosVaciaException {
+    public Response eliminarUsuarioInJSON(@PathParam("nombreUser") String nombreUser) throws UsuarioNoExisteException, ListaUsuariosVaciaException {
 
         try {
-            boolean res = oneOct.eliminarUsuario(user.getNombre());
+            boolean res = oneOct.eliminarUsuario(nombreUser);
 
             return Response.status(201).entity(1).build();
             //return Response.status(201).entity(oneOct.consultarListaUsuarios().size()).build();
@@ -158,7 +168,7 @@ public class JSONService {
         }
     }
 
-    @POST
+    /*@POST
     @Path("/Player/{nombreUser}/newObjeto")
     @Produces(MediaType.TEXT_PLAIN)
     //@Produces(MediaType.APPLICATION_JSON)
@@ -175,9 +185,9 @@ public class JSONService {
             //e.printStackTrace();
             throw e;
         }
-    }
+    }*/
 
-    @POST
+    /*@POST
     @Path("/Player/{nombreUser}/removeObjeto/{nombreObjeto}")
     @Produces(MediaType.TEXT_PLAIN)
     public Response eliminarObjetoDeUsuarioInJSON(@PathParam("nombreUser") String nombreUser, @PathParam("nombreObjeto") String nombreObjeto) throws UsuarioNoExisteException, ListaUsuariosVaciaException, UsuarioSinObjetosException, ObjetoNoEncontradoException {
@@ -189,7 +199,7 @@ public class JSONService {
         } catch (Exception e) {
             throw e;
         }
-    }
+    }*/
 
 
 }

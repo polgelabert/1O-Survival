@@ -90,47 +90,36 @@ public class Player {
 
 /////   Metodos   /////
 
-    public void addObjeto (Objeto objeto) {
-        inventarioUser.añadirObjeto(objeto);
-    }
 
-    //POR QUE HAY 2 METODOS IGUALES? Y LOS DOS IGUAL DE "MAL" ESCRITOS. EL DE ARRIBA ESTABA COMO EL DE ABAJO
-    /**
-     * Inserta objeto en inventario de usuario
-     * @param o
-     */
-    public void insertarObjeto(Objeto o) {
-        //this.getInventarioUser().getListaObjetos().add(o);
-        inventarioUser.añadirObjeto(o);
-    }
 
-    /**
-     * @param player
-     * @return boolean
-     * Comprueba si dos players son iguales. No se compara ni posicionActual ni mapaActual
-     */
-    public boolean usuarioEsIgual(Player player) {//NO ENTIENDO EN QUE NOS BENEFICIA ESTE METODO Y LA FORMA EN LA QUE ESTA HECHO
-                        //Usar equals para comparar strings
-        if (player.nombre.equals(this.nombre) && player.vida == this.vida && player.votos == this.votos && player.seguidores == this.seguidores) {
 
-            for(Objeto o : player.getInventarioUser().getListaObjetos()) {
-                for(int i=0; i< player.getInventarioUser().getListaObjetos().size(); i++){
-                    //if (o.getNombreObjeto() == this.getInventarioUser().getListaObjetos().get(i).getNombreObjeto() && o.getDescripcionObjeto() == this.getInventarioUser().getListaObjetos().get(i).getDescripcionObjeto() && o.getPeso() == this.getInventarioUser().getListaObjetos().get(i).getPeso() && o.getTamanoObjCelda() == this.getInventarioUser().getListaObjetos().get(i).getTamanoObjCelda() && o.getPosicionObjeto() == this.getInventarioUser().getListaObjetos().get(i).getPosicionObjeto()) return true;
-                    if (o.getNombreObjeto() == this.getInventarioUser().getListaObjetos().get(i).getNombreObjeto() && o.getDescripcionObjeto() == this.getInventarioUser().getListaObjetos().get(i).getDescripcionObjeto() && o.getPeso() == this.getInventarioUser().getListaObjetos().get(i).getPeso() && o.getTamanoObjCelda() == this.getInventarioUser().getListaObjetos().get(i).getTamanoObjCelda() && o.getPosicionObjeto().x == this.getInventarioUser().getListaObjetos().get(i).getPosicionObjeto().x && o.getPosicionObjeto().y == this.getInventarioUser().getListaObjetos().get(i).getPosicionObjeto().y ) return true;
+        /**
+         * @param player
+         * @return boolean
+         * Comprueba si dos players son iguales. No se compara ni posicionActual ni mapaActual
+         */
+       /* public boolean usuarioEsIgual(Player player) {//NO ENTIENDO EN QUE NOS BENEFICIA ESTE METODO Y LA FORMA EN LA QUE ESTA HECHO
+                            //Usar equals para comparar strings
+            if (player.nombre.equals(this.nombre) && player.vida == this.vida && player.votos == this.votos && player.seguidores == this.seguidores) {
+
+                for(Objeto o : player.getInventarioUser().getListaObjetos()) {
+                    for(int i=0; i< player.getInventarioUser().getListaObjetos().size(); i++){
+                        //if (o.getNombreObjeto() == this.getInventarioUser().getListaObjetos().get(i).getNombreObjeto() && o.getDescripcionObjeto() == this.getInventarioUser().getListaObjetos().get(i).getDescripcionObjeto() && o.getPeso() == this.getInventarioUser().getListaObjetos().get(i).getPeso() && o.getTamanoObjCelda() == this.getInventarioUser().getListaObjetos().get(i).getTamanoObjCelda() && o.getPosicionObjeto() == this.getInventarioUser().getListaObjetos().get(i).getPosicionObjeto()) return true;
+                        if (o.getNombreObjeto() == this.getInventarioUser().getListaObjetos().get(i).getNombreObjeto() && o.getDescripcionObjeto() == this.getInventarioUser().getListaObjetos().get(i).getDescripcionObjeto() && o.getPeso() == this.getInventarioUser().getListaObjetos().get(i).getPeso() && o.getTamanoObjCelda() == this.getInventarioUser().getListaObjetos().get(i).getTamanoObjCelda() && o.getPosicionObjeto().x == this.getInventarioUser().getListaObjetos().get(i).getPosicionObjeto().x && o.getPosicionObjeto().y == this.getInventarioUser().getListaObjetos().get(i).getPosicionObjeto().y ) return true;
+                    }
                 }
-            }
-            return false;
+                return false;
 
-        } else {
-            return false;
-        }
-    }
+            } else {
+                return false;
+            }
+        }*/
 
     /**
      * @param user
      * Modifica un usuario sobreescribiendo todos sus atributos.
      */
-    public void modificarUsuario(Player user) {
+    /*public void modificarUsuario(Player user) {
 
         this.nombre = user.nombre;
         this.vida = user.vida;
@@ -138,35 +127,18 @@ public class Player {
         this.seguidores = user.seguidores;
         this.inventarioUser = user.inventarioUser;
         this.posicionActual = user.posicionActual;
-    }
+    }*/
 
 
 
-    /**
-     * Busca y retorna un objeto de la lista de objetos del inventario.
-     * @param nombreObjeto
-     * @return Objeto
-     * @throws UsuarioSinObjetosException
-     * @throws ObjetoNoEncontradoException
-     */
-    public Objeto getObjeto(String nombreObjeto) throws UsuarioSinObjetosException, ObjetoNoEncontradoException {
 
-        for (Objeto o: inventarioUser.getListaObjetos()) {
-            if (o.getNombreObjeto().equals(nombreObjeto)) {
-                return o;
-            }
-        }
-        //no entiendo porque siempre usais this.getInventario en vez de inventarioUser,quiza soy yo que no me entero
-        if (inventarioUser.getListaObjetos().size() != 0) throw new ObjetoNoEncontradoException();
-        throw new UsuarioSinObjetosException();
-    }
 
     /**
      * Compara dos listas de usuarios
      * @param listaObjConsult
      * @return true si son iguales
      */
-    public boolean listaEsIgual (List<Objeto> listaObjConsult){
+    /*public boolean listaEsIgual (List<Objeto> listaObjConsult){
 //Mas de lo mismo, de que nos sirve comparar dos inventario? :O
         boolean resp = false;
         int m = 0;
@@ -183,7 +155,7 @@ public class Player {
         }
 
         return resp;
-    }
+    }*/
 
 
 

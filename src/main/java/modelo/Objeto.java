@@ -13,6 +13,13 @@ public class Objeto {
 
     public Objeto() {}
 
+
+
+
+
+
+    /////  GETS Y SETS  /////
+
     public Objeto(String nombreObjeto, String descripcionObjeto, int peso, int tamanoObjCelda) {
         this.nombreObjeto = nombreObjeto;
         this.descripcionObjeto = descripcionObjeto;
@@ -59,26 +66,6 @@ public class Objeto {
 
     public void setDescripcionObjeto(String descripcionObjeto) {
         this.descripcionObjeto = descripcionObjeto;
-    }
-
-
-
-    /////    /////
-
-    /**
-     *
-     * @param o
-     * @return true si objeto e sigual
-     */
-    public boolean objetoEsIgual(Objeto o) {
-
-        boolean resp = false;
-
-        if (o.nombreObjeto.equals(this.nombreObjeto) && o.descripcionObjeto.equals(this.descripcionObjeto) && o.peso == this.peso && o.tamanoObjCelda == this.tamanoObjCelda && o.posicionObjeto.x == this.posicionObjeto.x && o.posicionObjeto.y == this.posicionObjeto.y ) {
-            resp = true;
-        }
-
-        return resp;
     }
 
 
