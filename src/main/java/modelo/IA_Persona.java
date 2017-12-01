@@ -1,4 +1,4 @@
 package modelo;
 
-public class IA_Persona {
+public class IA_Persona extends IAs {
 }
