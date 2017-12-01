@@ -168,6 +168,22 @@ public class PlayerService {
         }
     }
 
+    @GET        // Falta revisar.
+    @Path("/player/{nombreUser}/{idMalla}")
+    @Produces(MediaType.APPLICATION_JSON)
+    public Mapa consultarListaObjetosDeUsuarioInJSON(@PathParam("idMalla") int idMalla) throws UsuarioNoExisteException, UsuarioSinObjetosException, MapaNoEncontradoException {
+
+        try {
+            return oneOct.consultarMapa(idMalla);
+
+        } catch (Exception e) {
+            throw e;
+        }
+
+    }
+
+
+
     /*@POST
     @Path("/Player/{nombreUser}/newObjeto")
     @Produces(MediaType.TEXT_PLAIN)

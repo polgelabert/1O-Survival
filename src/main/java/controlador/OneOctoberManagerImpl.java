@@ -20,6 +20,7 @@ public class OneOctoberManagerImpl implements OneOctoberManager {
     // CUANDO SE AÑADEN DESDE EL INVENTARIO, LOS COGE DE ESTE MAP. CUANDO SE QUITA, SE BORRA SOLAMENTE DEL INVENTARIO YA QUE
     // OTROS USUARIOS PUEDEN TENER ESTE MISMO OBJETO.
     private Map <String, Objeto> mapObjeto;
+    private Map <Integer, Mapa> mapMapas;
 
     private OneOctoberManagerImpl(){
         this.mapPlayer = new HashMap();
@@ -119,6 +120,10 @@ public class OneOctoberManagerImpl implements OneOctoberManager {
 
     }
 
+    public Mapa consultarMapa(int idMalla) throws MapaNoEncontradoException {
+        return getMapa(idMalla);
+    }
+
 
     /*public void modificarUsuario (String nombreUser, Player user2) throws UsuarioNoExisteException{
 
@@ -176,6 +181,11 @@ public class OneOctoberManagerImpl implements OneOctoberManager {
 
     private void isUserVoid (String nombreUser) throws UsuarioNoExisteException {
         if(!mapPlayer.containsKey(nombreUser)) throw new UsuarioNoExisteException();
+    }
+
+    private Mapa getMapa(int idMalla) throws MapaNoEncontradoException {
+        if(mapMapas.get(idMalla) == null) throw new MapaNoEncontradoException();
+        return mapMapas.get(idMalla);
     }
 
     public void reset() {

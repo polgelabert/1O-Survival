@@ -21,6 +21,7 @@ public interface OneOctoberManager {
 
     PlayerTO playerTO (Player user);
 
+    Mapa consultarMapa(int idMalla) throws MapaNoEncontradoException;
 
     public void reset();
 
