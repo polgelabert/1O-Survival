@@ -1,6 +1,6 @@
 package modelo;
 
-public class PlayerTO {
+public final class PlayerTO {
 
 
     private String nombre;

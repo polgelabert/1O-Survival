@@ -5,7 +5,7 @@ import controlador.excepciones.*;
 import java.util.ArrayList;
 import java.util.List;
 
-public class Player {
+public final class Player {
 
 
     private String nombre;
