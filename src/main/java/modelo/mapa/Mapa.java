@@ -1,15 +1,16 @@
 package modelo.mapa;
 
 
+import modelo.Objeto;
 import modelo.Punto;
-
+import java.util.ArrayList;
+import java.util.Arrays;
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
-import java.util.ArrayList;
-import java.util.Arrays;
+
 
 public class Mapa {
 
@@ -17,12 +18,12 @@ public class Mapa {
     private TextArea ta1 = new TextArea(60, 101);
     private String [][] malla = new String[altura][ample];
     private int idMalla;
-    private int posY =15, posX =15;
-    String[] edificios = new String[9];
+    private int posY =15, posX =15; // posicio del jugador (aixo sera un get inicial)
+    private String[] edificios = new String[9];
     /* 1 2 3
        4 5 6
        7 8 9  */
-
+    private java.util.List<Objeto> objectesDinsMapa = new ArrayList<>();
     public Mapa(){
         edificios[0]="H";
         edificios[1]="O";
@@ -34,7 +35,9 @@ public class Mapa {
         edificios[7]="O";
         edificios[8]="O";
 
+        afegirObjectes();
         generateMapa();
+        posarObjectesAlMapa();
         generateFrame();
     }
 
@@ -53,6 +56,40 @@ public class Mapa {
     }
 
 
+    public void afegirObjectes(){
+        Objeto banco = new Objeto("banco", "pa' sentarse", 20, 2);
+        Objeto container = new Objeto("Container", "pa' tirar basura", 40, 4);
+
+        banco.setIdObjMapa("b"); container.setIdObjMapa("c"); // li dic quin caracter correspon a l'objecte al mapa
+
+        banco.setTamanoObjCeldaMap(new Punto(2,1)); //dimensio del objecte al mapa
+        banco.setPosicionObjeto(new Punto(31,10)); //posició de la cela superior dreta al mapa
+        container.setTamanoObjCeldaMap(new Punto(2,2));
+        container.setPosicionObjeto(new Punto(31,40));
+
+        objectesDinsMapa.add(banco); objectesDinsMapa.add(container);
+
+        Objeto banco2 = new Objeto("banco", "pa' sentarse", 20, 2);
+        Objeto container2 = new Objeto("Container", "pa' tirar basura", 40, 4);
+        banco2.setIdObjMapa("b"); container2.setIdObjMapa("c"); // li dic quin caracter correspon a l'objecte al mapa
+        banco2.setPosicionObjeto(new Punto(61,20));
+        container2.setPosicionObjeto(new Punto(61,40));
+        banco2.setTamanoObjCeldaMap(new Punto(2,1)); //dimensio del objecte al mapa
+        container2.setTamanoObjCeldaMap(new Punto(2,2));
+        objectesDinsMapa.add(banco2); objectesDinsMapa.add(container2);
+    }
+
+    public void posarObjectesAlMapa(){
+        for (Objeto o: objectesDinsMapa) {
+            for (int amp=0;amp<o.getTamanoObjCeldaMap().getX();amp++) {
+                malla[o.getPosicionObjeto().getY()][o.getPosicionObjeto().getX() + amp] = o.getIdObjMapa();
+                for (int alt = 0; alt < o.getTamanoObjCeldaMap().getY(); alt++) {
+                    malla[o.getPosicionObjeto().getY() + alt][o.getPosicionObjeto().getX()+amp] = o.getIdObjMapa();
+                }
+            }
+        }
+
+    }
     // a partir del n y nn et diu a quin edifici estas
     public String quinEdifici(int n, int nn)
     {
@@ -163,6 +200,7 @@ public class Mapa {
         return new Punto(m,mm);
     }
 
+
     // dibuixo el mapa en el frame
     public void dibuixarMapa()
     {
@@ -178,7 +216,7 @@ public class Mapa {
         }
     }
 
-    // faig una finestra per probar el mapa
+    // faig una finestra per provar el mapa
     public Frame generateFrame ()
     {
         JFrame f = new JFrame("Mapa");

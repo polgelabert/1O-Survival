@@ -6,7 +6,10 @@ public class Punto {
     int y;
 
 
-    public Punto(){}
+    public Punto(){ // si la posicion es negativa, el objeto esta en el inventario, no en el mapa
+        this.x = -1;
+        this.y = -1;
+    }
 
     public Punto(int x, int y) {
         this.x = x;

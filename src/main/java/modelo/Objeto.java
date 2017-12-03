@@ -8,8 +8,9 @@ public class Objeto {
     private String descripcionObjeto;
     private int peso;
     private int tamanoObjCelda;
+    private Punto tamanoObjCeldaMap;
     private Punto posicionObjeto;
-
+    private String idObjMapa;
 
     public Objeto() {}
 
@@ -20,11 +21,29 @@ public class Objeto {
 
     /////  GETS Y SETS  /////
 
+    public void setTamanoObjCeldaMap(Punto tamanoObjCeldaMap) {
+        this.tamanoObjCeldaMap = tamanoObjCeldaMap;
+    }
+
+    public Punto getTamanoObjCeldaMap() {
+        return tamanoObjCeldaMap;
+    }
+
+    public String getIdObjMapa() {
+        return idObjMapa;
+    }
+
+    public void setIdObjMapa(String idObjMapa) {
+
+        this.idObjMapa = idObjMapa;
+    }
+
     public Objeto(String nombreObjeto, String descripcionObjeto, int peso, int tamanoObjCelda) {
         this.nombreObjeto = nombreObjeto;
         this.descripcionObjeto = descripcionObjeto;
         this.peso = peso;
         this.tamanoObjCelda = tamanoObjCelda;
+
         this.posicionObjeto = new Punto();
     }
 
