@@ -1,4 +1,4 @@
-package modelo;
+package modelo.IA;
 
 public class IA_Persona_Transeunte extends IA_Persona {
 }

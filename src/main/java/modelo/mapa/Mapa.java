@@ -1,11 +1,15 @@
-package modelo;
+package modelo.mapa;
 
+
+import modelo.Punto;
 
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
+import java.util.ArrayList;
+import java.util.Arrays;
 
 public class Mapa {
 
@@ -13,35 +17,43 @@ public class Mapa {
     private TextArea ta1 = new TextArea(60, 101);
     private String [][] malla = new String[altura][ample];
     private int idMalla;
-    private int posX=15, posY=15;
-
-    //private Character [][] malla;
+    private int posY =15, posX =15;
+    String[] edificios = new String[9];
+    /* 1 2 3
+       4 5 6
+       7 8 9  */
 
     public Mapa(){
+        edificios[0]="H";
+        edificios[1]="O";
+        edificios[2]="O";
+        edificios[3]="O";
+        edificios[4]="E";
+        edificios[5]="P";
+        edificios[6]="C";
+        edificios[7]="O";
+        edificios[8]="O";
+
         generateMapa();
         generateFrame();
     }
 
 
-    /*public String[][] getMalla() {
+    public String[][] getMalla() {
         return malla;
     }
-
     public void setMalla(String[][] malla) {
         this.malla = malla;
-    }
-*/
-    public void keyPressed(KeyEvent e) {
-        System.out.println("keyPressed");
     }
     public int getIdMalla() {
         return idMalla;
     }
-
     public void setIdMalla(Integer idMalla) {
         this.idMalla = idMalla;
     }
 
+
+    // a partir del n y nn et diu a quin edifici estas
     public String quinEdifici(int n, int nn)
     {
         String s= " ";
@@ -49,39 +61,39 @@ public class Mapa {
             case 1:
                 switch (n){
                     case 1:
-                        s="H";
+                        s=edificios[0];//"H";
                     break;
                     case 4:
-                        s="O";
+                        s=edificios[1];//"O";
                     break;
                     case 7:
-                        s="O";
+                        s=edificios[2];//"O";
                     break;
                 }
                 break;
             case 4:
                 switch (n){
                     case 1:
-                        s="O";
+                        s=edificios[3];//"O";
                     break;
                     case 4:
-                        s= "E";
+                        s= edificios[4];//"E";
                     break;
                     case 7:
-                        s="P";
+                        s=edificios[5];//"P";
                     break;
                 }
                 break;
             case 7:
                 switch (n){
                     case 1:
-                        s="C";
+                        s=edificios[6];//"C";
                     break;
                     case 4:
-                        s="O";
+                        s=edificios[7];//"O";
                     break;
                     case 7:
-                        s="O";
+                        s=edificios[8];//"O";
                     break;
                 }
                 break;
@@ -89,10 +101,12 @@ public class Mapa {
         }
         return s;
     }
+
+    // genero el mapa 3x3
     public void generateMapa()
     {
         boolean llocAlt = false, edifici = false;
-        int n=1, nn=1, fin1=3, fin=3;
+        int n, nn=1,fin1, fin=3;
 
         for(int i = 0; i< altura; i++)
         {
@@ -122,12 +136,38 @@ public class Mapa {
             }
 
         }
-        malla[posX][posY] ="@";
+        malla[posY][posX] ="@";
     }
+
+    // A partir de la posicio et retorna el n y nn per saber en quin edifici estas
+    public Punto quinDecim(int posX, int posY){
+        int m,mm;
+
+        if(posX<(3*ample/10) && posX>=(ample/10))
+            m=1;
+        else if (posX<(6*ample/10) && posX>=(4*ample/10))
+            m=4;
+        else if(posX<(9*ample/10) && posX>=(7*ample/10))
+            m=7;
+        else
+            m=0;
+
+        if(posY<(3*altura/10) && posY>=(altura/10))
+            mm=1;
+        else if (posY<(6*altura/10) && posY>=(4*altura/10))
+            mm=4;
+        else if(posY<(9*altura/10) && posY>=(7*altura/10))
+            mm=7;
+        else
+            mm=0;
+        return new Punto(m,mm);
+    }
+
+    // dibuixo el mapa en el frame
     public void dibuixarMapa()
     {
         ta1.setText("");
-        malla[posX][posY] ="@";
+        malla[posY][posX] ="@";
         for(int i = 0; i< altura; i++)
         {
             for(int j = 0; j< ample; j++ )
@@ -138,6 +178,7 @@ public class Mapa {
         }
     }
 
+    // faig una finestra per probar el mapa
     public Frame generateFrame ()
     {
         JFrame f = new JFrame("Mapa");
@@ -163,30 +204,46 @@ public class Mapa {
 
         button.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
-                malla[posX][posY] ="-";
-                posY += 1;dibuixarMapa();
-                //malla[posX][posY] ="@";
+                //malla[posY][posX] ="-";
+                Punto p=quinDecim(posX, posY);
+                if(p.getX()==0 || p.getY()==0)
+                    malla[posY][posX] ="-";
+                else
+                    malla[posY][posX] =quinEdifici(p.getX(),p.getY());
+                posX += 1;dibuixarMapa();
             }
         });
         button2.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
-                malla[posX][posY] ="-";
-                posY = posY - 1;dibuixarMapa();
-                //malla[posX][posY] ="@";
+                Punto p=quinDecim(posX, posY);
+                if(p.getX()==0 || p.getY()==0)
+                    malla[posY][posX] ="-";
+                else
+                    malla[posY][posX] =quinEdifici(p.getX(),p.getY());
+                posX = posX - 1;dibuixarMapa();
+                //malla[posY][posX] ="@";
             }
         });
         button3.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
-                malla[posX][posY] ="-";
-                posX += 1;dibuixarMapa();
-                //malla[posX][posY] ="@";
+                Punto p=quinDecim(posX, posY);
+                if(p.getX()==0 || p.getY()==0)
+                    malla[posY][posX] ="-";
+                else
+                    malla[posY][posX] =quinEdifici(p.getX(),p.getY());
+                posY += 1;dibuixarMapa();
+                //malla[posY][posX] ="@";
             }
         });
         button4.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
-                malla[posX][posY] ="-";
-                posX = posX - 1;dibuixarMapa();
-                //malla[posX][posY] ="@";
+                Punto p=quinDecim(posX, posY);
+                if(p.getX()==0 || p.getY()==0)
+                    malla[posY][posX] ="-";
+                else
+                    malla[posY][posX] =quinEdifici(p.getX(),p.getY());
+                posY = posY - 1;dibuixarMapa();
+                //malla[posY][posX] ="@";
             }
         });
         //f.getContentPane().add(ta1);

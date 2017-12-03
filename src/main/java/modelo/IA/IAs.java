@@ -1,6 +1,6 @@
-package modelo;
+package modelo.IA;
 
-public class IAs {
+public abstract class IAs {
 
     private int id;
     private String tipo;

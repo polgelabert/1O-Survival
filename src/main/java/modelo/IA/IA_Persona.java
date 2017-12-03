@@ -1,4 +1,4 @@
-package modelo;
+package modelo.IA;
 
-public class IA_Persona extends IAs {
+public abstract class IA_Persona extends IAs {
 }

@@ -2,6 +2,7 @@ package controlador;
 
 import modelo.*;
 import controlador.excepciones.*;
+import modelo.mapa.Mapa;
 
 import java.util.List;
 

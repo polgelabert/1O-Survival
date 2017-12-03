@@ -2,6 +2,7 @@ package controlador;
 
 import controlador.excepciones.*;
 import modelo.*;
+import modelo.mapa.Mapa;
 import org.apache.log4j.Logger;
 
 import java.util.ArrayList;

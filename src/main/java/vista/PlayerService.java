@@ -3,10 +3,10 @@ package vista;
 import controlador.*;
 import controlador.excepciones.*;
 import modelo.*;
+import modelo.mapa.Mapa;
 
 import javax.inject.Singleton;
 import javax.ws.rs.*;
-import javax.ws.rs.QueryParam;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 import java.util.List;
