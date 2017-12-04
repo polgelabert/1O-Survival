@@ -7,7 +7,7 @@ public class Objeto {
     private String nombreObjeto;
     private String descripcionObjeto;
     private int peso;
-    private int tamanoObjCelda;
+    //private int tamanoObjCelda;
     private Punto tamanoObjCeldaMap;
     private Punto posicionObjeto;
     private String idObjMapa;
@@ -38,7 +38,7 @@ public class Objeto {
         this.nombreObjeto = nombreObjeto;
         this.descripcionObjeto = descripcionObjeto;
         this.peso = peso;
-        this.tamanoObjCelda = tamanoObjCelda;
+        //this.tamanoObjCelda = tamanoObjCelda;
 
         this.posicionObjeto = new Punto();
     }
@@ -59,13 +59,16 @@ public class Objeto {
         this.peso = peso;
     }
 
+    /*
     public int getTamanoObjCelda() {
         return tamanoObjCelda;
     }
 
+
     public void setTamanoObjCelda(int tamanoObjCelda) {
         this.tamanoObjCelda = tamanoObjCelda;
     }
+    */
 
     public Punto getPosicionObjeto() {
         return posicionObjeto;

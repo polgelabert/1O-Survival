@@ -1,4 +1,4 @@
-package modelo;
+package modelo.clasesTablas;
 
 public class Logintable {
 
