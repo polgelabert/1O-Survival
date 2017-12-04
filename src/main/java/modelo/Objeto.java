@@ -7,7 +7,7 @@ public class Objeto {
     private String nombreObjeto;
     private String descripcionObjeto;
     private int peso;
-    //private int tamanoObjCelda;
+    private int tamanoObjCelda;
     private Punto tamanoObjCeldaMap;
     private Punto posicionObjeto;
     private String idObjMapa;
