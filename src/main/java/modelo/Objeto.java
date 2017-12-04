@@ -15,10 +15,6 @@ public class Objeto {
     public Objeto() {}
 
 
-
-
-
-
     /////  GETS Y SETS  /////
 
     public void setTamanoObjCeldaMap(Punto tamanoObjCeldaMap) {

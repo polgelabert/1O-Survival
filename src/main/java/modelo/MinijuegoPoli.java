@@ -8,13 +8,27 @@ import java.util.Random;
 
 public class MinijuegoPoli{
 
-    private int altura = 50, ample =100;
-    private TextArea ta1 = new TextArea(60, 101);
+    private int altura = 15, ample =30;
+    private TextArea ta1 = new TextArea(20, 50);
     private String [][] malla = new String[altura][ample];
     private int idMalla;
-    private int posX=95, posY=altura/2,numpolis=4,separacion=3,spawn=0;
+    private int posX=27, posY=altura/2,numpolis=4,separacion=3,spawn=0;
     private int[][] pospolis;
     private double tope=ample*0.9;
+    private Timer time;
+
+    public MinijuegoPoli(){
+        generateMapa();
+        frame();
+        time=new Timer(1000, new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                tick();
+            }
+        });
+        time.start();
+    }
+
 
 
     public void generateMapa()
@@ -43,6 +57,23 @@ public class MinijuegoPoli{
 
     }
     public void tick(){
+        separacion--;
+        if(separacion==0&&spawn<numpolis){
+            spawn();
+            separacion=3;
+        }
+        /*
+        if(separacion==3){
+            int poliY=pospolis[spawn-1][0];
+            int poliX=pospolis[spawn-1][1];
+            malla[poliY-1][poliX]="@";
+            malla[poliY][poliX]="|";malla[poliY][poliX+1]=">";
+            malla[poliY+1][poliX+1]="\\";
+            pospolis[spawn-1][1]++;
+        }
+        */
+        correr();
+        /*
         for(int i=0;i<spawn;i++){
             int poliY=pospolis[i][0];
             int poliX=pospolis[i][1];
@@ -51,9 +82,42 @@ public class MinijuegoPoli{
             malla[poliY+1][poliX+1]="\\";
             pospolis[i][1]++;
         }
-        frame();
+        */
+        dibuixarMapa();
+
     }
-    public void mostrar(){
+    public void correr(){
+        moverPj();
+        /*
+        for(int i=ample-1;i>0;i--){
+            for (int j=0;j<altura;j++){
+                malla[j][i]=malla[j][i-1];
+                if(i==1){
+                malla[j][i-1]="-";
+                }
+                else{break;}
+            }
+        }
+        for(int i=0;i<spawn;i++){
+            pospolis[spawn][1]++;
+        }
+        */
+    }
+
+    public void moverPj(){
+
+        for(int i=0;i<spawn;i++){
+            int poliY=pospolis[i][0];
+            int poliX=pospolis[i][1];
+            malla[poliY-1][poliX]="-";
+            malla[poliY][poliX]="-";malla[poliY][poliX+1]="-";
+            malla[poliY+1][poliX+1]="-";
+            poliX++;
+            pospolis[i][1]=poliX;
+            malla[poliY-1][poliX]="@";
+            malla[poliY][poliX]="|";malla[poliY][poliX+1]=">";
+            malla[poliY+1][poliX+1]="\\";
+        }
 
     }
 
@@ -85,12 +149,14 @@ public class MinijuegoPoli{
         //Dibujar mapa
         dibuixarMapa();
         //f.add(ta1);
+        JButton stop=new JButton("Stop");
         JButton button1 = new JButton("Abajo");
         JButton button2 = new JButton("Arriba");
 
         contentPane.setLayout(new FlowLayout());
 
         contentPane.add(ta1, BorderLayout.PAGE_START);
+        contentPane.add(stop,BorderLayout.NORTH);
         contentPane.add(button1, BorderLayout.EAST);
         contentPane.add(button2, BorderLayout.WEST);
 
@@ -116,6 +182,12 @@ public class MinijuegoPoli{
                     dibuixarMapa();
                     //malla[posX][posY] ="@";}
                 }
+            }
+        });
+        stop.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                time.stop();
             }
         });
         //f.getContentPane().add(ta1);

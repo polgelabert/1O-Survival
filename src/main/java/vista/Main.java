@@ -4,6 +4,7 @@ package vista;
 
 
 
+import modelo.MinijuegoPoli;
 import modelo.mapa.Mapa;
 import modelo.Objeto;
 import modelo.Player;
@@ -17,6 +18,8 @@ public class Main {
         boolean addedObj = us.getInventarioUser().añadirObjeto(newObject);
         boolean tt = us.getInventarioUser().sacarObjeto(newObject);
 
-        Mapa n=new Mapa();
+        //Mapa n=new Mapa();
+
+        MinijuegoPoli a=new MinijuegoPoli();
     }
 }
