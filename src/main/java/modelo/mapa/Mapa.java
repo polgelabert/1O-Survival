@@ -13,17 +13,23 @@ import java.awt.event.KeyEvent;
 
 
 public class Mapa {
+    // Coses que s'han de canviar
+    private TextArea ta1 = new TextArea(60, 101); //per prova del frame
+    private int posY =15, posX =15; // posicio del jugador (aixo sera un get inicial)
+
 
     private int altura = 50, ample =100;
-    private TextArea ta1 = new TextArea(60, 101);
     private String [][] malla = new String[altura][ample];
+    private String [][] mallaAnt = new String[altura][ample];
     private int idMalla;
-    private int posY =15, posX =15; // posicio del jugador (aixo sera un get inicial)
+
     private String[] edificios = new String[9];
     /* 1 2 3
        4 5 6
        7 8 9  */
     private java.util.List<Objeto> objectesDinsMapa = new ArrayList<>();
+
+
     public Mapa(){
         edificios[0]="H";
         edificios[1]="O";

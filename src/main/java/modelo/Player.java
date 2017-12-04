@@ -13,7 +13,7 @@ public final class Player {
     private int votos;
     private int seguidores;
     private Inventario inventarioUser;
-    private Punto posicionActual;
+    //private Punto posicionActual;
     private int mapaActual;
 
 
@@ -24,7 +24,7 @@ public final class Player {
         this.votos = votos;
         this.seguidores = seguidores;
         this.inventarioUser = new Inventario(100, new ArrayList<Objeto>());
-        this.posicionActual = new Punto();
+      //  this.posicionActual = new Punto();
     }
 
 
@@ -53,7 +53,7 @@ public final class Player {
     public void setSeguidores(int seguidores) {
         this.seguidores = seguidores;
     }
-
+/*
     public Punto getPosicionActual() {
         return posicionActual;
     }
@@ -61,7 +61,7 @@ public final class Player {
     public void setPosicionActual(Punto posicionActual) {
         this.posicionActual = posicionActual;
     }
-
+*/
     public int getMapaActual() {
         return mapaActual;
     }
