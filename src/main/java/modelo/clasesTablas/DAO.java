@@ -1,6 +1,6 @@
 package modelo.clasesTablas;
 
-import com.mysql.jdbc.Statement;
+//import com.mysql.jdbc.Statement;
 import jdk.nashorn.internal.runtime.ECMAException;
 
 import java.lang.reflect.Field;
