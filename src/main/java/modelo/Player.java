@@ -2,6 +2,8 @@
 package modelo;
 
 import controlador.excepciones.*;
+import modelo.mapa.Mapa;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -9,24 +11,32 @@ public final class Player {
 
 
     private String nombre;
-    private int vida;
-    private int votos;
-    private int seguidores;
+    private String contrasena;
+    private String correo;
+    //private nivel;
+    private int puntuacionTotal;
     private Inventario inventarioUser;
     //private Punto posicionActual;
     private int mapaActual;
 
 
     public Player (){}
-    public Player(String nombre, int vida, int votos, int seguidores) {
+    public Player(String nombre, String contrasena, String correo, int puntuacionTotal) {
         this.nombre = nombre;
-        this.vida = vida;
-        this.votos = votos;
-        this.seguidores = seguidores;
+        this.contrasena = contrasena;
+        this.correo = correo;
+        this.puntuacionTotal = puntuacionTotal;
         this.inventarioUser = new Inventario(100, new ArrayList<Objeto>());
       //  this.posicionActual = new Punto();
     }
 
+    public Player(String nombre, String contrasena, String correo) {
+        this.nombre = nombre;
+        this.contrasena = contrasena;
+        this.correo = correo;
+        this.puntuacionTotal = 0;
+        this.inventarioUser = new Inventario(100, new ArrayList<Objeto>());
+    }
 
 
 
@@ -38,44 +48,45 @@ public final class Player {
         this.nombre = nombre;
     }
 
-    public int getVida() {
-        return vida;
+    public String getContrasena() {
+        return contrasena;
     }
 
-    public void setVida(int vida) {
-        this.vida = vida;
+    public void setContrasena(String contrasena) {
+        this.contrasena = contrasena;
     }
 
-    public int getSeguidores() {
-        return seguidores;
+    public String getCorreo() {
+        return correo;
     }
 
-    public void setSeguidores(int seguidores) {
-        this.seguidores = seguidores;
-    }
-/*
-    public Punto getPosicionActual() {
-        return posicionActual;
+    public void setCorreo(String correo) {
+        this.correo = correo;
     }
 
-    public void setPosicionActual(Punto posicionActual) {
-        this.posicionActual = posicionActual;
+    public int getPuntuacionTotal() {
+        return puntuacionTotal;
     }
-*/
+
+    public void setPuntuacionTotal(int puntuacionTotal) {
+        this.puntuacionTotal = puntuacionTotal;
+    }
+
+    /*
+        public Punto getPosicionActual() {
+            return posicionActual;
+        }
+
+        public void setPosicionActual(Punto posicionActual) {
+            this.posicionActual = posicionActual;
+        }
+    */
     public int getMapaActual() {
         return mapaActual;
     }
 
     public void setMapaActual(int mapaActual) {
         this.mapaActual = mapaActual;
-    }
-
-    public int getVotos() {
-        return votos;
-    }
-
-    public void setVotos(int votos) {
-        this.votos = votos;
     }
 
     public Inventario getInventarioUser() {
