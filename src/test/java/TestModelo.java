@@ -1,7 +1,8 @@
 import controlador.OneOctoberManagerImpl;
 import controlador.excepciones.*;
+import modelo.Inventario;
 import modelo.Objeto;
-import modelo.Player;
+import modelo.Usuario;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -22,7 +23,7 @@ public class TestModelo {
 
     private OneOctoberManagerImpl oneOct;
 
-    Player user, user2;
+    Usuario user, user2;
     String nombreUser, nombreObjeto;
     Objeto objeto;
 
@@ -33,7 +34,7 @@ public class TestModelo {
         this.oneOct = OneOctoberManagerImpl.getInstance();
 
         try {
-            user = new Player("pol", 200, 50, 1 );
+            user = new Usuario("pol", "contra1", "pol1@gmail.com" );
             objeto = new Objeto("microfono", "microfono para avisar de dónde vienen los enemigos", 2, 1);
 
             //Se inserta el objeto a mapObjeto
@@ -41,7 +42,9 @@ public class TestModelo {
 
             //se añade al usuario user, el objeto sacado de la base de datos
             objeto = oneOct.getObjectFrommapObjeto("microfono");
-            user.getInventarioUser().añadirObjeto(objeto);
+            Inventario inventario = new Inventario(100);
+            user.getMiNivel().setInventarioUser(inventario);
+            user.getMiNivel().getInventarioUser().añadirObjeto(objeto);
 
             // Esta la he comentado ya que en en juego cuando te encuentres un objeto, ya estará creado... Por este motivo necesitaras cogerlo
             // del HashMap de Objetos. Y en esta linea si no lo creas, petará.
@@ -49,7 +52,7 @@ public class TestModelo {
 
             oneOct.crearUsuario(user);
 
-            user = new Player("marc", 150, 30, 2 );
+            user = new Usuario("marc", "contra2", "marc1@gmail.com" );
             oneOct.crearUsuario(user);
 
             }
@@ -73,11 +76,11 @@ public class TestModelo {
     @Test
     public void crearUsuarioTest() throws UsuarioYaExisteException, ListaUsuariosVaciaException {
         // Intento crar un usuario con el mismo nombre de otro usuario -> Excepcion UsuarioYaExiste:
-        user = new Player("pol", 100, 50, 1 );
+        user = new Usuario("pol", "contra1", "pol1@gmail.com");
         Assertions.assertThrows(UsuarioYaExisteException.class, () -> { oneOct.crearUsuario(user); });
 
         // Se crea correctamente el usuario.
-        user2 = new Player("juanito", 90, 40, 2 );
+        user2 = new Usuario("juan", "juanpass", "juan@gmail.com");
         assertTrue(oneOct.crearUsuario(user2));
 
 
@@ -95,7 +98,7 @@ public class TestModelo {
 
         // Consulta correcta del usuario.
         nombreUser = "pol";
-        Player user = oneOct.consultarUsuario(nombreUser);
+        Usuario user = oneOct.consultarUsuario(nombreUser);
 
 
     }
@@ -106,10 +109,10 @@ public class TestModelo {
      */
     @Test
     public void consultarListaUsuariosTest() throws ListaUsuariosVaciaException, UsuarioNoExisteException {
-        List<Player> listaPlayers = new ArrayList<>();
+        List<Usuario> listaUsuarios = new ArrayList<>();
 
-        listaPlayers = oneOct.consultarListaUsuarios();
-        Assert.assertTrue(oneOct.listUserIsEqual(listaPlayers));        // Comprueba que la lista que saca por pantalla es correcta.
+        listaUsuarios = oneOct.consultarListaUsuarios();
+        Assert.assertTrue(oneOct.listUserIsEqual(listaUsuarios));        // Comprueba que la lista que saca por pantalla es correcta.
 
         // Intenta mostrar una lista de usuarios vacia -> Excpecion ListaUsuariosVacia
         oneOct.eliminarUsuario("pol");
@@ -122,7 +125,7 @@ public class TestModelo {
 
         user = oneOct.consultarUsuario("pol");
         int nuevaVida = 250;
-        user2 = new Player("pol", nuevaVida,50, 1);
+        user2 = new Usuario("pol", nuevaVida,50, 1);
         objeto = new Objeto("casco", "casco que minimiza los golpes de los enemigos", 1, 1);
         user2.getInventarioUser().getListaObjetos().add(objeto);
         user.modificarUsuario(user2);
@@ -163,11 +166,11 @@ public class TestModelo {
 
         objeto = new Objeto("casco", "casco que minimiza los golpes de los enemigos", 1, 1);
 
-        user.getInventarioUser().añadirObjeto(objeto);
+        user.getMiNivel().getInventarioUser().añadirObjeto(objeto);
         //boolean result = user.getInventarioUser().getListaObjetos().get(1).objetoEsIgual(objeto);
         //assertTrue(result);
 
-        Assertions.assertEquals(2, user.getInventarioUser().getListaObjetos().size());
+        Assertions.assertEquals(2, user.getMiNivel().getInventarioUser().getListaObjetos().size());
     }
 
     /**
@@ -190,7 +193,7 @@ public class TestModelo {
 
 
         objeto = new Objeto("microfono", "microfono para avisar de dónde vienen los enemigos", 2, 1);
-        boolean res = user2.getInventarioUser().sacarObjeto(objeto);
+        boolean res = user2.getMiNivel().getInventarioUser().sacarObjeto(objeto);
 
 
     }

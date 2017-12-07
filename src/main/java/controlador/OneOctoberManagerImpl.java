@@ -16,10 +16,7 @@ public class OneOctoberManagerImpl implements OneOctoberManager {
     final static Logger log = Logger.getLogger(OneOctoberManagerImpl.class.getName());
 
     private static OneOctoberManagerImpl instance;
-    private Map <String, Player> mapPlayer;
-    // PUSE UN MAPA DE OBJETOS (mapObjeto) QUE SERIA COMO UNA DATABASE DÓNDE ALMAZENAR TODOS LOS OBJETOS DISPONIBLES EN EL JUEGO...
-    // CUANDO SE AÑADEN DESDE EL INVENTARIO, LOS COGE DE ESTE MAP. CUANDO SE QUITA, SE BORRA SOLAMENTE DEL INVENTARIO YA QUE
-    // OTROS USUARIOS PUEDEN TENER ESTE MISMO OBJETO.
+    private Map <String, Usuario> mapPlayer;
     private Map <String, Objeto> mapObjeto;
     private Map <Integer, Mapa> mapMapas;
 
@@ -36,11 +33,7 @@ public class OneOctoberManagerImpl implements OneOctoberManager {
     }
 
 ////////     COMENTARIOS       ///////
-// mapObjeto comentario
-// Comprobar parametros de entrada dentro o fuera la funcion?
-// PlayerService: POST crearUsuarioInJSON parameter en argumento.
-// Modificar usuario
-// interfaz correcta?
+
 
 
 
@@ -50,7 +43,7 @@ public class OneOctoberManagerImpl implements OneOctoberManager {
      * @return true si se crea el usuario correctamente.
      * @throws UsuarioYaExisteException
      */
-    public boolean crearUsuario(Player user) throws UsuarioYaExisteException {
+    public boolean crearUsuario(Usuario user) throws UsuarioYaExisteException {
 
         if(isUser(user.getNombre())) throw new UsuarioYaExisteException();          // lanza excepcion si isUser== true (lo contiene)
         addUser(user);
@@ -60,13 +53,13 @@ public class OneOctoberManagerImpl implements OneOctoberManager {
 
     /**
      * @param nombreUser
-     * @return Player
+     * @return Usuario
      * @throws UsuarioNoExisteException
      */
-    public Player consultarUsuario (String nombreUser) throws UsuarioNoExisteException {
+    public Usuario consultarUsuario (String nombreUser) throws UsuarioNoExisteException {
 
         log.info("Inicio consultarUsuario: " + nombreUser);
-        Player user = getUser(nombreUser);
+        Usuario user = getUser(nombreUser);
         //getUser ya lanza la excepcion. Ademas, getUser retorna el user este o no (despues del ContainsKey), devolvera null?
 
         log.info("Fin consultarUsuario: " + nombreUser + " con éxito.");
@@ -77,12 +70,12 @@ public class OneOctoberManagerImpl implements OneOctoberManager {
      * @return Lista de Players.
      * @throws ListaUsuariosVaciaException
      */
-    public List<Player> consultarListaUsuarios() throws ListaUsuariosVaciaException {
+    public List<Usuario> consultarListaUsuarios() throws ListaUsuariosVaciaException {
 
-        List<Player> listaPlayers = new ArrayList<>();
-        if (!listaPlayers.addAll(mapPlayer.values())) throw new ListaUsuariosVaciaException();
+        List<Usuario> listaUsuarios = new ArrayList<>();
+        if (!listaUsuarios.addAll(mapPlayer.values())) throw new ListaUsuariosVaciaException();
 
-        return listaPlayers;
+        return listaUsuarios;
     }
 
 
@@ -93,7 +86,7 @@ public class OneOctoberManagerImpl implements OneOctoberManager {
      * @throws UsuarioNoExisteException
      */
     public boolean eliminarUsuario (String nombreUser) throws UsuarioNoExisteException {
-        //Player user = getUser(nombreUser);
+        //Usuario user = getUser(nombreUser);
         isUserVoid(nombreUser);
         removeUser(nombreUser);
         return true;
@@ -107,15 +100,14 @@ public class OneOctoberManagerImpl implements OneOctoberManager {
      */
     public List<Objeto> consultarInventarioDeUsuario (String nombre) throws UsuarioSinObjetosException, UsuarioNoExisteException {
 
-        Player user = getUser(nombre);
-        List<Objeto> inventario = user.getInventarioUser().getListaObjetos();
-        if (inventario == null || inventario.size() == 0) throw new UsuarioSinObjetosException();
+        Usuario user = getUser(nombre);
+        if(user.getMiNivel().getInventarioUser() == null || user.getMiNivel().getInventarioUser().getListaObjetos().size() == 0) throw  new UsuarioSinObjetosException();
 
-        return inventario;
+        return user.getMiNivel().getInventarioUser().getListaObjetos();
     }
 
 
-    public PlayerTO playerTO (Player user){
+    public PlayerTO playerTO (Usuario user){
 
         return new PlayerTO(user);
 
@@ -126,9 +118,9 @@ public class OneOctoberManagerImpl implements OneOctoberManager {
     }
 
 
-    /*public void modificarUsuario (String nombreUser, Player user2) throws UsuarioNoExisteException{
+    /*public void modificarUsuario (String nombreUser, Usuario user2) throws UsuarioNoExisteException{
 
-        Player user = getUser(nombreUser);
+        Usuario user = getUser(nombreUser);
         user.modificarUsuario(user2);
     }*/
 
@@ -145,9 +137,9 @@ public class OneOctoberManagerImpl implements OneOctoberManager {
         return this.mapObjeto.get(microfono);
     }
 
-    private void addUser (Player user){ this.mapPlayer.put(user.getNombre(), user); }
+    private void addUser (Usuario user){ this.mapPlayer.put(user.getNombre(), user); }
 
-    private Player getUser(String nombreUser) throws UsuarioNoExisteException{
+    private Usuario getUser(String nombreUser) throws UsuarioNoExisteException{
 
         if (!this.mapPlayer.containsKey(nombreUser)) throw new UsuarioNoExisteException();
         return this.mapPlayer.get(nombreUser);
@@ -155,18 +147,18 @@ public class OneOctoberManagerImpl implements OneOctoberManager {
 
     /**
      * Compara únicamente los nombres de Usuario de la lista.
-     * @param listaPlayer
+     * @param listaUsuario
      * @return true si listas son iguales.
      */
-    public boolean listUserIsEqual(List<Player> listaPlayer){
+    public boolean listUserIsEqual(List<Usuario> listaUsuario){
         int cont = 0;
-        for (Player p : listaPlayer){
+        for (Usuario p : listaUsuario){
             String nombreUser = p.getNombre();
             if(nombreUser.equals(this.mapPlayer.get(nombreUser).getNombre())){
                 cont = cont + 1;
             }
         }
-        if(cont == listaPlayer.size()) return true;
+        if(cont == listaUsuario.size()) return true;
         return false;
     }
 
@@ -174,8 +166,8 @@ public class OneOctoberManagerImpl implements OneOctoberManager {
         this.mapPlayer.remove(nombreUser);
     }
 
-    private void removeObjet(Player user, Objeto objeto) {
-        user.getInventarioUser().getListaObjetos().remove(objeto);
+    private void removeObjet(Usuario user, Objeto objeto) {
+        user.getMiNivel().getInventarioUser().getListaObjetos().remove(objeto);
     }
 
     private boolean isUser (String nombreUser) { return (mapPlayer.containsKey(nombreUser)); }

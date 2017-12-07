@@ -4,18 +4,16 @@ public final class PlayerTO {
 
 
     private String nombre;
-    private int vida;
-    private int votos;
+    private int puntuacionTotal;
     private int seguidores;
 
 
     public PlayerTO(){}
 
-    public PlayerTO(Player user){
+    public PlayerTO(Usuario user){
         this.nombre = user.getNombre();
-        this.vida = user.getVida();
-        this.votos = user.getVotos();
-        this.seguidores = user.getSeguidores();
+        this.puntuacionTotal = user.getPuntuacionTotal();
+        this.seguidores = user.getMiNivel().getSeguidores();
     }
 
     public String getNombre() {
@@ -26,20 +24,12 @@ public final class PlayerTO {
         this.nombre = nombre;
     }
 
-    public int getVida() {
-        return vida;
+    public int getPuntuacionTotal() {
+        return puntuacionTotal;
     }
 
-    public void setVida(int vida) {
-        this.vida = vida;
-    }
-
-    public int getVotos() {
-        return votos;
-    }
-
-    public void setVotos(int votos) {
-        this.votos = votos;
+    public void setPuntuacionTotal(int puntuacionTotal) {
+        this.puntuacionTotal = puntuacionTotal;
     }
 
     public int getSeguidores() {

@@ -9,15 +9,15 @@ import javax.xml.bind.annotation.XmlRootElement;
 public class WebFunctions {
 
 
-    private Player user;
+    private Usuario user;
 
     @XmlElement
 
-    public Player getUser() {
+    public Usuario getUser() {
         return user;
     }
 
-    public void setUser(Player user) {
+    public void setUser(Usuario user) {
         this.user = user;
     }
 }

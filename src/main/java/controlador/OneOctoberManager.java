@@ -10,17 +10,17 @@ public interface OneOctoberManager {
 
 
 
-    boolean crearUsuario(Player user) throws UsuarioYaExisteException;
+    boolean crearUsuario(Usuario user) throws UsuarioYaExisteException;
 
-    Player consultarUsuario(String nombreUser) throws UsuarioNoExisteException;
+    Usuario consultarUsuario(String nombreUser) throws UsuarioNoExisteException;
 
-    List<Player> consultarListaUsuarios() throws ListaUsuariosVaciaException;
+    List<Usuario> consultarListaUsuarios() throws ListaUsuariosVaciaException;
 
     boolean eliminarUsuario (String nombreUser) throws UsuarioNoExisteException;
 
     List<Objeto> consultarInventarioDeUsuario(String nombre) throws UsuarioNoExisteException, UsuarioSinObjetosException;
 
-    PlayerTO playerTO (Player user);
+    PlayerTO playerTO (Usuario user);
 
     Mapa consultarMapa(int idMalla) throws MapaNoEncontradoException;
 

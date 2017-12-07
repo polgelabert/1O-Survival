@@ -1,42 +1,29 @@
 
 package modelo;
 
-import controlador.excepciones.*;
-import modelo.mapa.Mapa;
 
-import java.util.ArrayList;
-import java.util.List;
-
-public final class Player {
+public final class Usuario {
 
 
     private String nombre;
     private String contrasena;
     private String correo;
-    //private nivel;
+    private Nivel miNivel;
     private int puntuacionTotal;
-    private Inventario inventarioUser;
-    //private Punto posicionActual;
-    private int mapaActual;
 
 
-    public Player (){}
-    public Player(String nombre, String contrasena, String correo, int puntuacionTotal) {
-        this.nombre = nombre;
-        this.contrasena = contrasena;
-        this.correo = correo;
-        this.puntuacionTotal = puntuacionTotal;
-        this.inventarioUser = new Inventario(100, new ArrayList<Objeto>());
-      //  this.posicionActual = new Punto();
-    }
 
-    public Player(String nombre, String contrasena, String correo) {
+
+    public Usuario(){}
+    public Usuario(String nombre, String contrasena, String correo) {
         this.nombre = nombre;
         this.contrasena = contrasena;
         this.correo = correo;
         this.puntuacionTotal = 0;
-        this.inventarioUser = new Inventario(100, new ArrayList<Objeto>());
+        this.miNivel = new Nivel();
+      //  this.posicionActual = new Punto();
     }
+
 
 
 
@@ -81,22 +68,14 @@ public final class Player {
             this.posicionActual = posicionActual;
         }
     */
-    public int getMapaActual() {
-        return mapaActual;
+
+    public Nivel getMiNivel() {
+        return miNivel;
     }
 
-    public void setMapaActual(int mapaActual) {
-        this.mapaActual = mapaActual;
+    public void setMiNivel(Nivel miNivel) {
+        this.miNivel = miNivel;
     }
-
-    public Inventario getInventarioUser() {
-        return inventarioUser;
-    }
-
-    public void setInventarioUser(Inventario inventarioUser) {
-        this.inventarioUser = inventarioUser;
-    }
-
 
 
 /////   Metodos   /////
@@ -109,7 +88,7 @@ public final class Player {
          * @return boolean
          * Comprueba si dos players son iguales. No se compara ni posicionActual ni mapaActual
          */
-       /* public boolean usuarioEsIgual(Player player) {//NO ENTIENDO EN QUE NOS BENEFICIA ESTE METODO Y LA FORMA EN LA QUE ESTA HECHO
+       /* public boolean usuarioEsIgual(Usuario player) {//NO ENTIENDO EN QUE NOS BENEFICIA ESTE METODO Y LA FORMA EN LA QUE ESTA HECHO
                             //Usar equals para comparar strings
             if (player.nombre.equals(this.nombre) && player.vida == this.vida && player.votos == this.votos && player.seguidores == this.seguidores) {
 
@@ -130,7 +109,7 @@ public final class Player {
      * @param user
      * Modifica un usuario sobreescribiendo todos sus atributos.
      */
-    /*public void modificarUsuario(Player user) {
+    /*public void modificarUsuario(Usuario user) {
 
         this.nombre = user.nombre;
         this.vida = user.vida;
