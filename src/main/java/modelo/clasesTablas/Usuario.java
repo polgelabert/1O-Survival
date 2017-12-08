@@ -5,13 +5,15 @@ public class Logintable {
     private final String usuario;
     private String password;
     private final String correo;
-    private int idMapa;
+    private int puntFinal;
+    private String idMapa;
 
     public Logintable(String usuario, String password, String correo) {
         this.usuario = usuario;
         this.password = password;
         this.correo = correo;
-        this.idMapa = 0;
+        this.puntFinal= 0;
+
     }
 
     public String getUsuario() {
@@ -30,11 +32,11 @@ public class Logintable {
         return correo;
     }
 
-    public int getIdMapa() {
+    public String getIdMapa() {
         return idMapa;
     }
 
-    public void setIdMapa(int idMapa) {
+    public void setIdMapa(String idMapa) {
         this.idMapa = idMapa;
     }
 }
