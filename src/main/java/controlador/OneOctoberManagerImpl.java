@@ -2,9 +2,11 @@ package controlador;
 
 import controlador.excepciones.*;
 import modelo.*;
+import modelo.clasesTablas.Usuario;
 import modelo.mapa.Mapa;
 import org.apache.log4j.Logger;
 
+import java.lang.reflect.InvocationTargetException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -44,11 +46,27 @@ public class OneOctoberManagerImpl implements OneOctoberManager {
      * @throws UsuarioYaExisteException
      */
     public boolean crearUsuario(Usuario user) throws UsuarioYaExisteException {
+        createUser(user);
 
+        /*
         if(isUser(user.getNombre())) throw new UsuarioYaExisteException();          // lanza excepcion si isUser== true (lo contiene)
         addUser(user);
 
-        return true;                                                        // return true ya que operacion ok
+        return true;*/
+        return createUser(user);// return true ya que operacion ok
+    }
+    private boolean createUser (Usuario user){
+        boolean insertado = true;
+        try{
+            user.insert();
+
+
+        }catch (Exception e){
+            log.error(e.getMessage());
+            insertado = false;
+        }
+
+       return insertado;
     }
 
     /**
@@ -56,14 +74,27 @@ public class OneOctoberManagerImpl implements OneOctoberManager {
      * @return Usuario
      * @throws UsuarioNoExisteException
      */
-    public Usuario consultarUsuario (String nombreUser) throws UsuarioNoExisteException {
+    public Usuario consultarUsuario (String nombreUser, String password) throws UsuarioNoExisteException {
 
-        log.info("Inicio consultarUsuario: " + nombreUser);
+
+
+        /*log.info("Inicio consultarUsuario: " + nombreUser);
         Usuario user = getUser(nombreUser);
         //getUser ya lanza la excepcion. Ademas, getUser retorna el user este o no (despues del ContainsKey), devolvera null?
 
-        log.info("Fin consultarUsuario: " + nombreUser + " con éxito.");
-        return user;
+        log.info("Fin consultarUsuario: " + nombreUser + " con éxito.");*/
+        return selectUser(nombreUser);
+    }
+    private Usuario selectUser (String nombreUser ){
+        try{
+            Usuario u = new Usuario(nombreUser,"xx","xx");
+           u.select();
+
+        }catch (Exception e){
+
+            log.error(e.getMessage());
+        }
+
     }
 
     /**
@@ -92,26 +123,26 @@ public class OneOctoberManagerImpl implements OneOctoberManager {
         return true;
     }
 
-    /**
+    /*
      * @param nombre
      * @return ListaObjetos de un usuario
      * @throws UsuarioSinObjetosException
      * @throws UsuarioNoExisteException
-     */
+
     public List<Objeto> consultarInventarioDeUsuario (String nombre) throws UsuarioSinObjetosException, UsuarioNoExisteException {
 
         Usuario user = getUser(nombre);
         if(user.getMiNivel().getInventarioUser() == null || user.getMiNivel().getInventarioUser().getListaObjetos().size() == 0) throw  new UsuarioSinObjetosException();
 
         return user.getMiNivel().getInventarioUser().getListaObjetos();
-    }
+    }*/
 
-
+    /*
     public PlayerTO playerTO (Usuario user){
 
         return new PlayerTO(user);
 
-    }
+    }*/
 
     public Mapa consultarMapa(int idMalla) throws MapaNoEncontradoException {
         return getMapa(idMalla);
@@ -167,7 +198,7 @@ public class OneOctoberManagerImpl implements OneOctoberManager {
     }
 
     private void removeObjet(Usuario user, Objeto objeto) {
-        user.getMiNivel().getInventarioUser().getListaObjetos().remove(objeto);
+        //user.getMiNivel().getInventarioUser().getListaObjetos().remove(objeto);
     }
 
     private boolean isUser (String nombreUser) { return (mapPlayer.containsKey(nombreUser)); }

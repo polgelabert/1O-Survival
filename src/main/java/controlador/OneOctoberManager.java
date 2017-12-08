@@ -2,6 +2,8 @@ package controlador;
 
 import modelo.*;
 import controlador.excepciones.*;
+import modelo.clasesTablas.Niveltable;
+import modelo.clasesTablas.Usuario;
 import modelo.mapa.Mapa;
 
 import java.util.List;
@@ -12,15 +14,18 @@ public interface OneOctoberManager {
 
     boolean crearUsuario(Usuario user) throws UsuarioYaExisteException;
 
-    Usuario consultarUsuario(String nombreUser) throws UsuarioNoExisteException;
+    Usuario consultarUsuario(String nombreUser, String password) throws UsuarioNoExisteException;
 
     List<Usuario> consultarListaUsuarios() throws ListaUsuariosVaciaException;
 
     boolean eliminarUsuario (String nombreUser) throws UsuarioNoExisteException;
+    boolean modificarUsuario (String nombreUser) throws UsuarioNoExisteException;
+    Niveltable consultarNivelTable (String idMapa);
 
-    List<Objeto> consultarInventarioDeUsuario(String nombre) throws UsuarioNoExisteException, UsuarioSinObjetosException;
 
-    PlayerTO playerTO (Usuario user);
+   // List<Objeto> consultarInventarioDeUsuario(String nombre) throws UsuarioNoExisteException, UsuarioSinObjetosException;
+
+    //PlayerTO playerTO (Usuario user);
 
     Mapa consultarMapa(int idMalla) throws MapaNoEncontradoException;
 

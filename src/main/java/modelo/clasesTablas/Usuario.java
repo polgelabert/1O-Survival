@@ -1,23 +1,23 @@
 package modelo.clasesTablas;
 
-public class Logintable {
+public class Usuario extends  DAO{
 
-    private final String usuario;
+    private final String nombre;
     private String password;
-    private final String correo;
+    private String correo;
     private int puntFinal;
     private String idMapa;
 
-    public Logintable(String usuario, String password, String correo) {
-        this.usuario = usuario;
+    public Usuario(String usuario, String password, String correo) {
+        this.nombre = usuario;
         this.password = password;
         this.correo = correo;
         this.puntFinal= 0;
 
     }
 
-    public String getUsuario() {
-        return usuario;
+    public String getNombre() {
+        return nombre;
     }
 
     public String getPassword() {
