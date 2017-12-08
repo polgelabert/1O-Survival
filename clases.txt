@@ -1,0 +1,58 @@
+Clases:
+
+*** USUARIO (carga )
+- String nombre
+- String password
+- String correo
+- String idMapa
+- int puntuacionTotal
+
+*** NIVEL
+- String idMapa
+- int pesoMax
+- List<Objetos> listaObjetos
+- String idPolicias
+- String idTranseuntes
+- String idVotantes
+
+*** IAs general
+- String idLoquesea
+- int velocidad
+- int numeroMaxEnMapa
+
+*** RANKING  
+- String idMapa
+- String nombreUsuario
+- int votos
+- int seguidores
+- int puntuacionTotal
+
+*** INVENTARIO 
+- int pesoMax
+- int pesoActual
+- List<Objetos> lista
+
+*** PUNTO
+- int X
+- int Y
+
+*** OBJETOS
+- String nombreObjeto
+- String descripcionObjeto
+- int peso
+- Punto tamanoObjCeldaMap
+- Punto posicionObjeto
+
+*** OBJETOSTABLE
+- final String nombre;
+- String descripcion;
+- int peso;
+- String tamanoObjCeldaMap;
+
+*** MAPA (en android)
+- String[][] malla
+- Punto posUsuario
+- List<Objetos>
+
+ 
+
