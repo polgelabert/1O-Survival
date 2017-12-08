@@ -1,0 +1,34 @@
+tablas:
+
+*** USUARIO
+- String nombre
+- String password
+- String correo
+- String idMapa
+- int puntuacionTotal
+
+*** NIVELTABLE
+- String idMapa
+- int pesoMax
+- List<Objetos> listaObjetos (JSON)
+- String idPolicias
+- String idTranseuntes
+- String idVotantes
+
+*** RANKING
+- String idMapa
+- String nombreUsuario
+- int votos
+- int seguidores
+- int puntuacionTotal
+
+*** NIVELIASTABLE
+- String idLoquesea
+- int velocidad
+- int numeroMaxEnMapa
+
+*** OBJETOSTABLE
+- final String nombre
+- String descripcion
+- int peso
+- String tamanoObjCeldaMap;
