@@ -43,7 +43,7 @@ public class Mapa {
 
         afegirObjectes();
         generateMapa();
-        posarObjectesAlMapa();
+        //posarObjectesAlMapa();
         generateFrame();
     }
 
@@ -85,17 +85,18 @@ public class Mapa {
         objectesDinsMapa.add(banco2); objectesDinsMapa.add(container2);
     }
 
-    public void posarObjectesAlMapa(){
+    public static String[][] posarObjectesAlMapa(String[][] mapa, java.util.List<Objeto> objectesDinsMapa){
         for (Objeto o: objectesDinsMapa) {
             for (int amp=0;amp<o.getTamanoObjCeldaMap().getX();amp++) {
-                malla[o.getPosicionObjeto().getY()][o.getPosicionObjeto().getX() + amp] = o.getIdObjMapa();
+                mapa[o.getPosicionObjeto().getY()][o.getPosicionObjeto().getX() + amp] = o.getIdObjMapa();
                 for (int alt = 0; alt < o.getTamanoObjCeldaMap().getY(); alt++) {
-                    malla[o.getPosicionObjeto().getY() + alt][o.getPosicionObjeto().getX()+amp] = o.getIdObjMapa();
+                    mapa[o.getPosicionObjeto().getY() + alt][o.getPosicionObjeto().getX()+amp] = o.getIdObjMapa();
                 }
             }
         }
-
+        return mapa;
     }
+
     // a partir del n y nn et diu a quin edifici estas
     public String quinEdifici(int n, int nn)
     {
