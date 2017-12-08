@@ -12,9 +12,10 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
-public class GenerarMapa {
+public class GenerarMapa extends LibreriaTxt{
     private TextArea ta1 = new TextArea(60, 101); //per prova del frame
     private TextArea ta2 = new TextArea(50, 50);
+    private TextArea ta3 = new TextArea(50, 50);
     private int posY =15, posX =15;
 
     //utilitzar aquesta funció per generar els mapes en format txt
@@ -38,6 +39,9 @@ public class GenerarMapa {
 
         String[][] malla1=generateMapa(altura, ample, listaEdificios);
         generateFrame(malla1, ta1,altura,ample);
+
+        generarMapaCti();
+        generateFrame(mapaCti,ta3,altcti,altcti);
     }
     public void cargarEdificios(){
         listaEdificios=new ArrayList<>();
@@ -167,7 +171,7 @@ public class GenerarMapa {
         for(int i = 0; i< altcti; i++)
         {
             //nn=3 fins fin2=9
-            n=1; fin1=3;
+            n=7; fin1=9;
             if( i == (altcti/2-2))
                 porta1=true;
             else if (i==(altcti/2+2))
@@ -199,11 +203,11 @@ public class GenerarMapa {
 
                 if (j == (n*amplcti)/10 && llocAlt && !taula) {
                     taula = true;
-                    n = 7;
+                    //n = 7;
                 } else if (j == (fin1*amplcti)/10)
                 {
                     taula = false;
-                    fin1=9;
+                    //fin1=9;
                 }
                 if(taula) {
                     if(urna)
@@ -371,7 +375,7 @@ public class GenerarMapa {
         f.setVisible(true);
         return f;
     }
-
+/*
     public static void pasarMapaTxt(String[][] mapa, String nom){
         try {
             FileWriter writer = new FileWriter(nom+".txt", true);
@@ -387,7 +391,7 @@ public class GenerarMapa {
         }
     }
 
-    /*
+
     public static String[][] posarObjectesAlMapa(String[][] mapa, java.util.List<Objeto> objectesDinsMapa){
         for (Objeto o: objectesDinsMapa) {
             for (int amp=0;amp<o.getTamanoObjCeldaMap().getX();amp++) {
@@ -428,7 +432,8 @@ public class GenerarMapa {
         //generarMapaEscola();
         int altura = 50, ample =100;
         GenerarMapa g = new GenerarMapa();
-        //String [][] malla=generateMapa(altura,ample,listaEdificios);
+
+        //String [][] malla = generateMapa(altura,ample,listaEdificios);
         //pasarMapaTxt(malla);
     }
 }

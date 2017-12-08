@@ -3,12 +3,14 @@ package vista;
 import controlador.*;
 import controlador.excepciones.*;
 import modelo.*;
+import modelo.clasesTablas.Usuario;
 import modelo.mapa.Mapa;
 
 import javax.inject.Singleton;
 import javax.ws.rs.*;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -32,16 +34,16 @@ public class PlayerService {
         try {
             user = new Usuario("pol", "pass1234","pol123@gmail.com");
             Inventario inventario = new Inventario(100);
-            user.getMiNivel().setInventarioUser(inventario);
+            //user.getMiNivel().setInventarioUser(inventario);
             objeto = new Objeto("microfono", "microfono para avisar de dónde vienen los enemigos", 2, 1);
-            user.getMiNivel().getInventarioUser().getListaObjetos().add(objeto);
+            //user.getMiNivel().getInventarioUser().getListaObjetos().add(objeto);
             objeto = new Objeto("mesa", "mesa para obstaculizar a los enemigos", 15, 3);
-            user.getMiNivel().getInventarioUser().getListaObjetos().add(objeto);
+            //user.getMiNivel().getInventarioUser().getListaObjetos().add(objeto);
             oneOct.crearUsuario(user);
 
             user = new Usuario("marc", "0000","marc22@gmail.com" );
             inventario = new Inventario(100);
-            user.getMiNivel().setInventarioUser(inventario);
+            //user.getMiNivel().setInventarioUser(inventario);
             oneOct.crearUsuario(user);
 
         }
@@ -69,7 +71,7 @@ public class PlayerService {
 
         try {
 
-            Usuario user = oneOct.consultarUsuario(nombreUser);
+            //Usuario user = oneOct.consultarUsuario(nombreUser);
             return user;
             //return Response.status(200).build();
         } catch (Exception e) {
@@ -85,8 +87,7 @@ public class PlayerService {
 
         try {
 
-            return new PlayerTO(oneOct.consultarUsuario(nombreUser));
-
+            return new PlayerTO(oneOct.consultarUsuario(nombreUser,"j"));
         } catch (Exception e) {
             throw e;
         }
@@ -126,9 +127,9 @@ public class PlayerService {
     @Path("/player/{nombreUser}/inventario")
     @Produces(MediaType.APPLICATION_JSON)
     public List<Objeto> consultarListaObjetosDeUsuarioInJSON(@PathParam("nombreUser") String nombreUser) throws UsuarioNoExisteException, UsuarioSinObjetosException {
-
+        List<Objeto> k = new ArrayList<>();
         try {
-            return oneOct.consultarInventarioDeUsuario(nombreUser);
+            return  null;
 
         } catch (Exception e) {
             throw e;
@@ -178,7 +179,8 @@ public class PlayerService {
     public Mapa consultarMapaInJSON(@PathParam("idMalla") int idMalla) throws UsuarioNoExisteException, UsuarioSinObjetosException, MapaNoEncontradoException {
 
         try {
-            return oneOct.consultarMapa(idMalla);
+            return  null;
+            //return oneOct.consultarMapa(idMalla);
 
         } catch (Exception e) {
             throw e;
