@@ -6,7 +6,7 @@ package vista;
 
 import modelo.MinijuegoPoli;
 import modelo.Objeto;
-import modelo.Usuario;
+import modelo.clasesTablas.Usuario;
 
 public class Main {
 

@@ -19,17 +19,17 @@ public interface OneOctoberManager {
     List<Usuario> consultarListaUsuarios() throws ListaUsuariosVaciaException;
 
     boolean eliminarUsuario (String nombreUser) throws UsuarioNoExisteException;
-    boolean modificarUsuario (String nombreUser) throws UsuarioNoExisteException;
-    Niveltable consultarNivelTable (String idMapa);
+    // modificarUsuario (String nombreUser) throws UsuarioNoExisteException;
+   // Niveltable consultarNivelTable (String idMapa);
 
 
    // List<Objeto> consultarInventarioDeUsuario(String nombre) throws UsuarioNoExisteException, UsuarioSinObjetosException;
 
     //PlayerTO playerTO (Usuario user);
 
-    Mapa consultarMapa(int idMalla) throws MapaNoEncontradoException;
+    // consultarMapa(int idMalla) throws MapaNoEncontradoException;
 
-    public void reset();
+     public void reset();
 
 
 

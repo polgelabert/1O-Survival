@@ -83,18 +83,34 @@ public class OneOctoberManagerImpl implements OneOctoberManager {
         //getUser ya lanza la excepcion. Ademas, getUser retorna el user este o no (despues del ContainsKey), devolvera null?
 
         log.info("Fin consultarUsuario: " + nombreUser + " con éxito.");*/
-        return selectUser(nombreUser);
+        return selectUser(nombreUser, password);
     }
-    private Usuario selectUser (String nombreUser ){
+    private Usuario selectUser (String nombreUser, String password ){
+        ArrayList<Object[]> datos;
+        Usuario u2 = null;
         try{
             Usuario u = new Usuario(nombreUser,"xx","xx");
-           u.select();
+          datos= u.select();
+          Object[] j = datos.get(0);
+          if( j[1].equals(password)){
+
+              u2 = new Usuario(j[0].toString(),j[1].toString(),j[2].toString());
+
+
+
+          }
+          else
+              {
+                  u2 = new Usuario("xx","xx","xx");
+
+
+          }
 
         }catch (Exception e){
 
             log.error(e.getMessage());
         }
-
+        return u2;
     }
 
     /**
@@ -104,9 +120,12 @@ public class OneOctoberManagerImpl implements OneOctoberManager {
     public List<Usuario> consultarListaUsuarios() throws ListaUsuariosVaciaException {
 
         List<Usuario> listaUsuarios = new ArrayList<>();
-        if (!listaUsuarios.addAll(mapPlayer.values())) throw new ListaUsuariosVaciaException();
+        /*if (!listaUsuarios.addAll(mapPlayer.values())) throw new ListaUsuariosVaciaException();
 
         return listaUsuarios;
+        */
+        return listaUsuarios;
+
     }
 
 
@@ -144,9 +163,9 @@ public class OneOctoberManagerImpl implements OneOctoberManager {
 
     }*/
 
-    public Mapa consultarMapa(int idMalla) throws MapaNoEncontradoException {
+    /*public Mapa consultarMapa(int idMalla) throws MapaNoEncontradoException {
         return getMapa(idMalla);
-    }
+    }*/
 
 
     /*public void modificarUsuario (String nombreUser, Usuario user2) throws UsuarioNoExisteException{
@@ -164,9 +183,9 @@ public class OneOctoberManagerImpl implements OneOctoberManager {
         mapObjeto.put(objeto.getNombreObjeto(), objeto);
     }
     // nueva pol
-    public Objeto getObjectFrommapObjeto(String microfono) {
+    /*public Objeto getObjectFrommapObjeto(String microfono) {
         return this.mapObjeto.get(microfono);
-    }
+    }*/
 
     private void addUser (Usuario user){ this.mapPlayer.put(user.getNombre(), user); }
 

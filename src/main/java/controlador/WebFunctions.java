@@ -1,6 +1,7 @@
 package controlador;
 
 import modelo.*;
+import modelo.clasesTablas.Usuario;
 
 import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlRootElement;
