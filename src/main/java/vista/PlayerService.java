@@ -12,6 +12,7 @@ import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.logging.Logger;
 
 /**
  * POSTMAN LINK: https://www.getpostman.com/collections/6b68f7f14c1864bcc18d
@@ -23,6 +24,7 @@ public class PlayerService {
 
 
     public OneOctoberManager oneOct = OneOctoberManagerImpl.getInstance();
+    Logger log = Logger.getLogger(PlayerService.class.getName());
 
     Usuario user, user2;
     String nombreUser, nombreObjeto;
@@ -32,19 +34,19 @@ public class PlayerService {
     public PlayerService() throws UsuarioYaExisteException {
 
         try {
-            user = new Usuario("pol", "pass1234","pol123@gmail.com");
+          user = new Usuario("pol", "pass1234","pol123@gmail.com");
             Inventario inventario = new Inventario(100);
             //user.getMiNivel().setInventarioUser(inventario);
             objeto = new Objeto("microfono", "microfono para avisar de dónde vienen los enemigos", 2, 1);
             //user.getMiNivel().getInventarioUser().getListaObjetos().add(objeto);
             objeto = new Objeto("mesa", "mesa para obstaculizar a los enemigos", 15, 3);
             //user.getMiNivel().getInventarioUser().getListaObjetos().add(objeto);
-            oneOct.crearUsuario(user);
+           // oneOct.crearUsuario(user);
 
-            user = new Usuario("marc", "0000","marc22@gmail.com" );
+            user2 = new Usuario("marc", "0000","marc22@gmail.com" );
             inventario = new Inventario(100);
             //user.getMiNivel().setInventarioUser(inventario);
-            oneOct.crearUsuario(user);
+            //oneOct.crearUsuario(user2);
 
         }
         catch (Exception e) {
@@ -70,9 +72,9 @@ public class PlayerService {
     public Usuario consultarUsuarioInJSON(@PathParam("nombreUser") String nombreUser) throws UsuarioNoExisteException {
 
         try {
-
+            Usuario u = new Usuario(nombreUser,"xx","xx");
             //Usuario user = oneOct.consultarUsuario(nombreUser);
-            return user;
+            return u;
             //return Response.status(200).build();
         } catch (Exception e) {
             throw e;
@@ -139,13 +141,14 @@ public class PlayerService {
 
 
     @POST
-    @Path("/newPlayer")
+    @Path("/newUser")
     @Produces(MediaType.TEXT_PLAIN)
     @Consumes(MediaType.APPLICATION_JSON)
     //public Response crearUsuarioInJSON(@QueryParam("user") Usuario user) throws UsuarioYaExisteException {
     public Response crearUsuarioInJSON(Usuario user) throws UsuarioYaExisteException {
         try {
 
+            log.info("Will see");
             boolean res = oneOct.crearUsuario(user);
 
             return Response.status(201).entity(1).build();

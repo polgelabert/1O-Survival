@@ -2,6 +2,7 @@ package controlador;
 
 import controlador.excepciones.*;
 import modelo.*;
+import modelo.clasesTablas.Niveltable;
 import modelo.clasesTablas.Usuario;
 import modelo.mapa.Mapa;
 import org.apache.log4j.Logger;
@@ -124,7 +125,24 @@ public class OneOctoberManagerImpl implements OneOctoberManager {
 
         return listaUsuarios;
         */
+
+        return selectListUser();
+
+    }
+    private List<Usuario> selectListUser() {
+
+        List<Usuario> listaUsuarios = new ArrayList<>();
+        try{
+
+        }
+        catch(Exception e){}
         return listaUsuarios;
+
+        /*if (!listaUsuarios.addAll(mapPlayer.values())) throw new ListaUsuariosVaciaException();
+
+        return listaUsuarios;
+        */
+
 
     }
 
@@ -137,24 +155,79 @@ public class OneOctoberManagerImpl implements OneOctoberManager {
      */
     public boolean eliminarUsuario (String nombreUser) throws UsuarioNoExisteException {
         //Usuario user = getUser(nombreUser);
-        isUserVoid(nombreUser);
-        removeUser(nombreUser);
-        return true;
+        //(nombreUser);
+        //removeUser(nombreUser);
+        return deleteUser(nombreUser);
+    }
+    private boolean deleteUser (String nombreUser) throws UsuarioNoExisteException {
+        //Usuario user = getUser(nombreUser);
+        ArrayList<Object[]> ds;
+        boolean borrado = true;
+        Usuario u2 = null;
+        Usuario u = new Usuario(nombreUser,"xx","xx");
+        try {
+            ds = u.select();
+            Object[] j = ds.get(0);
+            u2 = new Usuario(j[0].toString(), j[1].toString(), j[2].toString());
+            u2.delete();
+        }
+        catch (Exception e){borrado=false;}
+
+        return borrado;
+    }
+    /**
+     * Elimina usuario: comprueba que user existe (isUserVoid) y lo elimina.
+     * @param nombreUser
+     * @return true si eliminado
+     * @throws UsuarioNoExisteException
+     */
+    public boolean modificarUsuario (Usuario nombreUser) throws UsuarioNoExisteException {
+
+
+        //Usuario user = getUser(nombreUser);
+        //(nombreUser);
+        //removeUser(nombreUser);
+        return updateUser(nombreUser);
+    }
+    private boolean updateUser (Usuario user){
+        boolean actualizado =true;
+        try{
+            user.update();
+
+        }catch (Exception e){
+
+
+         actualizado = false;
+        }
+
+        return actualizado;
+
     }
 
-    /*
-     * @param nombre
-     * @return ListaObjetos de un usuario
-     * @throws UsuarioSinObjetosException
-     * @throws UsuarioNoExisteException
 
-    public List<Objeto> consultarInventarioDeUsuario (String nombre) throws UsuarioSinObjetosException, UsuarioNoExisteException {
+    /**
+     * @param idMapa
+     * @return Nivel
+     * @throws
+     * @throws
+    */
+    public Niveltable seleccionarNivel (String idMapa)  {
 
-        Usuario user = getUser(nombre);
-        if(user.getMiNivel().getInventarioUser() == null || user.getMiNivel().getInventarioUser().getListaObjetos().size() == 0) throw  new UsuarioSinObjetosException();
+       return selectLevel(idMapa);
+    }
+    private Niveltable selectLevel (String idMapa){
+        Niveltable actNivel = null;
+        ArrayList<Object[]> datos;
 
-        return user.getMiNivel().getInventarioUser().getListaObjetos();
-    }*/
+        Niveltable nivel = new Niveltable(idMapa);
+        try {
+            datos = nivel.select();
+            Object[] j = datos.get(0);
+            actNivel = new Niveltable((String) j[0], (Integer) j[1], (ArrayList) j[2], (String) j[3], (String) j[4], (String) j[5]);
+        }
+        catch (Exception e){}
+        return actNivel;
+    }
 
     /*
     public PlayerTO playerTO (Usuario user){

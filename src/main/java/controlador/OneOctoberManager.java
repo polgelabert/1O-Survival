@@ -19,8 +19,8 @@ public interface OneOctoberManager {
     List<Usuario> consultarListaUsuarios() throws ListaUsuariosVaciaException;
 
     boolean eliminarUsuario (String nombreUser) throws UsuarioNoExisteException;
-    // modificarUsuario (String nombreUser) throws UsuarioNoExisteException;
-   // Niveltable consultarNivelTable (String idMapa);
+    boolean modificarUsuario (Usuario nombreUser) throws UsuarioNoExisteException;
+    Niveltable seleccionarNivel (String idMapa);
 
 
    // List<Objeto> consultarInventarioDeUsuario(String nombre) throws UsuarioNoExisteException, UsuarioSinObjetosException;

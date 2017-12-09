@@ -18,6 +18,15 @@ public class Niveltable extends DAO{
         this.idmapa=idmapa;
         this.objetosmapa=new ArrayList<Objeto>();
     }
+    public Niveltable(String idMapa, int pesomax, ArrayList<Objeto> objmapa, String policias, String transeunte, String votantes){
+
+        this.idmapa = idMapa;
+        this.pesomax = pesomax;
+        this.objetosmapa = objmapa;
+        this.policias = policias;
+        this.transeuntes = transeunte;
+        this.votantes = votantes;
+    }
 
     public String getIdmapa() {
         return idmapa;

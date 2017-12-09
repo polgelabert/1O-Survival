@@ -1,5 +1,7 @@
 package modelo.clasesTablas;
 
+import java.io.Serializable;
+
 public class Usuario extends  DAO{
 
     private final String nombre;
@@ -7,6 +9,10 @@ public class Usuario extends  DAO{
     private String correo;
     private int puntFinal;
     private String idMapa;
+
+   public Usuario(){
+        this.nombre="xx";
+    }
 
     public Usuario(String usuario, String password, String correo) {
         this.nombre = usuario;
