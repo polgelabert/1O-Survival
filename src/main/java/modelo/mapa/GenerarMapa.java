@@ -7,6 +7,7 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.util.ArrayList;
@@ -386,19 +387,12 @@ public class GenerarMapa extends LibreriaTxt{
         return f;
     }
 
-    public static void pasarMapaTxt(String[][] mapa, String nom){
-        try {
-            FileWriter writer = new FileWriter(nom+".txt", true);
-            for (String[] p: mapa) {
-                for (String pp:p) {
-                    writer.write(pp);
-                }
-                writer.write("\r\n");
-            }
-            writer.close();
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
+    public static void pasarMapaTxt2(String[][] mapa, String nom){
+        pasarMapaTxt(mapa,nom);
+    }
+
+    public static void llegirMapaTxt2(String nomFitxesSenseTxt){
+        llegirMapaTxt(nomFitxesSenseTxt);
     }
 /*
 
@@ -439,13 +433,12 @@ public class GenerarMapa extends LibreriaTxt{
 
 */
     public static void main(String[] args)  {
-        //generarMapaEscola();
-        int altura = 50, ample =100;
-        //GenerarMapa g = new GenerarMapa();
-        int altEscola=20, amplEscola=30;
-        int altcti=20, amplcti=30;
         List<Edifici> listaEdificios = cargarEdificios();
+        //String[][] malla2=generarMapaCti(altcti,amplcti);
+        //pasarMapaTxt(malla2,"mapaCTI");
+        llegirMapaTxt2("hola");
 
+/*
         TextArea ta1 = new TextArea(60, 101); //per prova del frame
         TextArea ta2 = new TextArea(50, 50);
         TextArea ta3 = new TextArea(50, 50);
@@ -463,6 +456,6 @@ public class GenerarMapa extends LibreriaTxt{
         pasarMapaTxt(malla2,"mapaCTI");
 
         //String [][] malla = generateMapa(altura,ample,listaEdificios);
-        //pasarMapaTxt(malla);
+        //pasarMapaTxt(malla);*/
     }
 }
