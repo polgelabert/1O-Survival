@@ -10,8 +10,9 @@ public abstract class LibreriaTxt {
     final static Logger log = Logger.getLogger(OneOctoberManagerImpl.class.getName());
 
     public static void pasarMapaTxt(String[][] mapa, String nomTxt){
+        String savePath=" ";
         try {
-            String savePath = System.getProperty("user.dir") + System.getProperty("file.separator") + "mapesTxt";
+            savePath = System.getProperty("user.dir") + System.getProperty("file.separator") + "mapesTxt";
             //File saveLocation = new File(savePath);
             File myFile = new File(savePath, nomTxt +".txt");
             FileWriter writer = new FileWriter(myFile, false);
@@ -23,8 +24,10 @@ public abstract class LibreriaTxt {
             }
             writer.close();
         } catch (IOException e) {
-            e.printStackTrace();
+            log.error(e);
+            log.info("No se ha podido crear el fichero del mapa: "+nomTxt);
         }
+        log.info("Se ha creado el mapa: "+nomTxt+". Se ha guardado en: "+savePath);
     }
 
     public static String[][] llegirMapaTxt(String nomTxt){

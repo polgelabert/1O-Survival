@@ -19,8 +19,6 @@ public class GenerarMapa extends LibreriaTxt{
     private TextArea ta3 = new TextArea(50, 50);
     private int posY =15, posX =15;
 
-    //utilitzar aquesta funció per generar els mapes en format txt
-
     private int altura = 50, ample =100;
     private String [][] malla = new String[altura][ample];
 
@@ -167,7 +165,6 @@ public class GenerarMapa extends LibreriaTxt{
         return malla;
         //malla[posX][posY] ="@";
     }
-
     public static String[][] generarMapaCti(int altcti, int amplcti){
         int n,fin1,nn=1,fin2=9, nnn=4, fin3=6;
         boolean llocAlt=false, taula=false, urna=false, porta1=false, porta=false;
@@ -242,7 +239,7 @@ public class GenerarMapa extends LibreriaTxt{
         {
             //nn=3 fins fin2=9
             n=1; fin1=3;
-            if(i==0 || i==altEscola-1)
+            if(i==altEscola-1)//i==0 || i==altEscola-1)
                 porta1=true;
             else
                 porta1=false;
@@ -387,10 +384,10 @@ public class GenerarMapa extends LibreriaTxt{
         return f;
     }
 
+    // fucnions que criden a les funcions de la llibreriaTxt
     public static void pasarMapaTxt2(String[][] mapa, String nom){
         pasarMapaTxt(mapa,nom);
     }
-
     public static void llegirMapaTxt2(String nomFitxesSenseTxt){
         llegirMapaTxt(nomFitxesSenseTxt);
     }
@@ -433,12 +430,15 @@ public class GenerarMapa extends LibreriaTxt{
 
 */
     public static void main(String[] args)  {
+        int altura = 50, ample =100;
+        int altEscola=20, amplEscola=30;
+        int altcti=20, amplcti=30;
         List<Edifici> listaEdificios = cargarEdificios();
         //String[][] malla2=generarMapaCti(altcti,amplcti);
         //pasarMapaTxt(malla2,"mapaCTI");
-        llegirMapaTxt2("hola");
+        //llegirMapaTxt2("hola");
 
-/*
+
         TextArea ta1 = new TextArea(60, 101); //per prova del frame
         TextArea ta2 = new TextArea(50, 50);
         TextArea ta3 = new TextArea(50, 50);
