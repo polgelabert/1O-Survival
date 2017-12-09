@@ -31,28 +31,30 @@ public class GenerarMapa extends LibreriaTxt{
 
     private List<Edifici> listaEdificios;
 
-    public GenerarMapa(){
-        cargarEdificios();
 
-        generarMapaEscola();
-        generateFrame (mapaEscola, ta2, altEscola, amplEscola);
+    public GenerarMapa(){
+/*        cargarEdificios();
+
+        String[][] malla3=generarMapaEscola(altEscola,amplEscola);
+        generateFrame (malla3, ta2, altEscola, amplEscola);
 
         String[][] malla1=generateMapa(altura, ample, listaEdificios);
         generateFrame(malla1, ta1,altura,ample);
 
-        generarMapaCti();
-        generateFrame(mapaCti,ta3,altcti,altcti);
+        String[][] malla2=generarMapaCti(altcti,amplcti);
+        generateFrame(malla2,ta3,altcti,amplcti);*/
+
     }
-    public void cargarEdificios(){
-        listaEdificios=new ArrayList<>();
+    public static List<Edifici> cargarEdificios(){
+        List<Edifici> listaEdificios=new ArrayList<>();
 
         Edifici hosp =new Edifici("H","Hospistal",1,true);
         listaEdificios.add(hosp);
-        Edifici nada =new Edifici("O","Nada",2,false);
+        Edifici nada =new Edifici("N","Nada",2,false);
         listaEdificios.add(nada);
-        Edifici nada2 =new Edifici("O","Nada",3,false);
+        Edifici nada2 =new Edifici("N","Nada",3,false);
         listaEdificios.add(nada2);
-        Edifici nada3 =new Edifici("O","Nada",4,false);
+        Edifici nada3 =new Edifici("N","Nada",4,false);
         listaEdificios.add(nada3);
         Edifici escuela =new Edifici("E","Escuela",5,true);
         listaEdificios.add(escuela);
@@ -60,10 +62,11 @@ public class GenerarMapa extends LibreriaTxt{
         listaEdificios.add(parque);
         Edifici cti =new Edifici("C","CTI",7,true);
         listaEdificios.add(cti);
-        Edifici nada5 =new Edifici("O","Nada",7,false);
+        Edifici nada5 =new Edifici("N","Nada",7,false);
         listaEdificios.add(nada5);
-        Edifici nada6 =new Edifici("O","Nada",8,false);
+        Edifici nada6 =new Edifici("N","Nada",8,false);
         listaEdificios.add(nada6);
+        return listaEdificios;
     }
     public static Edifici quinEdifici(int n, int nn, List<Edifici> list) {
         Edifici s =new Edifici("O","Nada",0,false);
@@ -164,14 +167,16 @@ public class GenerarMapa extends LibreriaTxt{
         //malla[posX][posY] ="@";
     }
 
-    public void generarMapaCti(){
-        int n,fin1,nn=2,fin2=8, nnn=3, fin3=4;
+    public static String[][] generarMapaCti(int altcti, int amplcti){
+        int n,fin1,nn=1,fin2=9, nnn=4, fin3=6;
         boolean llocAlt=false, taula=false, urna=false, porta1=false, porta=false;
+
+        String [][] mapaCti = new String[altcti][amplcti];
 
         for(int i = 0; i< altcti; i++)
         {
             //nn=3 fins fin2=9
-            n=7; fin1=9;
+            n=6; fin1=8;
             if( i == (altcti/2-2))
                 porta1=true;
             else if (i==(altcti/2+2))
@@ -185,20 +190,22 @@ public class GenerarMapa extends LibreriaTxt{
                 llocAlt = false;
                 //fin +=3;
             }
-            if(i==(nnn*altcti)/10){
+            if(i==(nnn*altcti)/20){
                 urna=true;
-                nnn+=3;
-            }else if(i==(fin3*altcti)/10){
+                nnn+=5;
+            }else if(i==(fin3*altcti)/20){
                 urna = false;
-                fin3+=3;
+                fin3+=5;
             }
 
             for(int j = 0; j< amplcti; j++ )
             {
                 // n=2 fins fin=4; n=8, fin=10
                 if (porta1) {// && (j==((amplEscola/2)-2)||j==(amplEscola/2)+2)){
-                    if (j == 1)//||j==(amplEscola/2)+2))
+                    if (j == 0)//||j==(amplEscola/2)+2))
                         porta = true;
+                    else
+                        porta = false;
                 }
 
                 if (j == (n*amplcti)/10 && llocAlt && !taula) {
@@ -211,7 +218,7 @@ public class GenerarMapa extends LibreriaTxt{
                 }
                 if(taula) {
                     if(urna)
-                        mapaCti[i][j] = "U";
+                        mapaCti[i][j] = "O";
                     else
                         mapaCti[i][j] = "T";
                     if(porta)
@@ -223,10 +230,12 @@ public class GenerarMapa extends LibreriaTxt{
             }
 
         }
+        return mapaCti;
     }
-    public void generarMapaEscola(){
+    public static String[][] generarMapaEscola(int altEscola,int amplEscola){
         int n,fin1,nn=2,fin2=8, nnn=3, fin3=4;
         boolean llocAlt=false, taula=false, urna=false, porta1=false, porta=false;
+        String[][] mapaEscola = new String[altEscola][amplEscola];
 
         for(int i = 0; i< altEscola; i++)
         {
@@ -285,10 +294,11 @@ public class GenerarMapa extends LibreriaTxt{
             }
 
         }
+        return mapaEscola;
     }
 
     // dibuixo el mapa en el frame
-    public void dibuixarMapa(String [][] mapa, TextArea ta, int alt, int ampl) {
+    public static void dibuixarMapa(String [][] mapa, TextArea ta, int alt, int ampl) {
         ta.setText("");
         //mapa[posY][posX] ="@";
         for(int i = 0; i< alt; i++)
@@ -302,7 +312,7 @@ public class GenerarMapa extends LibreriaTxt{
     }
 
     // faig una finestra per provar el mapa
-    public Frame generateFrame (String [][] mapa, TextArea ta, int alt, int ampl) {
+    public static Frame generateFrame (String [][] mapa, TextArea ta, int alt, int ampl) {
         JFrame f = new JFrame("Mapa");
 
         ta.setFont(new Font("monospaced", Font.PLAIN, 12));
@@ -375,7 +385,7 @@ public class GenerarMapa extends LibreriaTxt{
         f.setVisible(true);
         return f;
     }
-/*
+
     public static void pasarMapaTxt(String[][] mapa, String nom){
         try {
             FileWriter writer = new FileWriter(nom+".txt", true);
@@ -390,7 +400,7 @@ public class GenerarMapa extends LibreriaTxt{
             e.printStackTrace();
         }
     }
-
+/*
 
     public static String[][] posarObjectesAlMapa(String[][] mapa, java.util.List<Objeto> objectesDinsMapa){
         for (Objeto o: objectesDinsMapa) {
@@ -428,10 +438,29 @@ public class GenerarMapa extends LibreriaTxt{
     }
 
 */
-    public static void main(String[] args) {
+    public static void main(String[] args)  {
         //generarMapaEscola();
         int altura = 50, ample =100;
-        GenerarMapa g = new GenerarMapa();
+        //GenerarMapa g = new GenerarMapa();
+        int altEscola=20, amplEscola=30;
+        int altcti=20, amplcti=30;
+        List<Edifici> listaEdificios = cargarEdificios();
+
+        TextArea ta1 = new TextArea(60, 101); //per prova del frame
+        TextArea ta2 = new TextArea(50, 50);
+        TextArea ta3 = new TextArea(50, 50);
+
+        String[][] malla3=generarMapaEscola(altEscola,amplEscola);
+        //generateFrame (malla3, ta2, altEscola, amplEscola);
+        pasarMapaTxt(malla3,"mapaEscola");
+
+        String[][] malla1=generateMapa(altura, ample, listaEdificios);
+        //generateFrame(malla1, ta1,altura,ample);
+        pasarMapaTxt(malla1,"mapaGeneral");
+
+        String[][] malla2=generarMapaCti(altcti,amplcti);
+        //generateFrame(malla2,ta3,altcti,amplcti);
+        pasarMapaTxt(malla2,"mapaCTI");
 
         //String [][] malla = generateMapa(altura,ample,listaEdificios);
         //pasarMapaTxt(malla);
