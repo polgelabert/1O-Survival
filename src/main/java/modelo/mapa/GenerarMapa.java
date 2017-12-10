@@ -1,7 +1,6 @@
 package modelo.mapa;
 
 import modelo.Objeto;
-import modelo.Punto;
 
 import javax.swing.*;
 import java.awt.*;
@@ -14,7 +13,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class GenerarMapa extends LibreriaTxt{
-    private TextArea ta1 = new TextArea(60, 101); //per prova del frame
+    /*private TextArea ta1 = new TextArea(60, 101); //per prova del frame
     private TextArea ta2 = new TextArea(50, 50);
     private TextArea ta3 = new TextArea(50, 50);
     private int posY =15, posX =15;
@@ -28,7 +27,7 @@ public class GenerarMapa extends LibreriaTxt{
     private int altcti=20, amplcti=30;
     private String [][] mapaCti=new String[altcti][amplcti];
 
-    private List<Edifici> listaEdificios;
+    private List<Edifici> listaEdificios;*/
 
 
     public GenerarMapa(){
@@ -335,7 +334,7 @@ public class GenerarMapa extends LibreriaTxt{
         /*button.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
                 //malla[posY][posX] ="-";
-                Punto p=quinDecim(posX, posY);
+                Point p=quinDecim(posX, posY);
                 if(p.getX()==0 || p.getY()==0)
                     malla[posY][posX] ="-";
                 else
@@ -345,7 +344,7 @@ public class GenerarMapa extends LibreriaTxt{
         });
         button2.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
-                Punto p=quinDecim(posX, posY);
+                Point p=quinDecim(posX, posY);
                 if(p.getX()==0 || p.getY()==0)
                     malla[posY][posX] ="-";
                 else
@@ -356,7 +355,7 @@ public class GenerarMapa extends LibreriaTxt{
         });
         button3.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
-                Punto p=quinDecim(posX, posY);
+                Point p=quinDecim(posX, posY);
                 if(p.getX()==0 || p.getY()==0)
                     malla[posY][posX] ="-";
                 else
@@ -367,7 +366,7 @@ public class GenerarMapa extends LibreriaTxt{
         });
         button4.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
-                Punto p=quinDecim(posX, posY);
+                Point p=quinDecim(posX, posY);
                 if(p.getX()==0 || p.getY()==0)
                     malla[posY][posX] ="-";
                 else
@@ -405,7 +404,7 @@ public class GenerarMapa extends LibreriaTxt{
         return mapa;
     }
 
-    public Punto quinDecimMapaGen(int posX, int posY){
+    public Point quinDecimMapaGen(int posX, int posY){
         int m,mm;
 
         if(posX<(3*ample/10) && posX>=(ample/10))
@@ -425,7 +424,7 @@ public class GenerarMapa extends LibreriaTxt{
             mm=7;
         else
             mm=0;
-        return new Punto(m,mm);
+        return new Point(m,mm);
     }
 
 */

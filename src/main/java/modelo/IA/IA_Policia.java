@@ -1,11 +1,13 @@
 package modelo.IA;
 
-import modelo.Punto;
+
+import java.awt.*;
+import java.awt.geom.Point2D;
 
 public class IA_Policia  {
 
     private String queSoy;
-    private Punto posicionMapa;
+    private Point posicionMapa;
     private int idMapa;
 
 

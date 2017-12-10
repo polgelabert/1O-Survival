@@ -3,7 +3,8 @@ package modelo.mapa;
 
 import modelo.IA.IAs;
 import modelo.Objeto;
-import modelo.Punto;
+
+import java.awt.geom.Point2D;
 import java.util.ArrayList;
 import java.util.Arrays;
 import javax.swing.*;
@@ -18,7 +19,7 @@ public class Mapa extends LibreriaTxt{
     // Coses que s'han de canviar
     private TextArea ta1 = new TextArea(50, 50); //per prova del frame
 
-    private Punto posPlayer; // posicio del jugador (aixo sera un get inicial)
+    private Point posPlayer; // posicio del jugador (aixo sera un get inicial)
     private String[][] mapa;
     private java.util.List<Objeto> objectesDinsMapa = new ArrayList<>();
 
@@ -50,7 +51,7 @@ public class Mapa extends LibreriaTxt{
     }
 
     public void afegirIas(){
-        IAs ia1 = new IAs("v",1,4,new Punto(25,19));
+        IAs ia1 = new IAs("v",1,4,new Point(25,19));
         listaIas.add(ia1);
     }
 /*
@@ -74,29 +75,29 @@ public class Mapa extends LibreriaTxt{
 
         banco.setIdObjMapa("b"); container.setIdObjMapa("c"); // li dic quin caracter correspon a l'objecte al mapa
 
-        banco.setTamanoObjCeldaMap(new Punto(2,1)); //dimensio del objecte al mapa
-        banco.setPosicionObjeto(new Punto(31,10)); //posició de la cela superior dreta al mapa
-        container.setTamanoObjCeldaMap(new Punto(2,2));
-        container.setPosicionObjeto(new Punto(31,40));
+        banco.setTamanoObjCeldaMap(new Point(2,1)); //dimensio del objecte al mapa
+        banco.setPosicionObjeto(new Point(31,10)); //posició de la cela superior dreta al mapa
+        container.setTamanoObjCeldaMap(new Point(2,2));
+        container.setPosicionObjeto(new Point(31,40));
 
         objectesDinsMapa.add(banco); objectesDinsMapa.add(container);
 
         Objeto banco2 = new Objeto("banco", "pa' sentarse", 20, 2);
         Objeto container2 = new Objeto("Container", "pa' tirar basura", 40, 4);
         banco2.setIdObjMapa("b"); container2.setIdObjMapa("c"); // li dic quin caracter correspon a l'objecte al mapa
-        banco2.setPosicionObjeto(new Punto(61,20));
-        container2.setPosicionObjeto(new Punto(61,40));
-        banco2.setTamanoObjCeldaMap(new Punto(2,1)); //dimensio del objecte al mapa
-        container2.setTamanoObjCeldaMap(new Punto(2,2));
+        banco2.setPosicionObjeto(new Point(61,20));
+        container2.setPosicionObjeto(new Point(61,40));
+        banco2.setTamanoObjCeldaMap(new Point(2,1)); //dimensio del objecte al mapa
+        container2.setTamanoObjCeldaMap(new Point(2,2));
         objectesDinsMapa.add(banco2); objectesDinsMapa.add(container2);
     }
 
     public static String[][] posarObjectesAlMapa(String[][] mapa, java.util.List<Objeto> objectesDinsMapa){
         for (Objeto o: objectesDinsMapa) {
             for (int amp=0;amp<o.getTamanoObjCeldaMap().getX();amp++) {
-                mapa[o.getPosicionObjeto().getY()][o.getPosicionObjeto().getX() + amp] = o.getIdObjMapa();
+                mapa[(int) o.getPosicionObjeto().getY()][(int) o.getPosicionObjeto().getX() + amp] = o.getIdObjMapa();
                 for (int alt = 0; alt < o.getTamanoObjCeldaMap().getY(); alt++) {
-                    mapa[o.getPosicionObjeto().getY() + alt][o.getPosicionObjeto().getX()+amp] = o.getIdObjMapa();
+                    mapa[(int) o.getPosicionObjeto().getY() + alt][(int) o.getPosicionObjeto().getX()+amp] = o.getIdObjMapa();
                 }
             }
         }
@@ -105,7 +106,7 @@ public class Mapa extends LibreriaTxt{
 
     public void posarIasAlMapa(){
         for (IAs a: listaIas) {
-            mapa[a.getPosicion().getY()][a.getPosicion().getX()] = a.getIdIa();
+            mapa[(int) a.getPosicion().getY()][(int)a.getPosicion().getX()] = a.getIdIa();
         }
     }
 
@@ -161,7 +162,7 @@ public class Mapa extends LibreriaTxt{
 
 
     // A partir de la posicio et retorna el n y nn per saber en quin edifici estas
-    public Punto quinDecim(int posX, int posY){
+    public Point quinDecim(int posX, int posY){
         /*int m,mm;
 
         if(posX<(3*ample/10) && posX>=(ample/10))
@@ -181,7 +182,7 @@ public class Mapa extends LibreriaTxt{
             mm=7;
         else
             mm=0;
-        return new Punto(m,mm);*/
+        return new Point(m,mm);*/
         return null;
     }
 
@@ -227,7 +228,7 @@ public class Mapa extends LibreriaTxt{
         button.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
                 //malla[posY][posX] ="-";
-                Punto p=quinDecim(posX, posY);
+                Point p=quinDecim(posX, posY);
                 if(p.getX()==0 || p.getY()==0)
                     malla[posY][posX] ="-";
                 else
@@ -237,7 +238,7 @@ public class Mapa extends LibreriaTxt{
         });
         button2.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
-                Punto p=quinDecim(posX, posY);
+                Point p=quinDecim(posX, posY);
                 if(p.getX()==0 || p.getY()==0)
                     malla[posY][posX] ="-";
                 else
@@ -248,7 +249,7 @@ public class Mapa extends LibreriaTxt{
         });
         button3.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
-                Punto p=quinDecim(posX, posY);
+                Point p=quinDecim(posX, posY);
                 if(p.getX()==0 || p.getY()==0)
                     malla[posY][posX] ="-";
                 else
@@ -259,7 +260,7 @@ public class Mapa extends LibreriaTxt{
         });
         button4.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
-                Punto p=quinDecim(posX, posY);
+                Point p=quinDecim(posX, posY);
                 if(p.getX()==0 || p.getY()==0)
                     malla[posY][posX] ="-";
                 else

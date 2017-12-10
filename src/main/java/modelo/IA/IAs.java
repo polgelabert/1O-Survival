@@ -1,6 +1,8 @@
 package modelo.IA;
 
-import modelo.Punto;
+
+import java.awt.*;
+import java.awt.geom.Point2D;
 
 public class IAs {
 
@@ -10,10 +12,10 @@ public class IAs {
     private String idIa;
     private int velocidad;
     private int numeroMaxEnMapa;
-    private Punto posicion;
+    private Point posicion;
 
 
-    public IAs(String idIa, int velocidad, int numeroMaxEnMapa, Punto posicion) {
+    public IAs(String idIa, int velocidad, int numeroMaxEnMapa, Point posicion) {
         this.idIa = idIa;
         this.velocidad = velocidad;
         this.numeroMaxEnMapa = numeroMaxEnMapa;
@@ -38,10 +40,10 @@ public class IAs {
     public void setNumeroMaxEnMapa(int numeroMaxEnMapa) {
         this.numeroMaxEnMapa = numeroMaxEnMapa;
     }
-    public Punto getPosicion() {
+    public Point getPosicion() {
         return posicion;
     }
-    public void setPosicion(Punto posicion) {
+    public void setPosicion(Point posicion) {
         this.posicion = posicion;
     }
 

@@ -1,6 +1,9 @@
 
 package modelo;
 
+import java.awt.*;
+import java.awt.geom.Point2D;
+
 public class Objeto {
 
 
@@ -8,8 +11,8 @@ public class Objeto {
     private String descripcionObjeto;
     private int peso;
     //private int tamanoObjCelda;
-    private Punto tamanoObjCeldaMap;
-    private Punto posicionObjeto;
+    private Point tamanoObjCeldaMap;
+    private Point posicionObjeto;
     private String idObjMapa;
 
     public Objeto() {}
@@ -17,11 +20,11 @@ public class Objeto {
 
     /////  GETS Y SETS  /////
 
-    public void setTamanoObjCeldaMap(Punto tamanoObjCeldaMap) {
+    public void setTamanoObjCeldaMap(Point tamanoObjCeldaMap) {
         this.tamanoObjCeldaMap = tamanoObjCeldaMap;
     }
 
-    public Punto getTamanoObjCeldaMap() {
+    public Point getTamanoObjCeldaMap() {
         return tamanoObjCeldaMap;
     }
 
@@ -40,7 +43,7 @@ public class Objeto {
         this.peso = peso;
         //this.tamanoObjCelda = tamanoObjCelda;
 
-        this.posicionObjeto = new Punto();
+        this.posicionObjeto = new Point();
     }
 
     public String getNombreObjeto() {
@@ -70,11 +73,11 @@ public class Objeto {
     }
     */
 
-    public Punto getPosicionObjeto() {
+    public Point getPosicionObjeto() {
         return posicionObjeto;
     }
 
-    public void setPosicionObjeto(Punto posicionObjeto) {
+    public void setPosicionObjeto(Point posicionObjeto) {
         this.posicionObjeto = posicionObjeto;
     }
 

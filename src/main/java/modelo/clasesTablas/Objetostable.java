@@ -1,6 +1,7 @@
 package modelo.clasesTablas;
 
-import modelo.Punto;
+
+import java.awt.*;
 
 public class Objetostable extends DAO {
 
@@ -9,14 +10,14 @@ public class Objetostable extends DAO {
     private int peso;
     private String tamanoObjCeldaMap;
 
-    public Objetostable(String nombre, String descripcion, int peso, Punto tam){
+    public Objetostable(String nombre, String descripcion, int peso, Point tam){
         this.nombre=nombre;
         this.descripcion=descripcion;
         this.peso=peso;
-        this.tamanoObjCeldaMap=puntoToString(tam);
+        this.tamanoObjCeldaMap=tam.toString();//puntoToString(tam);
     }
 
-    public String puntoToString(Punto tam){
+    public String puntoToString(Point tam){
         return tam.getX()+","+tam.getY();
     }
 
