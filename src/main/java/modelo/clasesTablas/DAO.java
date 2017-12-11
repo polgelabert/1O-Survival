@@ -18,7 +18,7 @@ public abstract class DAO {
 
     //Field[]
     Field[] atributos;
-    String user="root",pass="dsa.upc",url="jdbc:mysql://localhost:3306/prueba";
+    String user="root",pass="dsa.upc",url="jdbc:mysql://localhost:3306/juego";
 
     //INSERT INTO Track (id, name, desc) VALUES (?, ?, ?)
     public String getInsert() throws Exception{
@@ -91,23 +91,26 @@ public abstract class DAO {
             //sb.append(bdname);
             sb.append(" WHERE ");
             atributos=getClass().getDeclaredFields();
-            String metodo="";
+            ArrayList<String> metodo=new ArrayList<String>();
             for(Field f:atributos){
                 if(Modifier.isFinal(f.getModifiers())){
-                    sb.append(f.getName()).append("=?");
-                    metodo="get"+f.getName().substring(0,1).toUpperCase()+f.getName().substring(1,f.getName().length());
-                    break;
+                    sb.append(f.getName()).append("=?, ");
+                    metodo.add("get"+f.getName().substring(0,1).toUpperCase()+f.getName().substring(1,f.getName().length()));
                 }
             }
-
+            sb.delete(sb.length()-2,sb.length());
             String query = sb.toString();
             Connection c = DriverManager.getConnection(url,user,pass);
             PreparedStatement statement = c.prepareStatement(query);
             Method[] metodos=getClass().getMethods();
-            for(Method m:metodos){
-                if(m.toString().contains(metodo)){
-                    statement.setObject(1,m.invoke(this,null));
-                    break;
+            for(int i=0;i<metodo.size();i++)
+            {
+                for(Method m:metodos){
+
+                    if (m.toString().contains(metodo.get(i))) {
+                        statement.setObject(i+1, m.invoke(this, null));
+                        break;
+                    }
                 }
             }
 

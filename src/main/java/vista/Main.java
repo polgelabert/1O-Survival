@@ -5,6 +5,7 @@ package vista;
 
 
 import modelo.MinijuegoPoli;
+import modelo.MinijuegoSeguidor;
 import modelo.Objeto;
 import modelo.clasesTablas.Usuario;
 
@@ -19,6 +20,7 @@ public class Main {
 
         //Mapa n=new Mapa();
 
-        MinijuegoPoli a=new MinijuegoPoli();
+        //MinijuegoPoli a=new MinijuegoPoli();
+        MinijuegoSeguidor a=new MinijuegoSeguidor("CiNa");
     }
 }
