@@ -11,7 +11,6 @@ import java.util.ArrayList;
 public class MinijuegoSeguidor {
 
     private String tema;
-    private int id;
     private String pregunta, respuesta;
     private String[] respuestas;
 
@@ -22,41 +21,21 @@ public class MinijuegoSeguidor {
     public MinijuegoSeguidor(String oficio) {
         this.tema = oficio;
         Minijuegoseguidorestable table=new Minijuegoseguidorestable(oficio);
-        ArrayList<Object[]> cosas=table.select();
-        Object[] o=cosas.remove(0);
-            for(int i=0;i<o.length;i++){
-               switch (i) {
-                   default:
-                       tema=o[i].toString();
-                       break;
-                   case 1:
-                       id=(Integer)o[i];
-                       break;
-                   case 2:
-                       pregunta=o[i].toString();
-                       break;
-                   case 3:
-                       respuesta=o[i].toString();
-                       break;
-                   case 4:
-                       this.respuestas=new String[4];
-                       this.respuestas[0]=o[i].toString();
-                       break;
-                   case 5:
-                       this.respuestas[1]=o[i].toString();
-                       break;
-                   case 6:
-                       this.respuestas[2]=o[i].toString();
-                       break;
-                   case 7:
-                       this.respuestas[3]=o[i].toString();
-                       break;
-
-               }
-            }
-
+        table.select();
+        setDatos(table.datos());
         displayPregunta();
         frame();
+    }
+
+    public void setDatos(String[][] datos){
+        tema=datos[0][0];
+        pregunta=datos[0][1];
+        respuesta=datos[0][2];
+        respuestas=new String[4];
+        respuestas[0]=datos[1][0];
+        respuestas[1]=datos[1][1];
+        respuestas[2]=datos[1][2];
+        respuestas[3]=datos[1][3];
     }
 
     public void displayPregunta(){
