@@ -87,25 +87,10 @@ public class OneOctoberManagerImpl implements OneOctoberManager {
         return selectUser(nombreUser, password);
     }
     private Usuario selectUser (String nombreUser, String password ){
-        ArrayList<Object[]> datos;
         Usuario u2 = null;
         try{
             Usuario u = new Usuario(nombreUser,"xx","xx");
-          datos= u.select();
-          Object[] j = datos.get(0);
-          if( j[1].equals(password)){
-
-              u2 = new Usuario(j[0].toString(),j[1].toString(),j[2].toString());
-
-
-
-          }
-          else
-              {
-                  u2 = new Usuario("xx","xx","xx");
-
-
-          }
+          u.select();
 
         }catch (Exception e){
 
@@ -161,15 +146,10 @@ public class OneOctoberManagerImpl implements OneOctoberManager {
     }
     private boolean deleteUser (String nombreUser) throws UsuarioNoExisteException {
         //Usuario user = getUser(nombreUser);
-        ArrayList<Object[]> ds;
         boolean borrado = true;
-        Usuario u2 = null;
         Usuario u = new Usuario(nombreUser,"xx","xx");
         try {
-            ds = u.select();
-            Object[] j = ds.get(0);
-            u2 = new Usuario(j[0].toString(), j[1].toString(), j[2].toString());
-            u2.delete();
+            u.delete();
         }
         catch (Exception e){borrado=false;}
 
@@ -221,9 +201,9 @@ public class OneOctoberManagerImpl implements OneOctoberManager {
 
         Niveltable nivel = new Niveltable(idMapa);
         try {
-            datos = nivel.select();
-            Object[] j = datos.get(0);
-            actNivel = new Niveltable((String) j[0], (Integer) j[1], (ArrayList) j[2], (String) j[3], (String) j[4], (String) j[5]);
+            //datos = nivel.select();
+            //Object[] j = datos.get(0);
+            //actNivel = new Niveltable((String) j[0], (Integer) j[1], (ArrayList) j[2], (String) j[3], (String) j[4], (String) j[5]);
         }
         catch (Exception e){}
         return actNivel;

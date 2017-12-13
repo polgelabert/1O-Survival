@@ -116,7 +116,6 @@ public abstract class DAO {
 
     // SELECT * FROM Track WHERE id=?
     public void select(/*String[] datos,String[] id,Object[] obj*/){
-        Object[] resultado=null;
         try {
             StringBuffer sb = new StringBuffer("SELECT * FROM ");
             sb.append(this.getClass().getSimpleName().substring(0, 1).toLowerCase() + this.getClass().getSimpleName().substring(1, this.getClass().getSimpleName().length())); //Track
@@ -147,15 +146,18 @@ public abstract class DAO {
                 }
             }
             ResultSet rs=statement.executeQuery();
-            for(int i=0;i<atributos.length;i++) {
+            rs.next();
+            for (int i = 0; i < atributos.length; i++) {
                 String nombre = "set" + atributos[i].getName().substring(0, 1).toUpperCase() + atributos[i].getName().substring(1, atributos[i].getName().length());
-                for (Method m : metodos) {
-                    if (m.toString().contains(nombre)) {
+                Method[] metodos2 = this.getClass().getDeclaredMethods();
+                for (Method m : metodos2) {
+                    if (m.getName().equals(nombre)) {
                         m.invoke(this, rs.getObject(atributos[i].getName()));
                         break;
                     }
                 }
             }
+
             statement.close();
             c.close();
 
