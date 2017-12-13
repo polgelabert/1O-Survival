@@ -47,11 +47,12 @@ public class Mapa extends LibreriaTxt{
         // carrego els ias
         afegirIas();
         posarIasAlMapa();
+
         generateFrame(mapa, ta1, mapa.length, mapa[0].length);
     }
 
     public void afegirIas(){
-        IAs ia1 = new IAs("v",1,4,new Point(25,19));
+        IAs ia1 = new IAs("v",1,4,new Point(25,19),new Point(15,15));
         listaIas.add(ia1);
     }
 /*
@@ -107,6 +108,7 @@ public class Mapa extends LibreriaTxt{
     public void posarIasAlMapa(){
         for (IAs a: listaIas) {
             mapa[(int) a.getPosicion().getY()][(int)a.getPosicion().getX()] = a.getIdIa();
+            mapa[(int) a.getPosObjetivo().getY()][(int)a.getPosObjetivo().getX()] = "*";
         }
     }
 
@@ -224,19 +226,27 @@ public class Mapa extends LibreriaTxt{
         contentPane.add(button2, BorderLayout.SOUTH);
         contentPane.add(button3, BorderLayout.EAST);
         contentPane.add(button4, BorderLayout.WEST);
-/*
+
         button.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
                 //malla[posY][posX] ="-";
-                Point p=quinDecim(posX, posY);
+                /*Point p=quinDecim(posX, posY);
                 if(p.getX()==0 || p.getY()==0)
                     malla[posY][posX] ="-";
                 else
                     malla[posY][posX] =quinEdifici(p.getX(),p.getY());
-                posX += 1;dibuixarMapa();
+                posX += 1;dibuixarMapa();*/
+
+                for (IAs a: listaIas) {
+                    mapa[(int) a.getPosicion().getY()][(int)a.getPosicion().getX()] = "-";
+                    a.mover();
+                    mapa[(int) a.getPosicion().getY()][(int)a.getPosicion().getX()] = a.getIdIa();
+                    //mapa[(int) a.getPosObjetivo().getY()][(int)a.getPosObjetivo().getX()] = "*";
+                }
+                dibuixarMapa(mapa,ta,alt,ampl);
             }
         });
-        button2.addActionListener(new ActionListener() {
+       /* button2.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
                 Point p=quinDecim(posX, posY);
                 if(p.getX()==0 || p.getY()==0)
@@ -279,5 +289,6 @@ public class Mapa extends LibreriaTxt{
 
     public static void main(String[] args)  {
         Mapa m = new Mapa("mapaEscola");
+
     }
 }
