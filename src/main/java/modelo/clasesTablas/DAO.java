@@ -79,11 +79,43 @@ public abstract class DAO {
 
     }
 
+    public ArrayList<Object[]> selectAll(/*String[] datos,String[] id,Object[] obj*/){
+        ArrayList<Object[]> resultado=null;
+        try {
+            StringBuffer sb = new StringBuffer("SELECT * FROM ");
+            sb.append(this.getClass().getSimpleName().substring(0, 1).toLowerCase() + this.getClass().getSimpleName().substring(1, this.getClass().getSimpleName().length())); //Track
+            //sb.append(this.getClass().getSimpleName());
+            //sb.append(bdname);
+            String query = sb.toString();
+            Connection c = DriverManager.getConnection(url,user,pass);
+            PreparedStatement statement = c.prepareStatement(query);
+            ResultSet rs=statement.executeQuery();
+            resultado=new ArrayList<Object[]>();
+            //String frase="";
+            while(rs.next()) {
+                Object[] fila=new Object[atributos.length];
+                for(int i=0;i<atributos.length;i++){
+                    fila[i]=rs.getObject(atributos[i].getName());
+                    //frase=frase+rs.getObject(datos[i]).toString()+" ";
+                }
+                //frase=frase+"\n";
+                resultado.add(fila);
+            }
+            //System.out.println(frase);
+            statement.close();
+            c.close();
 
+        }catch (Exception e){
+
+        }
+
+        return resultado;
+
+
+    }
 
     // SELECT * FROM Track WHERE id=?
-    public ArrayList<Object[]> select(/*String[] datos,String[] id,Object[] obj*/){
-        ArrayList<Object[]> resultado=null;
+    public void select(/*String[] datos,String[] id,Object[] obj*/){
         try {
             StringBuffer sb = new StringBuffer("SELECT * FROM ");
             sb.append(this.getClass().getSimpleName().substring(0, 1).toLowerCase() + this.getClass().getSimpleName().substring(1, this.getClass().getSimpleName().length())); //Track
@@ -113,29 +145,25 @@ public abstract class DAO {
                     }
                 }
             }
-
             ResultSet rs=statement.executeQuery();
-            resultado=new ArrayList<Object[]>();
-            //String frase="";
-            while(rs.next()) {
-                Object[] fila=new Object[atributos.length];
-                for(int i=0;i<atributos.length;i++){
-                    fila[i]=rs.getObject(atributos[i].getName());
-                    //frase=frase+rs.getObject(datos[i]).toString()+" ";
+            rs.next();
+            for (int i = 0; i < atributos.length; i++) {
+                String nombre = "set" + atributos[i].getName().substring(0, 1).toUpperCase() + atributos[i].getName().substring(1, atributos[i].getName().length());
+                Method[] metodos2 = this.getClass().getDeclaredMethods();
+                for (Method m : metodos2) {
+                    if (m.getName().equals(nombre)) {
+                        m.invoke(this, rs.getObject(atributos[i].getName()));
+                        break;
+                    }
                 }
-                //frase=frase+"\n";
-                resultado.add(fila);
             }
-            //System.out.println(frase);
+
             statement.close();
             c.close();
 
         }catch (Exception e){
 
         }
-
-        return resultado;
-
 
     }
 

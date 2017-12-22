@@ -83,6 +83,10 @@ public class Minijuegoseguidorestable extends DAO {
         return respuesta4;
     }
 
+    public void setTema(Object tema) {
+        this.tema = (String)tema;
+    }
+
     public void setPregunta(String pregunta) {
         this.pregunta = pregunta;
     }
