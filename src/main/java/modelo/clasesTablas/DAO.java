@@ -19,10 +19,14 @@ public abstract class DAO {
 
     //Field[]
     Field[] atributos;
+<<<<<<< HEAD
     String user="root",pass="dsa.upc";
             //String url="jdbc:mysql://localhost:3306/juego";
     String url="jdbc:mysql://147.83.7.206:3306/juego";
 
+=======
+    String user="root",pass="dsa.upc",url="jdbc:mysql://147.83.7.206:3306/juego";
+>>>>>>> 3558c79ae64873b4e7520d5573983ada7090a0cd
 
     //INSERT INTO Track (id, name, desc) VALUES (?, ?, ?)
     public String getInsert() throws Exception{

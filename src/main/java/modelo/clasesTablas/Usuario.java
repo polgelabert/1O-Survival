@@ -14,6 +14,7 @@ public class Usuario extends  DAO{
         this.nombre="xx";
     }
 
+
     public Usuario(String usuario, String password, String correo) {
         this.nombre = usuario;
         this.password = password;

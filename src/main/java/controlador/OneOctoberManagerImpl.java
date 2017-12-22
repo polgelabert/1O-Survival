@@ -64,7 +64,13 @@ public class OneOctoberManagerImpl implements OneOctoberManager {
                 throw e;
             }
 
+<<<<<<< HEAD
         }catch(Exception e){
+=======
+
+        }catch (Exception e){
+            log.error(e.getMessage());
+>>>>>>> 3558c79ae64873b4e7520d5573983ada7090a0cd
             insertado = false;
            /// e.printStackTrace();
             if (e.getMessage().contains("Duplicate entry")) throw new UsuarioYaExisteException();
