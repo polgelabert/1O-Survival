@@ -10,6 +10,7 @@ import javax.inject.Singleton;
 import javax.ws.rs.*;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
+import java.lang.reflect.InvocationTargetException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.logging.Logger;
@@ -145,7 +146,7 @@ public class PlayerService {
     @Produces(MediaType.TEXT_PLAIN)
     @Consumes(MediaType.APPLICATION_JSON)
     //public Response crearUsuarioInJSON(@QueryParam("user") Usuario user) throws UsuarioYaExisteException {
-    public Response crearUsuarioInJSON(Usuario user) throws UsuarioYaExisteException {
+    public Response crearUsuarioInJSON(Usuario user) throws UsuarioYaExisteException, AccesoDenegado, InvocationTargetException, IllegalAccessException {
         try {
 
             log.info("Will see");

@@ -1,6 +1,7 @@
 package modelo.clasesTablas;
 
 //import com.mysql.jdbc.Statement;
+import controlador.excepciones.UsuarioYaExisteException;
 import jdk.nashorn.internal.runtime.ECMAException;
 
 import java.lang.reflect.Field;
@@ -18,7 +19,10 @@ public abstract class DAO {
 
     //Field[]
     Field[] atributos;
-    String user="root",pass="dsa.upc",url="jdbc:mysql://localhost:3306/juego";
+    String user="root",pass="dsa.upc";
+            //String url="jdbc:mysql://localhost:3306/juego";
+    String url="jdbc:mysql://147.83.7.206:3306/juego";
+
 
     //INSERT INTO Track (id, name, desc) VALUES (?, ?, ?)
     public String getInsert() throws Exception{
@@ -40,7 +44,8 @@ public abstract class DAO {
         return sb.toString();
     }
 
-    public void insert() throws InvocationTargetException, IllegalAccessException {
+    public Exception insert() throws InvocationTargetException, IllegalAccessException, UsuarioYaExisteException {
+        Exception hecho=null;
         try{
             String query = getInsert();
             Connection c = DriverManager.getConnection(url,user,pass);
@@ -74,8 +79,11 @@ public abstract class DAO {
             statement.close();
             c.close();
         }catch (Exception e){
-            int a=0;
+
+            hecho=e;
+
         }
+        return hecho;
 
     }
 

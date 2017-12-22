@@ -6,13 +6,14 @@ import modelo.clasesTablas.Niveltable;
 import modelo.clasesTablas.Usuario;
 import modelo.mapa.Mapa;
 
+import java.lang.reflect.InvocationTargetException;
 import java.util.List;
 
 public interface OneOctoberManager {
 
 
 
-    boolean crearUsuario(Usuario user) throws UsuarioYaExisteException;
+    boolean crearUsuario(Usuario user) throws UsuarioYaExisteException, InvocationTargetException, IllegalAccessException, AccesoDenegado;
 
     Usuario consultarUsuario(String nombreUser, String password) throws UsuarioNoExisteException;
 

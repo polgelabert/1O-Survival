@@ -46,8 +46,8 @@ public class OneOctoberManagerImpl implements OneOctoberManager {
      * @return true si se crea el usuario correctamente.
      * @throws UsuarioYaExisteException
      */
-    public boolean crearUsuario(Usuario user) throws UsuarioYaExisteException {
-        createUser(user);
+    public boolean crearUsuario(Usuario user) throws UsuarioYaExisteException, AccesoDenegado {
+        //createUser(user);
 
         /*
         if(isUser(user.getNombre())) throw new UsuarioYaExisteException();          // lanza excepcion si isUser== true (lo contiene)
@@ -56,16 +56,21 @@ public class OneOctoberManagerImpl implements OneOctoberManager {
         return true;*/
         return createUser(user);// return true ya que operacion ok
     }
-    private boolean createUser (Usuario user){
+    private boolean createUser (Usuario user) throws UsuarioYaExisteException, AccesoDenegado {
         boolean insertado = true;
-        try{
-            user.insert();
+        try {
+            Exception e = user.insert();
+            if (e != null) {
+                throw e;
+            }
 
-
-        }catch (Exception e){
-            log.error(e.getMessage());
+        }catch(Exception e){
             insertado = false;
+           /// e.printStackTrace();
+            if (e.getMessage().contains("Duplicate entry")) throw new UsuarioYaExisteException();
+            if (e.getMessage().contains("Access denied")) throw new AccesoDenegado();
         }
+
 
        return insertado;
     }

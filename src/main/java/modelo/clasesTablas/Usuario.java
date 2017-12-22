@@ -45,4 +45,16 @@ public class Usuario extends  DAO{
     public void setIdMapa(String idMapa) {
         this.idMapa = idMapa;
     }
+
+    public void setCorreo(String correo) {
+        this.correo = correo;
+    }
+
+    public int getPuntFinal() {
+        return puntFinal;
+    }
+
+    public void setPuntFinal(int puntFinal) {
+        this.puntFinal = puntFinal;
+    }
 }
