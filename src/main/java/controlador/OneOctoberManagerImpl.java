@@ -62,6 +62,7 @@ public class OneOctoberManagerImpl implements OneOctoberManager {
             user.insert();
 
 
+
         }catch (Exception e){
             log.error(e.getMessage());
             insertado = false;

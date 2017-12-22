@@ -5,6 +5,7 @@ import controlador.excepciones.*;
 import modelo.*;
 import modelo.clasesTablas.Usuario;
 import modelo.mapa.Mapa;
+import okhttp3.ResponseBody;
 
 import javax.inject.Singleton;
 import javax.ws.rs.*;
@@ -60,36 +61,36 @@ public class PlayerService {
        //oneOct.reset();
     }
 
-    /**
-     *
-     * @param nombreUser
-     * @return json Usuario
-     * @throws UsuarioNoExisteException
-     */
-    @GET
-    @Path("/player/{nombreUser}/all")
-    @Produces(MediaType.APPLICATION_JSON)
-    public Usuario consultarUsuarioInJSON(@PathParam("nombreUser") String nombreUser) throws UsuarioNoExisteException {
-
+    @POST
+    @Path("/newUser")
+    @Produces(MediaType.TEXT_PLAIN)
+    @Consumes(MediaType.APPLICATION_JSON)
+    //public Response crearUsuarioInJSON(@QueryParam("user") Usuario user) throws UsuarioYaExisteException {
+    public int crearUsuarioInJSON(Usuario user) throws UsuarioYaExisteException {
         try {
-            Usuario u = new Usuario(nombreUser,"xx","xx");
-            //Usuario user = oneOct.consultarUsuario(nombreUser);
-            return u;
-            //return Response.status(200).build();
+
+            log.info("Will see");
+            boolean res = oneOct.crearUsuario(user);
+            if(res) return 1;
+            else return 0;
+            //return Response.status(201).entity(1).build();
+            //return consultarListaDeUsuarioInJSON();
+
         } catch (Exception e) {
+            //e.printStackTrace();
             throw e;
         }
-
     }
+
 
     @GET
     @Path("/player/{nombreUser}")
     @Produces(MediaType.APPLICATION_JSON)
-    public PlayerTO consultarUsuarioTOInJSON(@PathParam("nombreUser") String nombreUser) throws UsuarioNoExisteException {
+    public Usuario consultarUsuarioTOInJSON(@PathParam("nombreUser") String nombreUser) throws UsuarioNoExisteException {
 
         try {
 
-            return new PlayerTO(oneOct.consultarUsuario(nombreUser,"j"));
+            return oneOct.consultarUsuario(nombreUser,"j");
         } catch (Exception e) {
             throw e;
         }
@@ -111,20 +112,6 @@ public class PlayerService {
     }
 
 
-    /*@GET
-    @Path("/player/{nombreUser}/{nombreObjeto}")
-    @Produces({MediaType.APPLICATION_JSON,MediaType.TEXT_PLAIN})
-    public Objeto consultarObjetoDeUsuarioInJSON(@PathParam("nombreUser") String nombreUser, @PathParam("nombreObjeto") String nombreObjeto) throws UsuarioNoExisteException, ObjetoNoEncontradoException, UsuarioSinObjetosException {
-
-        try {
-            objeto = oneOct.consultarObjetoDeUsuario(nombreUser, nombreObjeto);
-            return objeto;
-
-        } catch (Exception e) {
-            throw e;
-        }
-    }*/
-
     @GET
     @Path("/player/{nombreUser}/inventario")
     @Produces(MediaType.APPLICATION_JSON)
@@ -139,26 +126,6 @@ public class PlayerService {
 
     }
 
-
-    @POST
-    @Path("/newUser")
-    @Produces(MediaType.TEXT_PLAIN)
-    @Consumes(MediaType.APPLICATION_JSON)
-    //public Response crearUsuarioInJSON(@QueryParam("user") Usuario user) throws UsuarioYaExisteException {
-    public Response crearUsuarioInJSON(Usuario user) throws UsuarioYaExisteException {
-        try {
-
-            log.info("Will see");
-            boolean res = oneOct.crearUsuario(user);
-
-            return Response.status(201).entity(1).build();
-            //return consultarListaDeUsuarioInJSON();
-
-        } catch (Exception e) {
-            //e.printStackTrace();
-            throw e;
-        }
-    }
 
     @DELETE
     @Path("/removePlayer/{nombreUser}")
@@ -176,55 +143,9 @@ public class PlayerService {
         }
     }
 
-    @GET        // Falta revisar.
-    @Path("/player/{nombreUser}/{idMalla}")
-    @Produces(MediaType.APPLICATION_JSON)
-    public Mapa consultarMapaInJSON(@PathParam("idMalla") int idMalla) throws UsuarioNoExisteException, UsuarioSinObjetosException, MapaNoEncontradoException {
-
-        try {
-            return  null;
-            //return oneOct.consultarMapa(idMalla);
-
-        } catch (Exception e) {
-            throw e;
-        }
-
-    }
 
 
 
-    /*@POST
-    @Path("/Usuario/{nombreUser}/newObjeto")
-    @Produces(MediaType.TEXT_PLAIN)
-    //@Produces(MediaType.APPLICATION_JSON)
-    //public Response crearUsuarioInJSON(@QueryParam("user") Usuario user) throws UsuarioYaExisteException {
-    public Response anadirObjetoAUsuarioInJSON(@PathParam("nombreUser") String nombreUser) throws UsuarioYaExisteException, UsuarioNoExisteException, ObjetoNoEncontradoException, UsuarioSinObjetosException {
-        try {
-
-            objeto = new Objeto("silla", "silla para avisar de dónde vienen los enemigos", 8, 2);
-            oneOct.anadirObjetoAUsuario(nombreUser, objeto);
-
-            return Response.status(201).entity(1).build();
-
-        } catch (Exception e) {
-            //e.printStackTrace();
-            throw e;
-        }
-    }*/
-
-    /*@POST
-    @Path("/Usuario/{nombreUser}/removeObjeto/{nombreObjeto}")
-    @Produces(MediaType.TEXT_PLAIN)
-    public Response eliminarObjetoDeUsuarioInJSON(@PathParam("nombreUser") String nombreUser, @PathParam("nombreObjeto") String nombreObjeto) throws UsuarioNoExisteException, ListaUsuariosVaciaException, UsuarioSinObjetosException, ObjetoNoEncontradoException {
-
-        try {
-            boolean res = oneOct.eliminarObjetoDeUsuario(nombreUser,nombreObjeto);
-            return Response.status(201).entity(1).build();
-
-        } catch (Exception e) {
-            throw e;
-        }
-    }*/
 
 
 }
