@@ -67,7 +67,7 @@ public class PlayerService {
     @Produces(MediaType.TEXT_PLAIN)
     @Consumes(MediaType.APPLICATION_JSON)
     //public Response crearUsuarioInJSON(@QueryParam("user") Usuario user) throws UsuarioYaExisteException {
-    public int crearUsuarioInJSON(Usuario user) throws UsuarioYaExisteException {
+    public int crearUsuarioInJSON(Usuario user) throws UsuarioYaExisteException, IllegalAccessException, AccesoDenegado, InvocationTargetException {
         try {
 
             log.info("Will see");
@@ -127,30 +127,6 @@ public class PlayerService {
 
     }
 
-
-<<<<<<< HEAD
-    @POST
-    @Path("/newUser")
-    @Produces(MediaType.TEXT_PLAIN)
-    @Consumes(MediaType.APPLICATION_JSON)
-    //public Response crearUsuarioInJSON(@QueryParam("user") Usuario user) throws UsuarioYaExisteException {
-    public Response crearUsuarioInJSON(Usuario user) throws UsuarioYaExisteException, AccesoDenegado, InvocationTargetException, IllegalAccessException {
-        try {
-
-            log.info("Will see");
-            boolean res = oneOct.crearUsuario(user);
-
-            return Response.status(201).entity(1).build();
-            //return consultarListaDeUsuarioInJSON();
-
-        } catch (Exception e) {
-            //e.printStackTrace();
-            throw e;
-        }
-    }
-
-=======
->>>>>>> 3558c79ae64873b4e7520d5573983ada7090a0cd
     @DELETE
     @Path("/removePlayer/{nombreUser}")
     @Produces(MediaType.TEXT_PLAIN)
