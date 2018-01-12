@@ -35,17 +35,11 @@ public class OneOctoberManagerImpl implements OneOctoberManager {
         return  instance;
     }
 
-////////     COMENTARIOS       ///////
 
 
 
 
-    /**
-     * Comprueba nombre de usuario (isUser) y lo añade a mapPlayer (addUser).
-     * @param user
-     * @return true si se crea el usuario correctamente.
-     * @throws UsuarioYaExisteException
-     */
+
     public boolean crearUsuario(Usuario user) throws UsuarioYaExisteException, AccesoDenegado {
         //createUser(user);
 
@@ -57,6 +51,7 @@ public class OneOctoberManagerImpl implements OneOctoberManager {
         return createUser(user);// return true ya que operacion ok
     }
     private boolean createUser (Usuario user) throws UsuarioYaExisteException, AccesoDenegado {
+
         boolean insertado = true;
         try {
             Exception e = user.insert();
@@ -77,39 +72,26 @@ public class OneOctoberManagerImpl implements OneOctoberManager {
        return insertado;
     }
 
-    /**
-     * @param nombreUser
-     * @return Usuario
-     * @throws UsuarioNoExisteException
-     */
-    public Usuario consultarUsuario (String nombreUser, String password) throws UsuarioNoExisteException {
 
-
-
-        /*log.info("Inicio consultarUsuario: " + nombreUser);
-        Usuario user = getUser(nombreUser);
-        //getUser ya lanza la excepcion. Ademas, getUser retorna el user este o no (despues del ContainsKey), devolvera null?
-
-        log.info("Fin consultarUsuario: " + nombreUser + " con éxito.");*/
-        return selectUser(nombreUser, password);
+    public Usuario consultarUsuario (String nombreUser) throws UsuarioNoExisteException {
+        return selectUser(nombreUser);
     }
-    private Usuario selectUser (String nombreUser, String password ){
-        Usuario u2 = null;
+
+    //Tripas consultarUsuario
+    private Usuario selectUser (String nombreUser) throws UsuarioNoExisteException {
+        Usuario u = null;
+        u = new Usuario(nombreUser,"xxx","xxx");
         try{
-            Usuario u = new Usuario(nombreUser,"xx","xx");
-          u.select();
-
+            u.select();
         }catch (Exception e){
-
             log.error(e.getMessage());
         }
-        return u2;
+
+        if(u.getPassword() == "xxx" & u.getCorreo()== "xxx") throw new UsuarioNoExisteException();
+        return u;
     }
 
-    /**
-     * @return Lista de Players.
-     * @throws ListaUsuariosVaciaException
-     */
+
     public List<Usuario> consultarListaUsuarios() throws ListaUsuariosVaciaException {
 
         List<Usuario> listaUsuarios = new ArrayList<>();
@@ -139,12 +121,6 @@ public class OneOctoberManagerImpl implements OneOctoberManager {
     }
 
 
-    /**
-     * Elinima usuario: comprueba que user existe (isUserVoid) y lo elimina.
-     * @param nombreUser
-     * @return true si eliminado
-     * @throws UsuarioNoExisteException
-     */
     public boolean eliminarUsuario (String nombreUser) throws UsuarioNoExisteException {
         //Usuario user = getUser(nombreUser);
         //(nombreUser);
@@ -162,12 +138,7 @@ public class OneOctoberManagerImpl implements OneOctoberManager {
 
         return borrado;
     }
-    /**
-     * Elimina usuario: comprueba que user existe (isUserVoid) y lo elimina.
-     * @param nombreUser
-     * @return true si eliminado
-     * @throws UsuarioNoExisteException
-     */
+
     public boolean modificarUsuario (Usuario nombreUser) throws UsuarioNoExisteException {
 
 
@@ -192,12 +163,6 @@ public class OneOctoberManagerImpl implements OneOctoberManager {
     }
 
 
-    /**
-     * @param idMapa
-     * @return Nivel
-     * @throws
-     * @throws
-    */
     public Niveltable seleccionarNivel (String idMapa)  {
 
        return selectLevel(idMapa);
@@ -255,11 +220,7 @@ public class OneOctoberManagerImpl implements OneOctoberManager {
         return this.mapPlayer.get(nombreUser);
     }
 
-    /**
-     * Compara únicamente los nombres de Usuario de la lista.
-     * @param listaUsuario
-     * @return true si listas son iguales.
-     */
+
     public boolean listUserIsEqual(List<Usuario> listaUsuario){
         int cont = 0;
         for (Usuario p : listaUsuario){
@@ -294,6 +255,8 @@ public class OneOctoberManagerImpl implements OneOctoberManager {
     public void reset() {
         this.instance = null;
     }
+
+
 
 
 

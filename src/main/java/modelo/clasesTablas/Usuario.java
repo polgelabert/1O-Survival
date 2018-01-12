@@ -10,18 +10,26 @@ public class Usuario extends  DAO{
     private int puntFinal;
     private String idMapa;
 
-   public Usuario(){
-        this.nombre="xx";
+    // He eliminat "this.nombre = "xx"" de dins del constructor i inicialitzat la variable nombre com a null inicialment (amunt)
+   /*public Usuario(){
+       this.nombre = "xx";
+    }*/
+
+
+    public Usuario (String usuario){
+        nombre = usuario;
     }
 
-
-    public Usuario(String usuario, String password, String correo) {
-        this.nombre = usuario;
+    public Usuario(String password, String correo, String usuario) {
         this.password = password;
         this.correo = correo;
         this.puntFinal= 0;
+        nombre = usuario;
 
     }
+
+
+
 
     public String getNombre() {
         return nombre;

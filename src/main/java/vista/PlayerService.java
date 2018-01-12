@@ -35,7 +35,8 @@ public class PlayerService {
 
     public PlayerService() throws UsuarioYaExisteException {
 
-        try {
+        /*try {
+
           user = new Usuario("pol", "pass1234","pol123@gmail.com");
             Inventario inventario = new Inventario(100);
             //user.getMiNivel().setInventarioUser(inventario);
@@ -55,11 +56,10 @@ public class PlayerService {
             //log.fatal(e.getMessage() + e.getCause());
             //e.printStackTrace();
             throw e;
-        }
-
-
-
+        }*/
        //oneOct.reset();
+
+
     }
 
     @POST
@@ -68,15 +68,15 @@ public class PlayerService {
     @Consumes(MediaType.APPLICATION_JSON)
     //public Response crearUsuarioInJSON(@QueryParam("user") Usuario user) throws UsuarioYaExisteException {
     public int crearUsuarioInJSON(Usuario user) throws UsuarioYaExisteException, IllegalAccessException, AccesoDenegado, InvocationTargetException {
+
         try {
 
-            log.info("Will see");
             boolean res = oneOct.crearUsuario(user);
             if(res) return 1;
             else return 0;
+
             //return Response.status(201).entity(1).build();
             //return consultarListaDeUsuarioInJSON();
-
         } catch (Exception e) {
             //e.printStackTrace();
             throw e;
@@ -90,8 +90,8 @@ public class PlayerService {
     public Usuario consultarUsuarioTOInJSON(@PathParam("nombreUser") String nombreUser) throws UsuarioNoExisteException {
 
         try {
+            return oneOct.consultarUsuario(nombreUser);
 
-            return oneOct.consultarUsuario(nombreUser,"j");
         } catch (Exception e) {
             throw e;
         }

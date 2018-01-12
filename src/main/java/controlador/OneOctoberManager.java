@@ -15,7 +15,7 @@ public interface OneOctoberManager {
 
     boolean crearUsuario(Usuario user) throws UsuarioYaExisteException, InvocationTargetException, IllegalAccessException, AccesoDenegado;
 
-    Usuario consultarUsuario(String nombreUser, String password) throws UsuarioNoExisteException;
+    Usuario consultarUsuario(String nombreUser) throws UsuarioNoExisteException;
 
     List<Usuario> consultarListaUsuarios() throws ListaUsuariosVaciaException;
 
