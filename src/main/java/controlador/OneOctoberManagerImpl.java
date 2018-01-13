@@ -108,8 +108,11 @@ public class OneOctoberManagerImpl implements OneOctoberManager {
         List<Usuario> listaUsuarios = new ArrayList<>();
         try{
 
+
         }
-        catch(Exception e){}
+        catch (Exception e) {
+            log.error(e.getMessage());
+        }
         return listaUsuarios;
 
         /*if (!listaUsuarios.addAll(mapPlayer.values())) throw new ListaUsuariosVaciaException();
