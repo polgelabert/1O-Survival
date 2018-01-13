@@ -2,20 +2,20 @@ package modelo.clasesTablas;
 
 public class Ranking extends DAO{
 
-    private final String idmapa;
+    private final String idMapa;
     private String usuario;
     private int votos,seguidores;
     private double puntuaciontot;
 
     public Ranking(String idmapa) {
-        this.idmapa = idmapa;
+        this.idMapa = idmapa;
     }
 
     //GETTERS
 
 
     public String getIdmapa() {
-        return idmapa;
+        return idMapa;
     }
 
     public String getUsuario() {
