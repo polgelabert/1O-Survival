@@ -1,19 +1,5 @@
-import controlador.OneOctoberManagerImpl;
 import controlador.excepciones.*;
-import modelo.Inventario;
-import modelo.Objeto;
-import modelo.clasesTablas.Usuario;
 
-import java.util.ArrayList;
-import java.util.List;
-
-import modelo.PlayerTO;
-import org.apache.log4j.Logger;
-import org.junit.After;
-import org.junit.Assert;
-import org.junit.Before;
-import org.junit.Test;
-import org.junit.jupiter.api.Assertions;
 import static org.junit.Assert.assertTrue;
 
 
@@ -23,7 +9,7 @@ public class TestModelo {
 
     private OneOctoberManagerImpl oneOct;
 
-    Usuario user, user2;
+    Usuario2 user, user2;
     String nombreUser, nombreObjeto;
     Objeto objeto;
 
@@ -34,7 +20,7 @@ public class TestModelo {
         this.oneOct = OneOctoberManagerImpl.getInstance();
 
         try {
-            user = new Usuario("pol", "contra1", "pol1@gmail.com" );
+            user = new Usuario2("pol", "contra1", "pol1@gmail.com" );
             objeto = new Objeto("microfono", "microfono para avisar de dónde vienen los enemigos", 2, 1);
 
             //Se inserta el objeto a mapObjeto
@@ -52,7 +38,7 @@ public class TestModelo {
 
             oneOct.crearUsuario(user);
 
-            user = new Usuario("marc", "contra2", "marc1@gmail.com" );
+            user = new Usuario2("marc", "contra2", "marc1@gmail.com" );
             oneOct.crearUsuario(user);
 
             }
@@ -77,11 +63,11 @@ public class TestModelo {
     @Test
     public void crearUsuarioTest() throws UsuarioYaExisteException, ListaUsuariosVaciaException {
         // Intento crar un usuario con el mismo nombre de otro usuario -> Excepcion UsuarioYaExiste:
-        user = new Usuario("pol", "contra1", "pol1@gmail.com");
+        user = new Usuario2("pol", "contra1", "pol1@gmail.com");
         Assertions.assertThrows(UsuarioYaExisteException.class, () -> { oneOct.crearUsuario(user); });
 
         // Se crea correctamente el usuario.
-        user2 = new Usuario("juan", "juanpass", "juan@gmail.com");
+        user2 = new Usuario2("juan", "juanpass", "juan@gmail.com");
         assertTrue(oneOct.crearUsuario(user2));
 
 
@@ -99,7 +85,7 @@ public class TestModelo {
 
         // Consulta correcta del usuario.
         nombreUser = "pol";
-        Usuario user = oneOct.consultarUsuario(nombreUser);
+        Usuario2 user = oneOct.consultarUsuario(nombreUser);
 
 
     }
@@ -110,7 +96,7 @@ public class TestModelo {
      *//*
     @Test
     public void consultarListaUsuariosTest() throws ListaUsuariosVaciaException, UsuarioNoExisteException {
-        List<Usuario> listaUsuarios = new ArrayList<>();
+        List<Usuario2> listaUsuarios = new ArrayList<>();
 
         listaUsuarios = oneOct.consultarListaUsuarios();
         Assert.assertTrue(oneOct.listUserIsEqual(listaUsuarios));        // Comprueba que la lista que saca por pantalla es correcta.
@@ -126,7 +112,7 @@ public class TestModelo {
 
         user = oneOct.consultarUsuario("pol");
         int nuevaVida = 250;
-        user2 = new Usuario("pol", nuevaVida,50, 1);
+        user2 = new Usuario2("pol", nuevaVida,50, 1);
         objeto = new Objeto("casco", "casco que minimiza los golpes de los enemigos", 1, 1);
         user2.getInventarioUser().getListaObjetos().add(objeto);
         user.modificarUsuario(user2);
@@ -183,7 +169,7 @@ public class TestModelo {
     @Test
     public void consultarObjetoDeUsuarioTest() throws UsuarioNoExisteException, UsuarioSinObjetosException, ObjetoNoEncontradoException {
 
-        // Usuario sin objetos
+        // Usuario2 sin objetos
         //user = oneOct.consultarUsuario("marc");
         //Assertions.assertThrows(UsuarioSinObjetosException.class, () -> { user.getInventarioUser().sacarObjeto();});
 
