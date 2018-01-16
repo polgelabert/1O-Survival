@@ -1,7 +1,6 @@
 package controlador;
 
-import modelo.*;
-import modelo.clasesTablas.Usuario;
+import modelo.clasesTablas.Usuario2;
 
 import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlRootElement;
@@ -10,15 +9,15 @@ import javax.xml.bind.annotation.XmlRootElement;
 public class WebFunctions {
 
 
-    private Usuario user;
+    private Usuario2 user;
 
     @XmlElement
 
-    public Usuario getUser() {
+    public Usuario2 getUser() {
         return user;
     }
 
-    public void setUser(Usuario user) {
+    public void setUser(Usuario2 user) {
         this.user = user;
     }
 }

@@ -1,34 +1,40 @@
 package modelo.clasesTablas;
 
-public class Usuario extends  DAO{
+public class Usuario2 extends  DAO{
 
-    private final String nombre;
+    private String nombre;
     private String password;
     private String correo;
     private int puntFinal;
     private String idMapa;
 
-    // He eliminat "this.nombre = "xx"" de dins del constructor i inicialitzat la variable nombre com a null inicialment (amunt)
-   /*public Usuario2(){
-       this.nombre = "xx";
-    }*/
 
 
-    //public Usuario2(){}
 
-    public Usuario(String nombre){
-        this.nombre = nombre;
-    }
+    public Usuario2(){ }
 
-
-    public Usuario(String nombre, String password, String correo) {
+    public Usuario2(String nombre, String password, String correo) {
         this.nombre = nombre;
         this.password = password;
         this.correo = correo;
         this.puntFinal= 0;
-
     }
 
+    //Constructor que copia toda la informacion del Usuario al nuevo Usuario2.
+    public Usuario2(String nombre, String password, String correo, int puntFinal, String idMapa) {
+        this.nombre = nombre;
+        this.password = password;
+        this.correo = correo;
+        this.puntFinal = 0;
+        this.puntFinal = puntFinal;
+        this.idMapa = idMapa;
+    }
+
+
+
+    public void setNombre(String nombre) {
+        this.nombre = nombre;
+    }
 
     public String getNombre() {
         return nombre;
@@ -67,14 +73,16 @@ public class Usuario extends  DAO{
     }
 
 
+
     ///// METODO COPIAR USUARIO //////
 
-    public void copyUser(Usuario2 user){
+    public void copyUser(Usuario userDAO){
 
-        this.setPassword(user.getPassword());
-        this.setCorreo(user.getCorreo());
-        this.setPuntFinal(user.getPuntFinal());
-        this.setIdMapa(user.getIdMapa());
+            this.setNombre(userDAO.getNombre());
+            this.setPassword(userDAO.getPassword());
+            this.setCorreo(userDAO.getCorreo());
+            this.setPuntFinal(userDAO.getPuntFinal());
+            this.setIdMapa(userDAO.getIdMapa());
     }
 
 

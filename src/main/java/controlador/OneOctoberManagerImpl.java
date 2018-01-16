@@ -3,11 +3,11 @@ package controlador;
 import controlador.excepciones.*;
 import modelo.*;
 import modelo.clasesTablas.Niveltable;
+import modelo.clasesTablas.Usuario2;
 import modelo.clasesTablas.Usuario;
 import modelo.mapa.Mapa;
 import org.apache.log4j.Logger;
 
-import java.lang.reflect.InvocationTargetException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -19,7 +19,7 @@ public class OneOctoberManagerImpl implements OneOctoberManager {
     final static Logger log = Logger.getLogger(OneOctoberManagerImpl.class.getName());
 
     private static OneOctoberManagerImpl instance;
-    private Map <String, Usuario> mapPlayer;
+    private Map <String, Usuario2> mapPlayer;
     private Map <String, Objeto> mapObjeto;
     private Map <Integer, Mapa> mapMapas;
 
@@ -40,21 +40,31 @@ public class OneOctoberManagerImpl implements OneOctoberManager {
 
 
 
-    public boolean crearUsuario(Usuario user) throws UsuarioYaExisteException, AccesoDenegado {
-        //createUser(user);
+    public boolean crearUsuario(Usuario2 user) throws UsuarioYaExisteException, AccesoDenegado {
+        return createUser(user);// return true ya que operacion ok
 
+
+
+        // createUser(user);
         /*
         if(isUser(user.getNombre())) throw new UsuarioYaExisteException();          // lanza excepcion si isUser== true (lo contiene)
         addUser(user);
-
         return true;*/
-        return createUser(user);// return true ya que operacion ok
     }
-    private boolean createUser (Usuario user) throws UsuarioYaExisteException, AccesoDenegado {
 
-        boolean insertado = true;
+    // Tripas CrearUsuario
+    private boolean createUser (Usuario2 user) throws UsuarioYaExisteException, AccesoDenegado {
+
+        boolean insertado = false;
         try {
-            Exception e = user.insert();
+
+            //Se crea el userDAO que interactuará con la DB
+            Usuario userDAO = new Usuario(user.getNombre());
+            userDAO.copyUser(user);     // funcion que copia todos los atributos de user a userDAO.
+
+            Exception e = userDAO.insert();
+            insertado = true;
+
             if (e != null) {
                 throw e;
             }
@@ -73,28 +83,37 @@ public class OneOctoberManagerImpl implements OneOctoberManager {
     }
 
 
-    public Usuario consultarUsuario (String nombreUser) throws UsuarioNoExisteException {
+    public Usuario2 consultarUsuario (String nombreUser) throws UsuarioNoExisteException {
         return selectUser(nombreUser);
     }
 
     //Tripas consultarUsuario
-    private Usuario selectUser (String nombreUser) throws UsuarioNoExisteException {
-        Usuario u = null;
-        u = new Usuario(nombreUser,"xxx","xxx");
+    private Usuario2 selectUser (String nombreUser) throws UsuarioNoExisteException {
+        //Usuario2 u = null;
+
+        //Se crea el usuario que interactua con el DAO
+        Usuario userDAO = new Usuario(nombreUser,"xxx","xxx");
+
         try{
-            u.select();
+            userDAO.select();
         }catch (Exception e){
             log.error(e.getMessage());
         }
 
-        if(u.getPassword() == "xxx" & u.getCorreo()== "xxx") throw new UsuarioNoExisteException();
-        return u;
+
+        if(userDAO.getNombre() == "xxx" & userDAO.getCorreo()== "xxx") throw new UsuarioNoExisteException();
+
+        // Se crea el Usuario2 (copiado del userDAO) que se retorna
+        Usuario2 user = new Usuario2();
+        user.copyUser(userDAO);
+
+        return user;
     }
 
 
-    public List<Usuario> consultarListaUsuarios() throws ListaUsuariosVaciaException {
+    public List<Usuario2> consultarListaUsuarios() throws ListaUsuariosVaciaException {
 
-        List<Usuario> listaUsuarios = new ArrayList<>();
+        List<Usuario2> listaUsuarios = new ArrayList<>();
         /*if (!listaUsuarios.addAll(mapPlayer.values())) throw new ListaUsuariosVaciaException();
 
         return listaUsuarios;
@@ -103,9 +122,9 @@ public class OneOctoberManagerImpl implements OneOctoberManager {
         return selectListUser();
 
     }
-    private List<Usuario> selectListUser() {
+    private List<Usuario2> selectListUser() {
 
-        List<Usuario> listaUsuarios = new ArrayList<>();
+        List<Usuario2> listaUsuarios = new ArrayList<>();
         try{
 
 
@@ -125,15 +144,15 @@ public class OneOctoberManagerImpl implements OneOctoberManager {
 
 
     public boolean eliminarUsuario (String nombreUser) throws UsuarioNoExisteException {
-        //Usuario user = getUser(nombreUser);
+        //Usuario2 user = getUser(nombreUser);
         //(nombreUser);
         //removeUser(nombreUser);
         return deleteUser(nombreUser);
     }
     private boolean deleteUser (String nombreUser) throws UsuarioNoExisteException {
-        //Usuario user = getUser(nombreUser);
+        //Usuario2 user = getUser(nombreUser);
         boolean borrado = true;
-        Usuario u = new Usuario(nombreUser,"xx","xx");
+        Usuario2 u = new Usuario2(nombreUser,"xx","xx");
         try {
             u.delete();
         }
@@ -142,15 +161,15 @@ public class OneOctoberManagerImpl implements OneOctoberManager {
         return borrado;
     }
 
-    public boolean modificarUsuario (Usuario nombreUser) throws UsuarioNoExisteException {
+    public boolean modificarUsuario (Usuario2 nombreUser) throws UsuarioNoExisteException {
 
 
-        //Usuario user = getUser(nombreUser);
+        //Usuario2 user = getUser(nombreUser);
         //(nombreUser);
         //removeUser(nombreUser);
         return updateUser(nombreUser);
     }
-    private boolean updateUser (Usuario user){
+    private boolean updateUser (Usuario2 user){
         boolean actualizado =true;
         try{
             user.update();
@@ -185,7 +204,7 @@ public class OneOctoberManagerImpl implements OneOctoberManager {
     }
 
     /*
-    public PlayerTO playerTO (Usuario user){
+    public PlayerTO playerTO (Usuario2 user){
 
         return new PlayerTO(user);
 
@@ -196,9 +215,9 @@ public class OneOctoberManagerImpl implements OneOctoberManager {
     }*/
 
 
-    /*public void modificarUsuario (String nombreUser, Usuario user2) throws UsuarioNoExisteException{
+    /*public void modificarUsuario (String nombreUser, Usuario2 user2) throws UsuarioNoExisteException{
 
-        Usuario user = getUser(nombreUser);
+        Usuario2 user = getUser(nombreUser);
         user.modificarUsuario(user2);
     }*/
 
@@ -215,18 +234,18 @@ public class OneOctoberManagerImpl implements OneOctoberManager {
         return this.mapObjeto.get(microfono);
     }*/
 
-    private void addUser (Usuario user){ this.mapPlayer.put(user.getNombre(), user); }
+    private void addUser (Usuario2 user){ this.mapPlayer.put(user.getNombre(), user); }
 
-    private Usuario getUser(String nombreUser) throws UsuarioNoExisteException{
+    private Usuario2 getUser(String nombreUser) throws UsuarioNoExisteException{
 
         if (!this.mapPlayer.containsKey(nombreUser)) throw new UsuarioNoExisteException();
         return this.mapPlayer.get(nombreUser);
     }
 
 
-    public boolean listUserIsEqual(List<Usuario> listaUsuario){
+    public boolean listUserIsEqual(List<Usuario2> listaUsuario){
         int cont = 0;
-        for (Usuario p : listaUsuario){
+        for (Usuario2 p : listaUsuario){
             String nombreUser = p.getNombre();
             if(nombreUser.equals(this.mapPlayer.get(nombreUser).getNombre())){
                 cont = cont + 1;
@@ -240,7 +259,7 @@ public class OneOctoberManagerImpl implements OneOctoberManager {
         this.mapPlayer.remove(nombreUser);
     }
 
-    private void removeObjet(Usuario user, Objeto objeto) {
+    private void removeObjet(Usuario2 user, Objeto objeto) {
         //user.getMiNivel().getInventarioUser().getListaObjetos().remove(objeto);
     }
 

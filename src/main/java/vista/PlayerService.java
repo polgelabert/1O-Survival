@@ -3,9 +3,7 @@ package vista;
 import controlador.*;
 import controlador.excepciones.*;
 import modelo.*;
-import modelo.clasesTablas.Usuario;
-import modelo.mapa.Mapa;
-import okhttp3.ResponseBody;
+import modelo.clasesTablas.Usuario2;
 
 import javax.inject.Singleton;
 import javax.ws.rs.*;
@@ -28,7 +26,7 @@ public class PlayerService {
     public OneOctoberManager oneOct = OneOctoberManagerImpl.getInstance();
     Logger log = Logger.getLogger(PlayerService.class.getName());
 
-    Usuario user, user2;
+    Usuario2 user, user2;
     String nombreUser, nombreObjeto;
     Objeto objeto;
 
@@ -37,7 +35,7 @@ public class PlayerService {
 
         /*try {
 
-          user = new Usuario("pol", "pass1234","pol123@gmail.com");
+          user = new Usuario2("pol", "pass1234","pol123@gmail.com");
             Inventario inventario = new Inventario(100);
             //user.getMiNivel().setInventarioUser(inventario);
             objeto = new Objeto("microfono", "microfono para avisar de dónde vienen los enemigos", 2, 1);
@@ -46,7 +44,7 @@ public class PlayerService {
             //user.getMiNivel().getInventarioUser().getListaObjetos().add(objeto);
            // oneOct.crearUsuario(user);
 
-            user2 = new Usuario("marc", "0000","marc22@gmail.com" );
+            user2 = new Usuario2("marc", "0000","marc22@gmail.com" );
             inventario = new Inventario(100);
             //user.getMiNivel().setInventarioUser(inventario);
             //oneOct.crearUsuario(user2);
@@ -66,8 +64,8 @@ public class PlayerService {
     @Path("/newUser")
     @Produces(MediaType.TEXT_PLAIN)
     @Consumes(MediaType.APPLICATION_JSON)
-    //public Response crearUsuarioInJSON(@QueryParam("user") Usuario user) throws UsuarioYaExisteException {
-    public int crearUsuarioInJSON(Usuario user) throws UsuarioYaExisteException, IllegalAccessException, AccesoDenegado, InvocationTargetException {
+    //public Response crearUsuarioInJSON(@QueryParam("user") Usuario2 user) throws UsuarioYaExisteException {
+    public int crearUsuarioInJSON(Usuario2 user) throws UsuarioYaExisteException, IllegalAccessException, AccesoDenegado, InvocationTargetException {
 
         try {
 
@@ -75,8 +73,6 @@ public class PlayerService {
             if(res) return 1;
             else return 0;
 
-            //return Response.status(201).entity(1).build();
-            //return consultarListaDeUsuarioInJSON();
         } catch (Exception e) {
             //e.printStackTrace();
             throw e;
@@ -87,10 +83,10 @@ public class PlayerService {
     @GET
     @Path("/player/{nombreUser}")
     @Produces(MediaType.APPLICATION_JSON)
-    public Usuario consultarUsuarioTOInJSON(@PathParam("nombreUser") String nombreUser) throws UsuarioNoExisteException {
+    public Usuario2 consultarUsuarioTOInJSON(@PathParam("nombreUser") String nombreUser) throws UsuarioNoExisteException {
 
         try {
-            return oneOct.consultarUsuario(nombreUser);
+            return  oneOct.consultarUsuario(nombreUser);
 
         } catch (Exception e) {
             throw e;
@@ -102,7 +98,7 @@ public class PlayerService {
     @GET
     @Path("/listaUsuarios")
     @Produces(MediaType.APPLICATION_JSON)
-    public List<Usuario> consultarListaDeUsuarioInJSON() throws ListaUsuariosVaciaException {
+    public List<Usuario2> consultarListaDeUsuarioInJSON() throws ListaUsuariosVaciaException {
 
         try {
             return oneOct.consultarListaUsuarios();

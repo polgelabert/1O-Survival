@@ -1,6 +1,6 @@
 package modelo;
 
-import modelo.clasesTablas.Usuario;
+import modelo.clasesTablas.Usuario2;
 
 public final class PlayerTO {
 
@@ -12,7 +12,7 @@ public final class PlayerTO {
 
     public PlayerTO(){}
 
-    public PlayerTO(Usuario user){
+    public PlayerTO(Usuario2 user){
         this.nombre = user.getNombre();
         //this.puntuacionTotal = user.getPuntuacionTotal();
         //this.seguidores = user.getMiNivel().getSeguidores();

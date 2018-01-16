@@ -1,10 +1,8 @@
 package controlador;
 
-import modelo.*;
 import controlador.excepciones.*;
 import modelo.clasesTablas.Niveltable;
-import modelo.clasesTablas.Usuario;
-import modelo.mapa.Mapa;
+import modelo.clasesTablas.Usuario2;
 
 import java.lang.reflect.InvocationTargetException;
 import java.util.List;
@@ -13,20 +11,20 @@ public interface OneOctoberManager {
 
 
 
-    boolean crearUsuario(Usuario user) throws UsuarioYaExisteException, InvocationTargetException, IllegalAccessException, AccesoDenegado;
+    boolean crearUsuario(Usuario2 user) throws UsuarioYaExisteException, InvocationTargetException, IllegalAccessException, AccesoDenegado;
 
-    Usuario consultarUsuario(String nombreUser) throws UsuarioNoExisteException;
+    Usuario2 consultarUsuario(String nombreUser) throws UsuarioNoExisteException;
 
-    List<Usuario> consultarListaUsuarios() throws ListaUsuariosVaciaException;
+    List<Usuario2> consultarListaUsuarios() throws ListaUsuariosVaciaException;
 
     boolean eliminarUsuario (String nombreUser) throws UsuarioNoExisteException;
-    boolean modificarUsuario (Usuario nombreUser) throws UsuarioNoExisteException;
+    boolean modificarUsuario (Usuario2 nombreUser) throws UsuarioNoExisteException;
     Niveltable seleccionarNivel (String idMapa);
 
 
    // List<Objeto> consultarInventarioDeUsuario(String nombre) throws UsuarioNoExisteException, UsuarioSinObjetosException;
 
-    //PlayerTO playerTO (Usuario user);
+    //PlayerTO playerTO (Usuario2 user);
 
     // consultarMapa(int idMalla) throws MapaNoEncontradoException;
 
