@@ -3,6 +3,7 @@ package modelo.clasesTablas;
 //import com.mysql.jdbc.Statement;
 import controlador.excepciones.UsuarioNoExisteException;
 import jdk.nashorn.internal.runtime.ECMAException;
+import org.apache.log4j.Logger;
 
 import java.lang.reflect.Field;
 import java.lang.reflect.InvocationTargetException;
@@ -24,6 +25,7 @@ public abstract class DAO {
     //String url="jdbc:mysql://localhost:3306/juego";
     String url="jdbc:mysql://147.83.7.206:3306/juego";
 
+    final static Logger log = Logger.getLogger(DAO.class.getName());
 
     //INSERT INTO Track (id, name, desc) VALUES (?, ?, ?)
     public String getInsert() throws Exception{
@@ -142,6 +144,7 @@ public abstract class DAO {
             sb.delete(sb.length()-2,sb.length());
             String query = sb.toString();
             Connection c = DriverManager.getConnection(url,user,pass);
+            log.info("Connection OK.");
             PreparedStatement statement = c.prepareStatement(query);
             Method[] metodos=getClass().getMethods();
             for(int i=0;i<metodo.size();i++)
