@@ -124,7 +124,7 @@ public abstract class DAO {
     }
 
     // SELECT * FROM Track WHERE id=?
-    public void select(/*String[] datos,String[] id,Object[] obj*/){
+    public void select(/*String[] datos,String[] id,Object[] obj*/) throws UsuarioNoExisteException {
         try {
             StringBuffer sb = new StringBuffer("SELECT * FROM ");
             sb.append(this.getClass().getSimpleName().substring(0, 1).toLowerCase() + this.getClass().getSimpleName().substring(1, this.getClass().getSimpleName().length())); //Track
@@ -155,7 +155,13 @@ public abstract class DAO {
                 }
             }
             ResultSet rs=statement.executeQuery();
-            rs.next();
+            //rs.next();
+            if ( rs.next() ) {
+                String name = rs.getString("nombre");
+                System.out.println(name);
+            } else{
+                throw new UsuarioNoExisteException();
+            }
             for (int i = 0; i < atributos.length; i++) {
                 String nombre = "set" + atributos[i].getName().substring(0, 1).toUpperCase() + atributos[i].getName().substring(1, atributos[i].getName().length());
                 Method[] metodos2 = this.getClass().getDeclaredMethods();
@@ -167,11 +173,13 @@ public abstract class DAO {
                 }
             }
 
+
+
             statement.close();
             c.close();
 
         }catch (Exception e){
-
+            //throw new UsuarioNoExisteException();
         }
 
 

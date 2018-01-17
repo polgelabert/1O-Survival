@@ -2,6 +2,7 @@ package controlador;
 
 import controlador.excepciones.*;
 import modelo.*;
+import modelo.clasesTablas.DAO;
 import modelo.clasesTablas.Niveltable;
 import modelo.clasesTablas.Usuario2;
 import modelo.clasesTablas.Usuario;
@@ -94,11 +95,8 @@ public class OneOctoberManagerImpl implements OneOctoberManager {
         //Se crea el usuario que interactua con el DAO
         Usuario userDAO = new Usuario(nombreUser,"xxx","xxx");
 
-        try{
-            userDAO.select();
-        }catch (Exception e){
-            log.error(e.getMessage());
-        }
+
+         userDAO.select();
 
 
         if(userDAO.getNombre() == "xxx" & userDAO.getCorreo()== "xxx") throw new UsuarioNoExisteException();
@@ -111,22 +109,29 @@ public class OneOctoberManagerImpl implements OneOctoberManager {
     }
 
 
-    public List<Usuario2> consultarListaUsuarios() throws ListaUsuariosVaciaException {
+    public List<Object[]> consultarListaUsuarios(Usuario2 user) throws ListaUsuariosVaciaException {
 
-        List<Usuario2> listaUsuarios = new ArrayList<>();
+        //List<Usuario2> listaUsuarios = new ArrayList<>();
         /*if (!listaUsuarios.addAll(mapPlayer.values())) throw new ListaUsuariosVaciaException();
 
         return listaUsuarios;
         */
 
-        return selectListUser();
+        return selectListUser(user);
 
     }
-    private List<Usuario2> selectListUser() {
+    private List<Object[]> selectListUser(Usuario2 user) {
 
-        List<Usuario2> listaUsuarios = new ArrayList<>();
+        List<Object[]> listaUsuarios = new ArrayList<>();
+
         try{
 
+            //Usuario2 u = consultarUsuario(user);
+
+            Usuario userDAO = new Usuario(user.getNombre());
+            userDAO.copyUser(user);
+
+            userDAO.selectAll();
 
         }
         catch (Exception e) {
@@ -151,37 +156,41 @@ public class OneOctoberManagerImpl implements OneOctoberManager {
     }
     private boolean deleteUser (String nombreUser) throws UsuarioNoExisteException {
         //Usuario2 user = getUser(nombreUser);
-        boolean borrado = true;
-        Usuario2 u = new Usuario2(nombreUser,"xx","xx");
+        boolean borrado = false;
+        Usuario2 u = new Usuario2(nombreUser,"xxx","xxx");
+
+        Usuario userDAO = new Usuario(nombreUser);
+        //userDAO.copyUser(user);
+
         try {
-            u.delete();
+
+            userDAO.delete();
+            borrado = true;
         }
         catch (Exception e){borrado=false;}
 
         return borrado;
     }
 
-    public boolean modificarUsuario (Usuario2 nombreUser) throws UsuarioNoExisteException {
-
-
-        //Usuario2 user = getUser(nombreUser);
-        //(nombreUser);
-        //removeUser(nombreUser);
-        return updateUser(nombreUser);
+    public boolean modificarUsuario (Usuario2 user) throws UsuarioNoExisteException {
+        return updateUser(user);
     }
     private boolean updateUser (Usuario2 user){
-        boolean actualizado =true;
+        boolean actualizado = false;
+
+        Usuario userDAO = new Usuario(user.getNombre());
+        userDAO.copyUser(user);
+
         try{
-            user.update();
 
-        }catch (Exception e){
+            userDAO.update();
+            actualizado = true;
 
-
-         actualizado = false;
+        } catch (Exception e){
+            actualizado = false;
         }
 
         return actualizado;
-
     }
 
 

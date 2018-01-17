@@ -3,6 +3,7 @@ package vista;
 import controlador.*;
 import controlador.excepciones.*;
 import modelo.*;
+import modelo.clasesTablas.Usuario;
 import modelo.clasesTablas.Usuario2;
 
 import javax.inject.Singleton;
@@ -95,13 +96,14 @@ public class PlayerService {
     }
 
 
-    @GET
+    @POST
     @Path("/listaUsuarios")
     @Produces(MediaType.APPLICATION_JSON)
-    public List<Usuario2> consultarListaDeUsuarioInJSON() throws ListaUsuariosVaciaException {
+    @Consumes(MediaType.APPLICATION_JSON)
+    public List<Object[]> consultarListaUsuariosInJSON(Usuario2 user) throws ListaUsuariosVaciaException {
 
         try {
-            return oneOct.consultarListaUsuarios();
+            return oneOct.consultarListaUsuarios(user);
 
         } catch (Exception e) {
             throw e;
@@ -109,13 +111,15 @@ public class PlayerService {
     }
 
 
-    @GET
-    @Path("/player/{nombreUser}/inventario")
-    @Produces(MediaType.APPLICATION_JSON)
-    public List<Objeto> consultarListaObjetosDeUsuarioInJSON(@PathParam("nombreUser") String nombreUser) throws UsuarioNoExisteException, UsuarioSinObjetosException {
-        List<Objeto> k = new ArrayList<>();
+    @POST
+    @Path("/player/update")
+    @Produces(MediaType.TEXT_PLAIN)
+    @Consumes(MediaType.APPLICATION_JSON)
+    public int modificarUsuarioInJSON(Usuario2 user) throws UsuarioNoExisteException, UsuarioSinObjetosException {
         try {
-            return  null;
+
+            if(oneOct.modificarUsuario(user)) return 1;
+            else return 0;
 
         } catch (Exception e) {
             throw e;
@@ -126,18 +130,23 @@ public class PlayerService {
     @DELETE
     @Path("/removePlayer/{nombreUser}")
     @Produces(MediaType.TEXT_PLAIN)
-    public Response eliminarUsuarioInJSON(@PathParam("nombreUser") String nombreUser) throws UsuarioNoExisteException, ListaUsuariosVaciaException {
+    public int eliminarUsuarioInJSON(@PathParam("nombreUser") String nombreUser) throws UsuarioNoExisteException, ListaUsuariosVaciaException {
 
         try {
-            boolean res = oneOct.eliminarUsuario(nombreUser);
 
-            return Response.status(201).entity(1).build();
+            if(oneOct.eliminarUsuario(nombreUser)) return 1;
+            else return 0;
+
+
+            //return Response.status(201).entity(1).build();
             //return Response.status(201).entity(oneOct.consultarListaUsuarios().size()).build();
 
         } catch (Exception e) {
             throw e;
         }
     }
+
+
 
 
 

@@ -1,6 +1,6 @@
 package modelo.clasesTablas;
 
-public class Usuario extends  DAO{
+public class Usuario extends DAO{
 
     private final String nombre;
     private String password;

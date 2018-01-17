@@ -1,5 +1,6 @@
 package modelo;
 
+import controlador.excepciones.UsuarioNoExisteException;
 import modelo.clasesTablas.Minijuegoseguidorestable;
 
 import javax.swing.*;
@@ -18,7 +19,7 @@ public class MinijuegoSeguidor {
     private int resultado;
     private JFrame f;
 
-    public MinijuegoSeguidor(String oficio) {
+    public MinijuegoSeguidor(String oficio) throws UsuarioNoExisteException {
         this.tema = oficio;
         Minijuegoseguidorestable table=new Minijuegoseguidorestable(oficio);
         table.select();

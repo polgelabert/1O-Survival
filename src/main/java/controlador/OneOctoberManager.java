@@ -15,7 +15,7 @@ public interface OneOctoberManager {
 
     Usuario2 consultarUsuario(String nombreUser) throws UsuarioNoExisteException;
 
-    List<Usuario2> consultarListaUsuarios() throws ListaUsuariosVaciaException;
+    List<Object[]> consultarListaUsuarios(Usuario2 user) throws ListaUsuariosVaciaException;
 
     boolean eliminarUsuario (String nombreUser) throws UsuarioNoExisteException;
     boolean modificarUsuario (Usuario2 nombreUser) throws UsuarioNoExisteException;
