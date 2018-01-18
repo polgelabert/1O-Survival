@@ -1,4 +1,4 @@
--- MySQL dump 10.13  Distrib 5.7.20, for Win64 (x86_64)
+-- MySQL dump 10.13  Distrib 5.7.17, for Win64 (x86_64)
 --
 -- Host: localhost    Database: juego
 -- ------------------------------------------------------
@@ -14,14 +14,6 @@
 /*!40014 SET @OLD_FOREIGN_KEY_CHECKS=@@FOREIGN_KEY_CHECKS, FOREIGN_KEY_CHECKS=0 */;
 /*!40101 SET @OLD_SQL_MODE=@@SQL_MODE, SQL_MODE='NO_AUTO_VALUE_ON_ZERO' */;
 /*!40111 SET @OLD_SQL_NOTES=@@SQL_NOTES, SQL_NOTES=0 */;
-
---
--- Current Database: `juego`
---
-
-CREATE DATABASE /*!32312 IF NOT EXISTS*/ `juego` /*!40100 DEFAULT CHARACTER SET utf8 */;
-
-USE `juego`;
 
 --
 -- Table structure for table `minijuegoseguidorestable`
@@ -161,7 +153,7 @@ CREATE TABLE `usuario` (
 
 LOCK TABLES `usuario` WRITE;
 /*!40000 ALTER TABLE `usuario` DISABLE KEYS */;
-INSERT INTO `usuario` VALUES ('ACarla','4Carla','CACACarla@gmail.com',NULL,0),('Alex2','4','alexagui@gmail.com','mapa1',0),('Anna2','2','annagarcia@gmail.com','mapa1',0),('Javi','111','javijavito@gmail.com','mapa1',254),('Joan2','1','joanet@gmail.com','mapa1',0),('Joaquin','10','joaquin@gmail.com','mapa1',0),('mama','18','mama@gmail.com','mapa2',0),('Maria','5','maria@gmail.com','mapa2',0),('Marta','8447','martamartaa@gmail.com',NULL,0),('MartinaGrande','01556565','martiPoLnmontelior@gmail.com',NULL,0),('MartinALL','0155','martinmontelior@gmail.com',NULL,0),('Oriol','8','oriol@gmail.com','mapa2',0),('Pedro','9','pedro@gmail.com','mapa2',0),('Pol2','3','pol@gmail.com','mapa2',0),('popo','pipi','piopoi@gmail.com',NULL,0),('Victor','7','victor@gmail.com','mapa3',0);
+INSERT INTO `usuario` VALUES ('AABB','perpper','RRR@gmail.com',NULL,0),('Alex2','4','alexagui@gmail.com','mapa1',0),('Anna2','2','annagarcia@gmail.com','mapa1',0),('Javi','444','javijavito@gmail.com','mapa1',123456789),('Joan2','1','joanet@gmail.com','mapa1',0),('Joaquin','10','joaquin@gmail.com','mapa1',0),('mama','18','mama@gmail.com','mapa2',0),('Maria','5','maria@gmail.com','mapa2',0),('Marta','8447','martamartaa@gmail.com',NULL,0),('MartinaGrande','01556565','martiPoLnmontelior@gmail.com',NULL,0),('MartinALL','0155','martinmontelior@gmail.com',NULL,0),('Oriol','8','oriol@gmail.com','mapa2',0),('Pedro','9','pedro@gmail.com','mapa2',0),('Pol2','3','pol@gmail.com','mapa2',0),('popo','pipi','piopoi@gmail.com',NULL,0),('Victor','7','victor@gmail.com','mapa3',0);
 /*!40000 ALTER TABLE `usuario` ENABLE KEYS */;
 UNLOCK TABLES;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
@@ -174,4 +166,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2018-01-17 12:22:38
+-- Dump completed on 2018-01-18 11:36:00
