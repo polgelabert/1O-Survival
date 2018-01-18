@@ -63,7 +63,9 @@ public class OneOctoberManagerImpl implements OneOctoberManager {
             Usuario userDAO = new Usuario(user.getNombre());
             userDAO.copyUser(user);     // funcion que copia todos los atributos de user a userDAO.
 
+            log.info("CreateUser entra a DAO.");
             Exception e = userDAO.insert();
+            log.info("CreateUser sale de DAO.");
             insertado = true;
 
             if (e != null) {
@@ -130,9 +132,9 @@ public class OneOctoberManagerImpl implements OneOctoberManager {
 
             Usuario userDAO = new Usuario(user.getNombre());
             userDAO.copyUser(user);
-
+            log.info("selectAll entra a DAO.");
             userDAO.selectAll();
-
+            log.info("selectAll surt de DAO.");
         }
         catch (Exception e) {
             log.error(e.getMessage());
@@ -163,8 +165,9 @@ public class OneOctoberManagerImpl implements OneOctoberManager {
         //userDAO.copyUser(user);
 
         try {
-
+            log.info("deleteUser entra a DAO.");
             userDAO.delete();
+            log.info("deleteUser surt de DAO.");
             borrado = true;
         }
         catch (Exception e){borrado=false;}
@@ -182,8 +185,9 @@ public class OneOctoberManagerImpl implements OneOctoberManager {
         userDAO.copyUser(user);
 
         try{
-
+            log.info("UpdateUser entra a DAO.");
             userDAO.update();
+            log.info("UpdateUser surt de DAO.");
             actualizado = true;
 
         } catch (Exception e){
