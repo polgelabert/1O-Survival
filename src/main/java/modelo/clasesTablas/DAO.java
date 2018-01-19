@@ -22,6 +22,7 @@ public abstract class DAO {
     Field[] atributos;
     String user="root",pass="Mazinger72";
 
+
     String url="jdbc:mysql://localhost:3306/juego";
     //String url="jdbc:mysql://127.0.0.1:3306/juego";
 
