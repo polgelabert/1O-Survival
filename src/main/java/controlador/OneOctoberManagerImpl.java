@@ -97,11 +97,11 @@ public class OneOctoberManagerImpl implements OneOctoberManager {
         //Se crea el usuario que interactua con el DAO
         Usuario userDAO = new Usuario(nombreUser,"xxx","xxx");
 
-        log.info("Select entra a DAO.");
+        log.info("*** Select entra a DAO.");
         userDAO.select();
-        log.info("Select surt de DAO.");
+        log.info("*** Select surt de DAO.");
 
-        if(userDAO.getNombre() == "xxx" & userDAO.getCorreo()== "xxx") throw new UsuarioNoExisteException();
+        if(userDAO.getNombre().equals( "xxx") && userDAO.getCorreo().equals("xxx")) throw new UsuarioNoExisteException();
 
         // Se crea el Usuario2 (copiado del userDAO) que se retorna
         Usuario2 user = new Usuario2();
