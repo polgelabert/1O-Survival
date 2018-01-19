@@ -20,10 +20,10 @@ public abstract class DAO {
 
     //Field[]
     Field[] atributos;
-    String user="root",pass="root";
+    String user="root",pass="Mazinger72";
 
-    //String url="jdbc:mysql://localhost:3306/juego";
-    String url="jdbc:mysql://147.83.7.206:3306/juego";
+    String url="jdbc:mysql://localhost:3306/juego";
+    //String url="jdbc:mysql://127.0.0.1:3306/juego";
 
     final static Logger log = Logger.getLogger(DAO.class.getName());
 
@@ -143,6 +143,7 @@ public abstract class DAO {
             }
             sb.delete(sb.length()-2,sb.length());
             String query = sb.toString();
+            log.info("Connection PRE CONNECTION OK.");
             Connection c = DriverManager.getConnection(url,user,pass);
             log.info("Connection OK.");
             PreparedStatement statement = c.prepareStatement(query);
@@ -182,7 +183,8 @@ public abstract class DAO {
             c.close();
 
         }catch (Exception e){
-            //throw new UsuarioNoExisteException();
+            log.error("Exception "+e.getMessage());
+            e.printStackTrace();
         }
 
 
