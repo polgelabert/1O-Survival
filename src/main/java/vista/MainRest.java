@@ -9,14 +9,14 @@ import java.io.IOException;
 import java.net.URI;
 
 /**
- * Main class.
+ * Main class..
  *
  */
 public class MainRest {
     // Base URI the Grizzly HTTP server will listen on
 
-    public static final String BASE_URI = "http://147.83.7.206:8088/1O-survival/";
-    //public static final String BASE_URI = "http://localhost:8088/1O-survival/";
+    //public static final String BASE_URI = "http://147.83.7.206:8088/1O-survival/";
+    public static final String BASE_URI = "http://localhost:8088/1O-survival/";
 
 
     /**
