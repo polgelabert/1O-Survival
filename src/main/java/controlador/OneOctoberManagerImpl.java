@@ -102,14 +102,14 @@ public class OneOctoberManagerImpl implements OneOctoberManager {
             userDAO.select();
             log.info("Select surt de DAO.");
 
-            if(userDAO.getNombre().equals( "xxx") && userDAO.getCorreo().equals("xxx")) throw new UsuarioNoExisteException();
+            if(userDAO.getNombre().equals( "xxx") && userDAO.getCorreo().equals("xxx")) throw new Exception();
 
             // Se crea el Usuario2 (copiado del userDAO) que se retorna
             user = new Usuario2();
             user.copyUser(userDAO);
         }
         catch (Exception e)  {
-            user.setResponse(-1);
+            user.setResponse(-3);
 
         }
 
