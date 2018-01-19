@@ -165,7 +165,7 @@ public abstract class DAO {
                 String name = rs.getString("nombre");
                 System.out.println(name);
             } else{
-                throw new UsuarioNoExisteException();
+                //throw new UsuarioNoExisteException();
             }
             for (int i = 0; i < atributos.length; i++) {
                 String nombre = "set" + atributos[i].getName().substring(0, 1).toUpperCase() + atributos[i].getName().substring(1, atributos[i].getName().length());
