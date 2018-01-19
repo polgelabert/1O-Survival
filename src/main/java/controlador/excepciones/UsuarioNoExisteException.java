@@ -2,9 +2,7 @@ package controlador.excepciones;
 
 public class UsuarioNoExisteException extends Exception {
 
-    public UsuarioNoExisteException() {
-        super(String.valueOf(-3));
-    }
+    public UsuarioNoExisteException() { super (String.valueOf(-3)); }
 
 
 }

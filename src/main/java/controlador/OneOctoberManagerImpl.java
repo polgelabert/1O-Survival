@@ -41,7 +41,7 @@ public class OneOctoberManagerImpl implements OneOctoberManager {
 
 
 
-    public boolean crearUsuario(Usuario2 user) throws UsuarioYaExisteException, AccesoDenegado {
+    public Usuario2 crearUsuario(Usuario2 user) throws UsuarioYaExisteException, AccesoDenegado {
         return createUser(user);// return true ya que operacion ok
 
 
@@ -52,44 +52,39 @@ public class OneOctoberManagerImpl implements OneOctoberManager {
         addUser(user);
         return true;*/
     }
-
     // Tripas CrearUsuario
-    private boolean createUser (Usuario2 user) throws UsuarioYaExisteException, AccesoDenegado {
+    private Usuario2 createUser (Usuario2 user) throws UsuarioYaExisteException, AccesoDenegado {
 
-        boolean insertado = false;
+        Usuario userDAO= null;
+
         try {
-
             //Se crea el userDAO que interactuará con la DB
-            Usuario userDAO = new Usuario(user.getNombre());
+            userDAO = new Usuario(user.getNombre());
             userDAO.copyUser(user);     // funcion que copia todos los atributos de user a userDAO.
 
             log.info("CreateUser entra a DAO.");
-            Exception e = userDAO.insert();
+            if (!userDAO.insert()) throw new UsuarioYaExisteException();
             log.info("CreateUser sale de DAO.");
-            insertado = true;
 
-            if (e != null) {
-                throw e;
-            }
 
 
         }catch(Exception e){
+            log.error(e.getMessage());
+            user.setResponse(Integer.parseInt(e.getMessage()));
+            return user;
 
-            insertado = false;
             /// e.printStackTrace();
-            if (e.getMessage().contains("Duplicate entry")) throw new UsuarioYaExisteException();
-            if (e.getMessage().contains("Access denied")) throw new AccesoDenegado();
+            //if (e.getMessage().contains("Duplicate entry")) throw new UsuarioYaExisteException();
+            //if (e.getMessage().contains("Access denied")) throw new AccesoDenegado();
         }
 
-
-        return insertado;
+        return user;
     }
 
 
     public Usuario2 consultarUsuario (String nombreUser) throws UsuarioNoExisteException {
         return selectUser(nombreUser);
     }
-
     //Tripas consultarUsuario
     private Usuario2 selectUser (String nombreUser) throws UsuarioNoExisteException {
         Usuario userDAO= null;
@@ -102,19 +97,20 @@ public class OneOctoberManagerImpl implements OneOctoberManager {
             userDAO.select();
             log.info("Select surt de DAO.");
 
-            if(userDAO.getNombre().equals( "xxx") && userDAO.getCorreo().equals("xxx")) throw new Exception();
-
             // Se crea el Usuario2 (copiado del userDAO) que se retorna
             user = new Usuario2();
             user.copyUser(userDAO);
+
+            if(user.getPassword().equals( "xxx") && user.getCorreo().equals("xxx")) throw new UsuarioNoExisteException();
         }
         catch (Exception e)  {
-            user.setResponse(-3);
-
+            user.setResponse(Integer.parseInt(e.getMessage()));
+            return user;
         }
 
         return user;
     }
+
 
 
     public List<Object[]> consultarListaUsuarios(Usuario2 user) throws ListaUsuariosVaciaException {
@@ -154,52 +150,53 @@ public class OneOctoberManagerImpl implements OneOctoberManager {
     }
 
 
-    public boolean eliminarUsuario (String nombreUser) throws UsuarioNoExisteException {
-        //Usuario2 user = getUser(nombreUser);
-        //(nombreUser);
-        //removeUser(nombreUser);
-        return deleteUser(nombreUser);
-    }
-    private boolean deleteUser (String nombreUser) throws UsuarioNoExisteException {
-        //Usuario2 user = getUser(nombreUser);
-        boolean borrado = false;
-        Usuario2 u = new Usuario2(nombreUser,"xxx","xxx");
 
-        Usuario userDAO = new Usuario(nombreUser);
-        //userDAO.copyUser(user);
-
-        try {
-            log.info("deleteUser entra a DAO.");
-            userDAO.delete();
-            log.info("deleteUser surt de DAO.");
-            borrado = true;
-        }
-        catch (Exception e){borrado=false;}
-
-        return borrado;
-    }
-
-    public boolean modificarUsuario (Usuario2 user) throws UsuarioNoExisteException {
+    public Usuario2 modificarUsuario (Usuario2 user) throws UsuarioNoExisteException {
         return updateUser(user);
     }
-    private boolean updateUser (Usuario2 user){
-        boolean actualizado = false;
+    private Usuario2 updateUser (Usuario2 user){
 
         Usuario userDAO = new Usuario(user.getNombre());
         userDAO.copyUser(user);
 
         try{
             log.info("UpdateUser entra a DAO.");
-            userDAO.update();
+            if(!userDAO.update()) throw new UsuarioNoActualizado();
             log.info("UpdateUser surt de DAO.");
-            actualizado = true;
 
         } catch (Exception e){
-            actualizado = false;
+            log.error(e.getMessage());
+            user.setResponse(Integer.parseInt(e.getMessage()));
+            return user;
         }
 
-        return actualizado;
+        return user;
     }
+
+
+
+    public boolean eliminarUsuario (String nombreUser) throws UsuarioNoExisteException {
+        return deleteUser(nombreUser);
+    }
+    private boolean deleteUser (String nombreUser) throws UsuarioNoExisteException {
+        Usuario2 u = new Usuario2(nombreUser,"xxx","xxx");
+
+        Usuario userDAO = new Usuario(u.getNombre());
+
+        try {
+            log.info("deleteUser entra a DAO.");
+            if(!userDAO.delete()) throw new UsuarioNoBorrado();
+            log.info("deleteUser surt de DAO.");
+        }
+        catch (Exception e){
+            log.error(e.getMessage());
+            return false;
+        }
+
+        return true;
+    }
+
+
 
 
     public Niveltable seleccionarNivel (String idMapa)  {

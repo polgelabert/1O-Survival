@@ -63,21 +63,24 @@ public class PlayerService {
 
     @POST
     @Path("/newUser")
-    @Produces(MediaType.TEXT_PLAIN)
+    @Produces(MediaType.APPLICATION_JSON)
     @Consumes(MediaType.APPLICATION_JSON)
     //public Response crearUsuarioInJSON(@QueryParam("user") Usuario2 user) throws UsuarioYaExisteException {
-    public int crearUsuarioInJSON(Usuario2 user) throws UsuarioYaExisteException, IllegalAccessException, AccesoDenegado, InvocationTargetException {
+    public Usuario2 crearUsuarioInJSON(Usuario2 user) throws UsuarioYaExisteException, IllegalAccessException, AccesoDenegado, InvocationTargetException {
 
-        try {
 
-            boolean res = oneOct.crearUsuario(user);
-            if(res) return 1;
-            else return 0;
+        return  oneOct.crearUsuario(user);
+
+        /*try {
+
+            return  oneOct.crearUsuario(user);
+            //if(res) return 1;
+            //else return 0;
 
         } catch (Exception e) {
-            //e.printStackTrace();
+            e.printStackTrace();
             throw e;
-        }
+        }*/
     }
 
 
@@ -86,12 +89,15 @@ public class PlayerService {
     @Produces(MediaType.APPLICATION_JSON)
     public Usuario2 consultarUsuarioTOInJSON(@PathParam("nombreUser") String nombreUser) throws UsuarioNoExisteException {
 
-        try {
+        return  oneOct.consultarUsuario(nombreUser);
+
+        /*try {
             return  oneOct.consultarUsuario(nombreUser);
 
-        } catch (Exception e) {
-            throw e;
         }
+        catch (Exception e) {
+            throw e;
+        }*/
 
     }
 
@@ -113,17 +119,21 @@ public class PlayerService {
 
     @POST
     @Path("/player/update")
-    @Produces(MediaType.TEXT_PLAIN)
+    @Produces(MediaType.APPLICATION_JSON)
     @Consumes(MediaType.APPLICATION_JSON)
-    public int modificarUsuarioInJSON(Usuario2 user) throws UsuarioNoExisteException, UsuarioSinObjetosException {
-        try {
+    public Usuario2 modificarUsuarioInJSON(Usuario2 user) throws UsuarioNoExisteException, UsuarioSinObjetosException {
+
+
+        return oneOct.modificarUsuario(user);
+
+        /*try {
 
             if(oneOct.modificarUsuario(user)) return 1;
             else return 0;
 
         } catch (Exception e) {
             throw e;
-        }
+        }*/
 
     }
 

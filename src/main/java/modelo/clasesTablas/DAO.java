@@ -1,6 +1,7 @@
 package modelo.clasesTablas;
 
 //import com.mysql.jdbc.Statement;
+import controlador.excepciones.UsuarioNoActualizado;
 import controlador.excepciones.UsuarioNoExisteException;
 import jdk.nashorn.internal.runtime.ECMAException;
 import org.apache.log4j.Logger;
@@ -20,8 +21,9 @@ public abstract class DAO {
 
     //Field[]
     Field[] atributos;
-    String user="root",pass="Mazinger72";
-
+    String user="root",
+            pass="Mazinger72";
+            //pass="root";
 
     //String url="jdbc:mysql://localhost:3306/juego";
     String url="jdbc:mysql://127.0.0.1:3306/juego";
@@ -48,8 +50,8 @@ public abstract class DAO {
         return sb.toString();
     }
 
-    public Exception insert() throws InvocationTargetException, IllegalAccessException {
-        Exception hecho=null;
+    public boolean insert() throws InvocationTargetException, IllegalAccessException {
+
         try{
             String query = getInsert();
             Connection c = DriverManager.getConnection(url,user,pass);
@@ -83,46 +85,11 @@ public abstract class DAO {
             statement.close();
             c.close();
         }catch (Exception e){
-
-            hecho=e;
-
+            log.error("Exception: "+e.getMessage());
+            e.printStackTrace();
+            return false;
         }
-        return hecho;
-
-    }
-
-    public ArrayList<Object[]> selectAll(/*String[] datos,String[] id,Object[] obj*/){
-        ArrayList<Object[]> resultado=null;
-        try {
-            StringBuffer sb = new StringBuffer("SELECT * FROM ");
-            sb.append(this.getClass().getSimpleName().substring(0, 1).toLowerCase() + this.getClass().getSimpleName().substring(1, this.getClass().getSimpleName().length())); //Track
-            //sb.append(this.getClass().getSimpleName());
-            //sb.append(bdname);
-            String query = sb.toString();
-            Connection c = DriverManager.getConnection(url,user,pass);
-            PreparedStatement statement = c.prepareStatement(query);
-            ResultSet rs=statement.executeQuery();
-            resultado=new ArrayList<Object[]>();
-            //String frase="";
-            while(rs.next()) {
-                Object[] fila=new Object[atributos.length];
-                for(int i=0;i<atributos.length;i++){
-                    fila[i]=rs.getObject(atributos[i].getName());
-                    //frase=frase+rs.getObject(datos[i]).toString()+" ";
-                }
-                //frase=frase+"\n";
-                resultado.add(fila);
-            }
-            //System.out.println(frase);
-            statement.close();
-            c.close();
-
-        }catch (Exception e){
-
-        }
-
-        return resultado;
-
+        return true;
 
     }
 
@@ -165,7 +132,7 @@ public abstract class DAO {
                 String name = rs.getString("nombre");
                 System.out.println(name);
             } else{
-                //throw new UsuarioNoExisteException();
+                throw new UsuarioNoExisteException();
             }
             for (int i = 0; i < atributos.length; i++) {
                 String nombre = "set" + atributos[i].getName().substring(0, 1).toUpperCase() + atributos[i].getName().substring(1, atributos[i].getName().length());
@@ -192,14 +159,52 @@ public abstract class DAO {
 
     }
 
+    public ArrayList<Object[]> selectAll(/*String[] datos,String[] id,Object[] obj*/){
+        ArrayList<Object[]> resultado=null;
+        try {
+            StringBuffer sb = new StringBuffer("SELECT * FROM ");
+            sb.append(this.getClass().getSimpleName().substring(0, 1).toLowerCase() + this.getClass().getSimpleName().substring(1, this.getClass().getSimpleName().length())); //Track
+            //sb.append(this.getClass().getSimpleName());
+            //sb.append(bdname);
+            String query = sb.toString();
+            Connection c = DriverManager.getConnection(url,user,pass);
+            PreparedStatement statement = c.prepareStatement(query);
+            ResultSet rs=statement.executeQuery();
+            resultado=new ArrayList<Object[]>();
+            //String frase="";
+            while(rs.next()) {
+                Object[] fila=new Object[atributos.length];
+                for(int i=0;i<atributos.length;i++){
+                    fila[i]=rs.getObject(atributos[i].getName());
+                    //frase=frase+rs.getObject(datos[i]).toString()+" ";
+                }
+                //frase=frase+"\n";
+                resultado.add(fila);
+            }
+            //System.out.println(frase);
+            statement.close();
+            c.close();
+
+        }catch (Exception e){
+
+        }
+
+        return resultado;
+
+
+    }
+
+
+
     // UPDATE Track SET name=?, desc=? WHERE id=?
 
-    public void update(){
+    public boolean update(){
+
         StringBuffer sb=new StringBuffer("UPDATE ");
         sb.append(this.getClass().getSimpleName().substring(0, 1).toLowerCase() + this.getClass().getSimpleName().substring(1, this.getClass().getSimpleName().length()));
         sb.append(" SET ");
-        atributos=this.getClass().getDeclaredFields();
-        Field ident=atributos[0];//Se queja por no estar inicializado
+        atributos = this.getClass().getDeclaredFields();
+        Field ident = atributos[0];//Se queja por no estar inicializado
         for (Field f:atributos) {
             if(!Modifier.isFinal(f.getModifiers())) {
                 sb.append(f.getName()).append("=?, ");
@@ -234,18 +239,27 @@ public abstract class DAO {
                     statement.setObject(atributos.length,metodos[j].invoke(this,null));
                 }
             }
-            statement.executeUpdate();
+
+
+            int resp = statement.executeUpdate();
             statement.close();
             c.close();
 
-        }catch (Exception e){}
+            if(resp == 1) return true;
+            else throw new Exception();
+
+        }catch (Exception e){
+            log.error("Exception: "+e.getMessage());
+            e.printStackTrace();
+            return false;
+        }
 
     }
 
 
 
     // DELETE FROM Track WHERE id=?
-    public void delete(){
+    public boolean delete(){
         StringBuffer sb = new StringBuffer("DELETE FROM ");
         sb.append(this.getClass().getSimpleName().substring(0, 1).toLowerCase() + this.getClass().getSimpleName().substring(1, this.getClass().getSimpleName().length()));
         //sb.append(this.getClass().getSimpleName());
@@ -273,14 +287,18 @@ public abstract class DAO {
                 }
             }
             //statement.setObject(1,cond2);
-            statement.executeUpdate();
+            int resp = statement.executeUpdate();
             statement.close();
             c.close();
 
-        }catch(Exception e){
+            if(resp == 1) return true;
+            else throw new Exception();
 
+        }catch (Exception e) {
+            log.error("Exception: " + e.getMessage());
+            e.printStackTrace();
+            return false;
         }
-
     }
 
 }

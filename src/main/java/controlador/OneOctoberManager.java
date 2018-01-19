@@ -11,14 +11,14 @@ public interface OneOctoberManager {
 
 
 
-    boolean crearUsuario(Usuario2 user) throws UsuarioYaExisteException, InvocationTargetException, IllegalAccessException, AccesoDenegado;
+    Usuario2 crearUsuario(Usuario2 user) throws UsuarioYaExisteException, InvocationTargetException, IllegalAccessException, AccesoDenegado;
 
     Usuario2 consultarUsuario(String nombreUser) throws UsuarioNoExisteException;
 
     List<Object[]> consultarListaUsuarios(Usuario2 user) throws ListaUsuariosVaciaException;
 
     boolean eliminarUsuario (String nombreUser) throws UsuarioNoExisteException;
-    boolean modificarUsuario (Usuario2 nombreUser) throws UsuarioNoExisteException;
+    Usuario2 modificarUsuario (Usuario2 nombreUser) throws UsuarioNoExisteException;
     Niveltable seleccionarNivel (String idMapa);
 
 
