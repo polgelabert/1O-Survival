@@ -92,20 +92,26 @@ public class OneOctoberManagerImpl implements OneOctoberManager {
 
     //Tripas consultarUsuario
     private Usuario2 selectUser (String nombreUser) throws UsuarioNoExisteException {
-        //Usuario2 u = null;
+        Usuario userDAO= null;
+        Usuario2 user = null;
 
-        //Se crea el usuario que interactua con el DAO
-        Usuario userDAO = new Usuario(nombreUser,"xxx","xxx");
+        try {
+            userDAO = new Usuario(nombreUser, "xxx", "xxx");
 
-        log.info("*** Select entra a DAO.");
-        userDAO.select();
-        log.info("*** Select surt de DAO.");
+            log.info("Select entra a DAO.");
+            userDAO.select();
+            log.info("Select surt de DAO.");
 
-        if(userDAO.getNombre().equals( "xxx") && userDAO.getCorreo().equals("xxx")) throw new UsuarioNoExisteException();
+            if(userDAO.getNombre().equals( "xxx") && userDAO.getCorreo().equals("xxx")) throw new UsuarioNoExisteException();
 
-        // Se crea el Usuario2 (copiado del userDAO) que se retorna
-        Usuario2 user = new Usuario2();
-        user.copyUser(userDAO);
+            // Se crea el Usuario2 (copiado del userDAO) que se retorna
+            user = new Usuario2();
+            user.copyUser(userDAO);
+        }
+        catch (Exception e)  {
+            user.setResponse(-1);
+
+        }
 
         return user;
     }

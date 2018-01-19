@@ -7,7 +7,7 @@ public class Usuario2 extends  DAO{
     private String correo;
     private int puntFinal;
     private String idMapa;
-    private String response;
+    private int response;
 
 
 
@@ -85,11 +85,11 @@ public class Usuario2 extends  DAO{
             this.setIdMapa(userDAO.getIdMapa());
     }
 
-    public String getResponse() {
+    public int getResponse() {
         return this.response;
     }
 
-    public void setResponse(String response) {
+    public void setResponse(int response) {
         this.response = response;
     }
 }

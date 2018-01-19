@@ -23,8 +23,8 @@ public abstract class DAO {
     String user="root",pass="Mazinger72";
 
 
-    String url="jdbc:mysql://localhost:3306/juego";
-    //String url="jdbc:mysql://127.0.0.1:3306/juego";
+    //String url="jdbc:mysql://localhost:3306/juego";
+    String url="jdbc:mysql://127.0.0.1:3306/juego";
 
     final static Logger log = Logger.getLogger(DAO.class.getName());
 
@@ -184,7 +184,7 @@ public abstract class DAO {
             c.close();
 
         }catch (Exception e){
-            log.error("Exception "+e.getMessage());
+            log.error("Exception: "+e.getMessage());
             e.printStackTrace();
         }
 
