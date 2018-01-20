@@ -102,7 +102,7 @@ public class PlayerService {
     }
 
 
-    @GET
+    @POST
     @Path("/isUser")
     @Consumes(MediaType.APPLICATION_JSON)
     @Produces(MediaType.APPLICATION_JSON)
