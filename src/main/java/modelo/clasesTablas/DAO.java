@@ -159,6 +159,81 @@ public abstract class DAO {
 
     }
 
+
+    public Usuario checkUser(Usuario userDAO) throws UsuarioNoExisteException {
+
+        try {
+
+            StringBuffer sb = new StringBuffer("SELECT * FROM ");
+            sb.append(this.getClass().getSimpleName().substring(0, 1).toLowerCase() + this.getClass().getSimpleName().substring(1, this.getClass().getSimpleName().length())); //Track
+            sb.append(" WHERE ");
+            atributos=getClass().getDeclaredFields();
+            ArrayList<String> metodo=new ArrayList<String>();
+
+            for(Field f:atributos){
+                if(Modifier.isFinal(f.getModifiers())){
+                    sb.append(f.getName()).append("=?, ");
+                    metodo.add("get"+f.getName().substring(0,1).toUpperCase()+f.getName().substring(1,f.getName().length()));
+                }
+            }
+            sb.delete(sb.length()-2,sb.length());
+            String query = sb.toString();
+            log.info("Connection PRE CONNECTION OK.");
+            Connection c = DriverManager.getConnection(url,user,pass);
+            log.info("Connection OK.");
+            PreparedStatement statement = c.prepareStatement(query);
+            Method[] metodos=getClass().getMethods();
+            for(int i=0;i<metodo.size();i++)
+            {
+                for(Method m:metodos){
+
+                    if (m.toString().contains(metodo.get(i))) {
+                        statement.setObject(i+1, m.invoke(this, null));
+                        break;
+                    }
+                }
+            }
+            ResultSet rs=statement.executeQuery();
+            //rs.next();
+            if ( rs.next() ) {
+                String name = rs.getString("nombre");
+                String pass = rs.getString("password");
+                System.out.println(name);
+                System.out.println(pass);
+                if(!name.equals(userDAO.getNombre()) && !pass.equals(userDAO.getPassword())){
+                    throw  new UsuarioNoExisteException();
+                }
+            } else{
+                throw new UsuarioNoExisteException();
+            }
+            for (int i = 0; i < atributos.length; i++) {
+                String nombre = "set" + atributos[i].getName().substring(0, 1).toUpperCase() + atributos[i].getName().substring(1, atributos[i].getName().length());
+                Method[] metodos2 = this.getClass().getDeclaredMethods();
+                for (Method m : metodos2) {
+                    if (m.getName().equals(nombre)) {
+
+                        m.invoke(this, rs.getObject(atributos[i].getName()));
+
+                        break;
+                    }
+                }
+            }
+
+
+
+            statement.close();
+            c.close();
+
+        }catch (Exception e){
+            log.error("Exception: "+e.getMessage());
+            e.printStackTrace();
+        }
+
+        return userDAO;
+
+    }
+
+
     public ArrayList<Object[]> selectAll(/*String[] datos,String[] id,Object[] obj*/){
         ArrayList<Object[]> resultado=null;
         try {

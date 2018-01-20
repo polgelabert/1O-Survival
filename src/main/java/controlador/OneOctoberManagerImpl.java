@@ -91,6 +91,7 @@ public class OneOctoberManagerImpl implements OneOctoberManager {
         Usuario2 user = null;
 
         try {
+
             userDAO = new Usuario(nombreUser, "xxx", "xxx");
 
             log.info("Select entra a DAO.");
@@ -102,6 +103,34 @@ public class OneOctoberManagerImpl implements OneOctoberManager {
             user.copyUser(userDAO);
 
             if(user.getPassword().equals( "xxx") && user.getCorreo().equals("xxx")) throw new UsuarioNoExisteException();
+        }
+        catch (Exception e)  {
+            user.setResponse(Integer.parseInt(e.getMessage()));
+            return user;
+        }
+
+        return user;
+    }
+
+    public Usuario2 esUsuario (Usuario2 user) throws UsuarioNoExisteException {
+        return isUser(user);
+    }
+    //Tripas consultarUsuario
+    private Usuario2 isUser (Usuario2 user) throws UsuarioNoExisteException {
+        Usuario userDAO= null;
+
+        try {
+            userDAO = new Usuario(user.getNombre(), user.getPassword(), "xxx");
+
+            log.info("Select entra a DAO.");
+            userDAO.checkUser(userDAO);
+            log.info("Select surt de DAO.");
+
+            // Se crea el Usuario2 (copiado del userDAO) que se retorna
+            user = new Usuario2();
+            user.copyUser(userDAO);
+
+            if(user.getCorreo().equals("xxx")) throw new UsuarioNoExisteException();
         }
         catch (Exception e)  {
             user.setResponse(Integer.parseInt(e.getMessage()));

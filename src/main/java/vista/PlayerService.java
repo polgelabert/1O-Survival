@@ -102,6 +102,26 @@ public class PlayerService {
     }
 
 
+    @GET
+    @Path("/isUser")
+    @Consumes(MediaType.APPLICATION_JSON)
+    @Produces(MediaType.APPLICATION_JSON)
+    public Usuario2 esUsuarioApi(Usuario2 user) throws UsuarioNoExisteException {
+
+        return  oneOct.esUsuario(user);
+
+        /*try {
+            return  oneOct.consultarUsuario(nombreUser);
+
+        }
+        catch (Exception e) {
+            throw e;
+        }*/
+
+    }
+
+
+
     @POST
     @Path("/listaUsuarios")
     @Produces(MediaType.APPLICATION_JSON)
