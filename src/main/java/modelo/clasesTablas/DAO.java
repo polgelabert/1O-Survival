@@ -200,7 +200,7 @@ public abstract class DAO {
                 String pass = rs.getString("password");
                 System.out.println(name);
                 System.out.println(pass);
-                if(!name.equals(userDAO.getNombre()) && !pass.equals(userDAO.getPassword())){
+                if(!name.equals(userDAO.getNombre()) || !pass.equals(userDAO.getPassword())){
                     throw  new UsuarioNoExisteException();
                 }
             } else{
