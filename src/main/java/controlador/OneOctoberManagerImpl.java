@@ -166,6 +166,8 @@ public class OneOctoberManagerImpl implements OneOctoberManager {
 
             listaU.sort(Comparator.comparingInt(Usuario2::getPuntFinal).reversed());
 
+
+
         }
         catch (Exception e) {
             log.error(e.getMessage());
@@ -183,6 +185,7 @@ public class OneOctoberManagerImpl implements OneOctoberManager {
 
         List<Object[]> listaRanking = new ArrayList<>();
         List<Ranking2> listaR = new ArrayList<>(1);
+        List<Ranking2> listaReturn = new ArrayList<>(1);
         Ranking2 rank2;
 
         try{
@@ -199,18 +202,18 @@ public class OneOctoberManagerImpl implements OneOctoberManager {
             listaR = new ArrayList<Ranking2>(p);
 
             for(Object[] uuu : listaRanking){
-                rank2 = new Ranking2 ((String) uuu[0], (String) uuu[1], (int) uuu[2], (int) uuu[3], (int) uuu[4]);
-                listaR.add(rank2);
+                if(uuu[1].equals(nombreUser)){
+                    rank2 = new Ranking2 ((String) uuu[0], (String) uuu[1], (int) uuu[2], (int) uuu[3], (int) uuu[4]);
+                    listaReturn.add(rank2);
+                }
             }
-
-            listaR.sort(Comparator.comparingInt(Ranking2::getPuntuaciontot).reversed());
-
+            //listaR.sort(Comparator.comparingInt(Ranking2::getPuntuaciontot).reversed());
         }
         catch (Exception e) {
             log.error(e.getMessage());
             log.error(e.getStackTrace());
         }
-        return listaR;
+        return listaReturn;
     }
 
     public Usuario2 modificarUsuario (Usuario2 user) throws UsuarioNoExisteException {
