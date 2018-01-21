@@ -2,6 +2,7 @@ package controlador;
 
 import controlador.excepciones.*;
 import modelo.clasesTablas.Niveltable;
+import modelo.clasesTablas.Ranking2;
 import modelo.clasesTablas.Usuario2;
 
 import java.lang.reflect.InvocationTargetException;
@@ -17,7 +18,11 @@ public interface OneOctoberManager {
 
     Usuario2 esUsuario(Usuario2 user) throws UsuarioNoExisteException;
 
-    List<Usuario2> consultarListaUsuarios(String userName) throws ListaUsuariosVaciaException;
+    List<Usuario2> consultarListaUsuariosOrdPuntTotal(String userName) throws ListaUsuariosVaciaException;
+
+
+    List<Ranking2> consultarListaRankingOrdPuntTotal(String userName) throws ListaUsuariosVaciaException;
+
 
     boolean eliminarUsuario (String nombreUser) throws UsuarioNoExisteException;
     Usuario2 modificarUsuario (Usuario2 nombreUser) throws UsuarioNoExisteException;

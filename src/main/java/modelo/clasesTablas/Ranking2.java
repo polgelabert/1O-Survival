@@ -1,28 +1,31 @@
 package modelo.clasesTablas;
 
-public class Ranking extends DAO{
+public class Ranking2 extends DAO{
 
     private String idMapa;
-    private final String usuario;
+    private String usuario;
     private int votos,seguidores;
     private int puntuaciontot;
 
 
 
-    public Ranking(String usuario) {
+    public Ranking2() {}
+
+    public Ranking2(String usuario){
+        this.idMapa = "xxx";
         this.usuario = usuario;
+        this.votos = 0;
+        this.seguidores = 0;
+        this.puntuaciontot = 0;
     }
 
-    public Ranking(String idMapa, String usuario, int votos, int seguidores, int puntuaciontot) {
+    public Ranking2(String idMapa, String usuario, int votos, int seguidores, int puntuaciontot) {
         this.idMapa = idMapa;
         this.usuario = usuario;
         this.votos = votos;
         this.seguidores = seguidores;
         this.puntuaciontot = puntuaciontot;
     }
-
-
-
 
     //GETTERS
 
@@ -58,6 +61,10 @@ public class Ranking extends DAO{
         this.idMapa = idMapa;
     }
 
+    public void setUsuario(String usuario) {
+        this.usuario = usuario;
+    }
+
     public void setVotos(int votos) {
         this.votos = votos;
     }
@@ -68,15 +75,5 @@ public class Ranking extends DAO{
 
     public void setPuntuaciontot(int puntuaciontot) {
         this.puntuaciontot = puntuaciontot;
-    }
-
-
-
-
-    public void copyRank(Ranking2 rank2) {
-        this.setIdMapa(rank2.getIdMapa());
-        this.setVotos(rank2.getVotos());
-        this.setSeguidores(rank2.getSeguidores());
-        this.setPuntuaciontot(rank2.getPuntuaciontot());
     }
 }

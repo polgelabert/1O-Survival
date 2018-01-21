@@ -2,12 +2,10 @@ package controlador;
 
 import controlador.excepciones.*;
 import modelo.*;
-import modelo.clasesTablas.DAO;
-import modelo.clasesTablas.Niveltable;
-import modelo.clasesTablas.Usuario2;
-import modelo.clasesTablas.Usuario;
+import modelo.clasesTablas.*;
 import modelo.mapa.Mapa;
 import org.apache.log4j.Logger;
+import org.glassfish.hk2.api.Rank;
 
 import java.util.*;
 
@@ -139,26 +137,19 @@ public class OneOctoberManagerImpl implements OneOctoberManager {
 
 
 
-    public List<Usuario2> consultarListaUsuarios(String nombreUser) throws ListaUsuariosVaciaException {
-
-        //List<Usuario2> listaUsuarios = new ArrayList<>();
-        /*if (!listaUsuarios.addAll(mapPlayer.values())) throw new ListaUsuariosVaciaException();
-        return listaUsuarios;
-        */
-
+    public List<Usuario2> consultarListaUsuariosOrdPuntTotal(String nombreUser) throws ListaUsuariosVaciaException {
         return selectListUser(nombreUser);
-
     }
+
     private List<Usuario2> selectListUser(String nombreUser) {
 
         List<Object[]> listaUsuarios = new ArrayList<>();
         List<Usuario2> listaU = new ArrayList<>(1);
 
         try{
-
             Usuario2 user = new Usuario2(nombreUser);
-
             Usuario userDAO = new Usuario(nombreUser);
+
             userDAO.copyUser(user);
             log.info("selectAll entra a DAO.");
             listaUsuarios = userDAO.selectAll();
@@ -173,7 +164,7 @@ public class OneOctoberManagerImpl implements OneOctoberManager {
                 listaU.add(user);
             }
 
-            listaU.sort(Comparator.comparingInt(Usuario2::getPuntFinal));
+            listaU.sort(Comparator.comparingInt(Usuario2::getPuntFinal).reversed());
 
         }
         catch (Exception e) {
@@ -182,15 +173,45 @@ public class OneOctoberManagerImpl implements OneOctoberManager {
             listaU.get(0).setResponse(-1);
         }
         return listaU;
-
-        /*if (!listaUsuarios.addAll(mapPlayer.values())) throw new ListaUsuariosVaciaException();
-        return listaUsuarios;
-        */
-
-
     }
 
+    public List<Ranking2> consultarListaRankingOrdPuntTotal(String nombreUser) throws ListaUsuariosVaciaException {
+        return selectListRanking(nombreUser);
+    }
 
+    private List<Ranking2> selectListRanking(String nombreUser) {
+
+        List<Object[]> listaRanking = new ArrayList<>();
+        List<Ranking2> listaR = new ArrayList<>(1);
+        Ranking2 rank2;
+
+        try{
+            rank2 = new Ranking2(nombreUser);
+            Ranking rankDAO = new Ranking(nombreUser);
+
+            rankDAO.copyRank(rank2);
+            log.info("selectAll entra a DAO.");
+            listaRanking = rankDAO.selectAll();
+            log.info("selectAll surt de DAO.");
+
+
+            int p = listaRanking.size();
+            listaR = new ArrayList<Ranking2>(p);
+
+            for(Object[] uuu : listaRanking){
+                rank2 = new Ranking2 ((String) uuu[0], (String) uuu[1], (int) uuu[2], (int) uuu[3], (int) uuu[4]);
+                listaR.add(rank2);
+            }
+
+            listaR.sort(Comparator.comparingInt(Ranking2::getPuntuaciontot).reversed());
+
+        }
+        catch (Exception e) {
+            log.error(e.getMessage());
+            log.error(e.getStackTrace());
+        }
+        return listaR;
+    }
 
     public Usuario2 modificarUsuario (Usuario2 user) throws UsuarioNoExisteException {
         return updateUser(user);

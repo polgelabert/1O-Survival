@@ -26,7 +26,6 @@ public class Usuario extends DAO{
         this.password = password;
         this.correo = correo;
         this.puntFinal= 0;
-
     }
 
 

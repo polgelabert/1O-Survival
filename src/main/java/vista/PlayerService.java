@@ -4,6 +4,7 @@ import controlador.*;
 import controlador.excepciones.*;
 import modelo.*;
 import modelo.clasesTablas.Ranking;
+import modelo.clasesTablas.Ranking2;
 import modelo.clasesTablas.Usuario;
 import modelo.clasesTablas.Usuario2;
 
@@ -69,7 +70,7 @@ public class PlayerService {
     @Produces(MediaType.APPLICATION_JSON)
     @Consumes(MediaType.APPLICATION_JSON)
     //public Response crearUsuarioInJSON(@QueryParam("user") Usuario2 user) throws UsuarioYaExisteException {
-    public Usuario2 crearUsuarioInJSON(Usuario2 user) throws UsuarioYaExisteException, IllegalAccessException, AccesoDenegado, InvocationTargetException {
+    public Usuario2 crearUsuario(Usuario2 user) throws UsuarioYaExisteException, IllegalAccessException, AccesoDenegado, InvocationTargetException {
 
 
         return  oneOct.crearUsuario(user);
@@ -90,7 +91,7 @@ public class PlayerService {
     @GET
     @Path("/player/{nombreUser}")
     @Produces(MediaType.APPLICATION_JSON)
-    public Usuario2 consultarUsuarioTOInJSON(@PathParam("nombreUser") String nombreUser) throws UsuarioNoExisteException {
+    public Usuario2 consultarUsuario(@PathParam("nombreUser") String nombreUser) throws UsuarioNoExisteException {
 
         return  oneOct.consultarUsuario(nombreUser);
 
@@ -109,7 +110,7 @@ public class PlayerService {
     @Path("/isUser")
     @Consumes(MediaType.APPLICATION_JSON)
     @Produces(MediaType.APPLICATION_JSON)
-    public Usuario2 esUsuarioApi(Usuario2 user) throws UsuarioNoExisteException {
+    public Usuario2 esUsuarioDB(Usuario2 user) throws UsuarioNoExisteException {
 
         return  oneOct.esUsuario(user);
 
@@ -128,11 +129,11 @@ public class PlayerService {
     @GET
     @Path("/{nombreUser}/listaUsuarios")
     @Produces({MediaType.APPLICATION_JSON})
-    public List<Usuario2> consultarListaUsuarios(@PathParam("nombreUser") String nombreUser) throws ListaUsuariosVaciaException {
+    public List<Usuario2> consultarListaUsuariosOrdPuntTotal(@PathParam("nombreUser") String nombreUser) throws ListaUsuariosVaciaException {
 
         List<Usuario2> listaU= new ArrayList<>();
         try {
-            listaU = oneOct.consultarListaUsuarios(nombreUser);
+            listaU = oneOct.consultarListaUsuariosOrdPuntTotal(nombreUser);
 
         } catch (Exception e) {
             e.getCause();
@@ -142,37 +143,28 @@ public class PlayerService {
     }
 
 
-    /*@GET
+    @GET
     @Path("/{nombreUser}/ranking")
     @Produces({MediaType.APPLICATION_JSON})
-    public List<Ranking> consultarListaUsuarios(@PathParam("nombreUser") String nombreUser) throws ListaUsuariosVaciaException {
+    public List<Ranking2> consultarListaUsuarios(@PathParam("nombreUser") String nombreUser) throws ListaUsuariosVaciaException {
 
-        List<Usuario2> listaU = new ArrayList<>(1);
-        List<Object[]> listaUsuarios;
+        List<Ranking2> listaR= new ArrayList<>();
         try {
-            listaUsuarios = oneOct.consultarListaUsuarios(nombreUser);
-            int p = listaUsuarios.size();
-            listaU = new ArrayList<Usuario2>(p);
-
-            for(Object[] uuu : listaUsuarios){
-                Usuario2 user = new Usuario2((String) uuu[0], (String) uuu[1], (String) uuu[2], (int) uuu[3], (String) uuu[4]);
-                listaU.add(user);
-            }
+            listaR = oneOct.consultarListaRankingOrdPuntTotal(nombreUser);
 
         } catch (Exception e) {
             e.getCause();
             e.printStackTrace();
-            listaU.get(0).setResponse(-1);
         }
-        return listaU;
-    }*/
+        return listaR;
+    }
 
 
     @POST
     @Path("/player/update")
     @Produces(MediaType.APPLICATION_JSON)
     @Consumes(MediaType.APPLICATION_JSON)
-    public Usuario2 modificarUsuarioInJSON(Usuario2 user) throws UsuarioNoExisteException, UsuarioSinObjetosException {
+    public Usuario2 modificarUsuario(Usuario2 user) throws UsuarioNoExisteException, UsuarioSinObjetosException {
 
 
         return oneOct.modificarUsuario(user);
@@ -191,7 +183,7 @@ public class PlayerService {
     @DELETE
     @Path("/removePlayer/{nombreUser}")
     @Produces(MediaType.TEXT_PLAIN)
-    public int eliminarUsuarioInJSON(@PathParam("nombreUser") String nombreUser) throws UsuarioNoExisteException, ListaUsuariosVaciaException {
+    public int eliminarUsuario(@PathParam("nombreUser") String nombreUser) throws UsuarioNoExisteException, ListaUsuariosVaciaException {
 
         try {
 
