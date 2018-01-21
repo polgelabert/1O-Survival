@@ -110,13 +110,16 @@
                         </goals>
                     </execution>
                 </executions>
+
                 <configuration>
                     <mainClass>vista.MainRest</mainClass>
                 </configuration>
             </plugin>
 
         </plugins>
+
     </build>
+
 
 
 

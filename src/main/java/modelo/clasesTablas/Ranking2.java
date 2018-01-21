@@ -30,6 +30,7 @@ public class Ranking2 extends DAO{
     //GETTERS
 
 
+
     public String getIdMapa() {
         return idMapa;
     }
