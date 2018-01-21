@@ -3,6 +3,7 @@ package vista;
 import controlador.*;
 import controlador.excepciones.*;
 import modelo.*;
+import modelo.clasesTablas.Ranking;
 import modelo.clasesTablas.Usuario;
 import modelo.clasesTablas.Usuario2;
 
@@ -129,6 +130,23 @@ public class PlayerService {
     @Produces({MediaType.APPLICATION_JSON})
     public List<Usuario2> consultarListaUsuarios(@PathParam("nombreUser") String nombreUser) throws ListaUsuariosVaciaException {
 
+        List<Usuario2> listaU= new ArrayList<>();
+        try {
+            listaU = oneOct.consultarListaUsuarios(nombreUser);
+
+        } catch (Exception e) {
+            e.getCause();
+            e.printStackTrace();
+        }
+        return listaU;
+    }
+
+
+    /*@GET
+    @Path("/{nombreUser}/ranking")
+    @Produces({MediaType.APPLICATION_JSON})
+    public List<Ranking> consultarListaUsuarios(@PathParam("nombreUser") String nombreUser) throws ListaUsuariosVaciaException {
+
         List<Usuario2> listaU = new ArrayList<>(1);
         List<Object[]> listaUsuarios;
         try {
@@ -147,7 +165,7 @@ public class PlayerService {
             listaU.get(0).setResponse(-1);
         }
         return listaU;
-    }
+    }*/
 
 
     @POST

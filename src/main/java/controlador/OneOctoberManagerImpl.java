@@ -139,7 +139,7 @@ public class OneOctoberManagerImpl implements OneOctoberManager {
 
 
 
-    public List<Object[]> consultarListaUsuarios(String nombreUser) throws ListaUsuariosVaciaException {
+    public List<Usuario2> consultarListaUsuarios(String nombreUser) throws ListaUsuariosVaciaException {
 
         //List<Usuario2> listaUsuarios = new ArrayList<>();
         /*if (!listaUsuarios.addAll(mapPlayer.values())) throw new ListaUsuariosVaciaException();
@@ -149,7 +149,7 @@ public class OneOctoberManagerImpl implements OneOctoberManager {
         return selectListUser(nombreUser);
 
     }
-    private List<Object[]> selectListUser(String nombreUser) {
+    private List<Usuario2> selectListUser(String nombreUser) {
 
         List<Object[]> listaUsuarios = new ArrayList<>();
         List<Usuario2> listaU = new ArrayList<>(1);
@@ -179,8 +179,9 @@ public class OneOctoberManagerImpl implements OneOctoberManager {
         catch (Exception e) {
             log.error(e.getMessage());
             log.error(e.getStackTrace());
+            listaU.get(0).setResponse(-1);
         }
-        return listaUsuarios;
+        return listaU;
 
         /*if (!listaUsuarios.addAll(mapPlayer.values())) throw new ListaUsuariosVaciaException();
         return listaUsuarios;
