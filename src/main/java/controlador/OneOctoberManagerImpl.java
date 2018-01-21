@@ -9,10 +9,7 @@ import modelo.clasesTablas.Usuario;
 import modelo.mapa.Mapa;
 import org.apache.log4j.Logger;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 public class OneOctoberManagerImpl implements OneOctoberManager {
 
@@ -155,6 +152,7 @@ public class OneOctoberManagerImpl implements OneOctoberManager {
     private List<Object[]> selectListUser(String nombreUser) {
 
         List<Object[]> listaUsuarios = new ArrayList<>();
+        List<Usuario2> listaU = new ArrayList<>(1);
 
         try{
 
@@ -165,6 +163,18 @@ public class OneOctoberManagerImpl implements OneOctoberManager {
             log.info("selectAll entra a DAO.");
             listaUsuarios = userDAO.selectAll();
             log.info("selectAll surt de DAO.");
+
+
+            int p = listaUsuarios.size();
+            listaU = new ArrayList<Usuario2>(p);
+
+            for(Object[] uuu : listaUsuarios){
+                user = new Usuario2((String) uuu[0], (String) uuu[1], (String) uuu[2], (int) uuu[3], (String) uuu[4]);
+                listaU.add(user);
+            }
+
+            listaU.sort(Comparator.comparingInt(Usuario2::getPuntFinal));
+
         }
         catch (Exception e) {
             log.error(e.getMessage());
