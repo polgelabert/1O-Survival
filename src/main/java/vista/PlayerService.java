@@ -8,8 +8,10 @@ import modelo.clasesTablas.Usuario2;
 
 import javax.inject.Singleton;
 import javax.ws.rs.*;
+import javax.ws.rs.core.GenericEntity;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
+import java.lang.reflect.Array;
 import java.lang.reflect.InvocationTargetException;
 import java.util.ArrayList;
 import java.util.List;
@@ -122,18 +124,29 @@ public class PlayerService {
 
 
 
-    @POST
-    @Path("/listaUsuarios")
-    @Produces(MediaType.APPLICATION_JSON)
-    @Consumes(MediaType.APPLICATION_JSON)
-    public List<Object[]> consultarListaUsuariosInJSON(Usuario2 user) throws ListaUsuariosVaciaException {
+    @GET
+    @Path("/{nombreUser}/listaUsuarios")
+    @Produces({MediaType.APPLICATION_JSON})
+    public List<Usuario2> consultarListaUsuarios(@PathParam("nombreUser") String nombreUser) throws ListaUsuariosVaciaException {
 
+        List<Usuario2> listaU = new ArrayList<>(1);
+        List<Object[]> listaUsuarios;
         try {
-            return oneOct.consultarListaUsuarios(user);
+            listaUsuarios = oneOct.consultarListaUsuarios(nombreUser);
+            int p = listaUsuarios.size();
+            listaU = new ArrayList<Usuario2>(p);
+
+            for(Object[] uuu : listaUsuarios){
+                Usuario2 user = new Usuario2((String) uuu[0], (String) uuu[1], (String) uuu[2], (int) uuu[3], (String) uuu[4]);
+                listaU.add(user);
+            }
 
         } catch (Exception e) {
-            throw e;
+            e.getCause();
+            e.printStackTrace();
+            listaU.get(0).setResponse(-1);
         }
+        return listaU;
     }
 
 

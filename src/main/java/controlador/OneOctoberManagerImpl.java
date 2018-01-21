@@ -142,32 +142,33 @@ public class OneOctoberManagerImpl implements OneOctoberManager {
 
 
 
-    public List<Object[]> consultarListaUsuarios(Usuario2 user) throws ListaUsuariosVaciaException {
+    public List<Object[]> consultarListaUsuarios(String nombreUser) throws ListaUsuariosVaciaException {
 
         //List<Usuario2> listaUsuarios = new ArrayList<>();
         /*if (!listaUsuarios.addAll(mapPlayer.values())) throw new ListaUsuariosVaciaException();
         return listaUsuarios;
         */
 
-        return selectListUser(user);
+        return selectListUser(nombreUser);
 
     }
-    private List<Object[]> selectListUser(Usuario2 user) {
+    private List<Object[]> selectListUser(String nombreUser) {
 
         List<Object[]> listaUsuarios = new ArrayList<>();
 
         try{
 
-            //Usuario2 u = consultarUsuario(user);
+            Usuario2 user = new Usuario2(nombreUser);
 
-            Usuario userDAO = new Usuario(user.getNombre());
+            Usuario userDAO = new Usuario(nombreUser);
             userDAO.copyUser(user);
             log.info("selectAll entra a DAO.");
-            userDAO.selectAll();
+            listaUsuarios = userDAO.selectAll();
             log.info("selectAll surt de DAO.");
         }
         catch (Exception e) {
             log.error(e.getMessage());
+            log.error(e.getStackTrace());
         }
         return listaUsuarios;
 

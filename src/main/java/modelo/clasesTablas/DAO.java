@@ -178,9 +178,9 @@ public abstract class DAO {
             }
             sb.delete(sb.length()-2,sb.length());
             String query = sb.toString();
-            log.info("Connection PRE CONNECTION OK.");
+            //log.info("Connection PRE CONNECTION OK.");
             Connection c = DriverManager.getConnection(url,user,pass);
-            log.info("Connection OK.");
+            //log.info("Connection OK.");
             PreparedStatement statement = c.prepareStatement(query);
             Method[] metodos=getClass().getMethods();
             for(int i=0;i<metodo.size();i++)
@@ -241,16 +241,20 @@ public abstract class DAO {
             sb.append(this.getClass().getSimpleName().substring(0, 1).toLowerCase() + this.getClass().getSimpleName().substring(1, this.getClass().getSimpleName().length())); //Track
             //sb.append(this.getClass().getSimpleName());
             //sb.append(bdname);
+            atributos=getClass().getDeclaredFields();
             String query = sb.toString();
             Connection c = DriverManager.getConnection(url,user,pass);
             PreparedStatement statement = c.prepareStatement(query);
             ResultSet rs=statement.executeQuery();
             resultado=new ArrayList<Object[]>();
             //String frase="";
+            Object[] fila;
             while(rs.next()) {
-                Object[] fila=new Object[atributos.length];
+                fila=new Object[atributos.length];
                 for(int i=0;i<atributos.length;i++){
                     fila[i]=rs.getObject(atributos[i].getName());
+                    //log.info("Valor de i:  " + i);
+                    //log.info(rs.getObject(atributos[i].getName()));
                     //frase=frase+rs.getObject(datos[i]).toString()+" ";
                 }
                 //frase=frase+"\n";
@@ -261,7 +265,8 @@ public abstract class DAO {
             c.close();
 
         }catch (Exception e){
-
+            log.error(e.getMessage());
+            log.error(e.getStackTrace());
         }
 
         return resultado;

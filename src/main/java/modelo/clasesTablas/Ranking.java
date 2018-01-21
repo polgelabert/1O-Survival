@@ -14,6 +14,8 @@ public class Ranking extends DAO{
     //GETTERS
 
 
+
+
     public String getIdmapa() {
         return idMapa;
     }

@@ -13,6 +13,13 @@ public class Usuario2 extends  DAO{
 
     public Usuario2(){ }
 
+    public Usuario2(String nombre){
+        this.nombre = nombre;
+        this.password = "xxx";
+        this.correo = "xxx";
+        this.response = 0;
+    }
+
     public Usuario2(String nombre, String password, String correo) {
         this.nombre = nombre;
         this.password = password;
