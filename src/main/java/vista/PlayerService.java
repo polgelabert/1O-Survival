@@ -166,7 +166,7 @@ public class PlayerService {
     }
 
     @POST
-    @Path("/player/updateRank")
+    @Path("/player/insertRank")
     @Produces(MediaType.APPLICATION_JSON)
     @Consumes(MediaType.APPLICATION_JSON)
     public Ranking2 modificarRanking(Ranking2 rank) {
