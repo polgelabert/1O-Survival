@@ -15,13 +15,9 @@ public class OneOctoberManagerImpl implements OneOctoberManager {
     final static Logger log = Logger.getLogger(OneOctoberManagerImpl.class.getName());
 
     private static OneOctoberManagerImpl instance;
-    private Map <String, Usuario2> mapPlayer;
-    private Map <String, Objeto> mapObjeto;
-    private Map <Integer, Mapa> mapMapas;
 
-    private OneOctoberManagerImpl(){
-        this.mapPlayer = new HashMap();
-        this.mapObjeto = new HashMap();}
+
+    private OneOctoberManagerImpl(){ }
 
     public static OneOctoberManagerImpl getInstance(){                 // Tiene que ser estático ??
         if(instance == null) {
@@ -34,18 +30,9 @@ public class OneOctoberManagerImpl implements OneOctoberManager {
 
 
 
-
-
     public Usuario2 crearUsuario(Usuario2 user) throws UsuarioYaExisteException, AccesoDenegado {
         return createUser(user);// return true ya que operacion ok
 
-
-
-        // createUser(user);
-        /*
-        if(isUser(user.getNombre())) throw new UsuarioYaExisteException();          // lanza excepcion si isUser== true (lo contiene)
-        addUser(user);
-        return true;*/
     }
     // Tripas CrearUsuario
     private Usuario2 createUser (Usuario2 user) throws UsuarioYaExisteException, AccesoDenegado {
@@ -57,9 +44,9 @@ public class OneOctoberManagerImpl implements OneOctoberManager {
             userDAO = new Usuario(user.getNombre());
             userDAO.copyUser(user);     // funcion que copia todos los atributos de user a userDAO.
 
-            log.info("CreateUser entra a DAO.");
+            //log.info("CreateUser entra a DAO.");
             if (!userDAO.insert()) throw new UsuarioYaExisteException();
-            log.info("CreateUser sale de DAO.");
+            //log.info("CreateUser sale de DAO.");
 
 
 
@@ -76,7 +63,6 @@ public class OneOctoberManagerImpl implements OneOctoberManager {
         return user;
     }
 
-
     public Usuario2 consultarUsuario (String nombreUser) throws UsuarioNoExisteException {
         return selectUser(nombreUser);
     }
@@ -89,9 +75,9 @@ public class OneOctoberManagerImpl implements OneOctoberManager {
 
             userDAO = new Usuario(nombreUser, "xxx", "xxx");
 
-            log.info("Select entra a DAO.");
+            //log.info("Select entra a DAO.");
             userDAO.select();
-            log.info("Select surt de DAO.");
+            //log.info("Select surt de DAO.");
 
             // Se crea el Usuario2 (copiado del userDAO) que se retorna
             user = new Usuario2();
@@ -117,9 +103,9 @@ public class OneOctoberManagerImpl implements OneOctoberManager {
         try {
             userDAO = new Usuario(user.getNombre(), user.getPassword(), "xxx");
 
-            log.info("Select entra a DAO.");
+            //log.info("Select entra a DAO.");
             userDAO.checkUser(userDAO);
-            log.info("Select surt de DAO.");
+            //log.info("Select surt de DAO.");
 
             // Se crea el Usuario2 (copiado del userDAO) que se retorna
             user = new Usuario2();
@@ -135,8 +121,6 @@ public class OneOctoberManagerImpl implements OneOctoberManager {
         return user;
     }
 
-
-
     public List<Usuario2> consultarListaUsuarios(String nombreUser) throws ListaUsuariosVaciaException {
         return selectListUser(nombreUser);
     }
@@ -151,9 +135,9 @@ public class OneOctoberManagerImpl implements OneOctoberManager {
             Usuario userDAO = new Usuario(nombreUser);
 
             userDAO.copyUser(user);
-            log.info("selectAll entra a DAO.");
+            //log.info("selectAll entra a DAO.");
             listaUsuarios = userDAO.selectAll();
-            log.info("selectAll surt de DAO.");
+            //log.info("selectAll surt de DAO.");
 
 
             int p = listaUsuarios.size();
@@ -193,9 +177,9 @@ public class OneOctoberManagerImpl implements OneOctoberManager {
             Ranking rankDAO = new Ranking(nombreUser);
 
             rankDAO.copyRank(rank2);
-            log.info("selectAll entra a DAO.");
+            //log.info("selectAll entra a DAO.");
             listaRanking = rankDAO.selectAll();
-            log.info("selectAll surt de DAO.");
+            //log.info("selectAll surt de DAO.");
 
 
             int p = listaRanking.size();
@@ -227,9 +211,9 @@ public class OneOctoberManagerImpl implements OneOctoberManager {
         userDAO.copyUser(user);
 
         try{
-            log.info("UpdateUser entra a DAO.");
+            //log.info("UpdateUser entra a DAO.");
             if(!userDAO.update()) throw new UsuarioNoActualizado();
-            log.info("UpdateUser surt de DAO.");
+            //log.info("UpdateUser surt de DAO.");
 
         } catch (Exception e){
             log.error(e.getMessage());
@@ -249,9 +233,9 @@ public class OneOctoberManagerImpl implements OneOctoberManager {
         rankDAO.copyRank(rank);
 
         try{
-            log.info("UpdateRank entra a DAO.");
+            //log.info("UpdateRank entra a DAO.");
             if(!rankDAO.insert()) throw new UsuarioNoActualizado();
-            log.info("UpdateRank surt de DAO.");
+            //log.info("UpdateRank surt de DAO.");
 
         } catch (Exception e){
             log.error(e.getMessage());
@@ -262,7 +246,6 @@ public class OneOctoberManagerImpl implements OneOctoberManager {
         return rank;
     }
 
-
     public boolean eliminarUsuario (String nombreUser) throws UsuarioNoExisteException {
         return deleteUser(nombreUser);
     }
@@ -272,9 +255,9 @@ public class OneOctoberManagerImpl implements OneOctoberManager {
         Usuario userDAO = new Usuario(u.getNombre());
 
         try {
-            log.info("deleteUser entra a DAO.");
+            //log.info("deleteUser entra a DAO.");
             if(!userDAO.delete()) throw new UsuarioNoBorrado();
-            log.info("deleteUser surt de DAO.");
+            //log.info("deleteUser surt de DAO.");
         }
         catch (Exception e){
             log.error(e.getMessage());
@@ -283,8 +266,6 @@ public class OneOctoberManagerImpl implements OneOctoberManager {
 
         return true;
     }
-
-
 
     public Niveltable seleccionarNivel (String idMapa)  {
 
@@ -302,74 +283,6 @@ public class OneOctoberManagerImpl implements OneOctoberManager {
         }
         catch (Exception e){}
         return actNivel;
-    }
-
-    /*
-    public PlayerTO playerTO (Usuario2 user){
-        return new PlayerTO(user);
-    }*/
-
-    /*public Mapa consultarMapa(int idMalla) throws MapaNoEncontradoException {
-        return getMapa(idMalla);
-    }*/
-
-
-    /*public void modificarUsuario (String nombreUser, Usuario2 user2) throws UsuarioNoExisteException{
-        Usuario2 user = getUser(nombreUser);
-        user.modificarUsuario(user2);
-    }*/
-
-
-
-
-    /////   METODOS PRIVADOS (TRIPAS) -> English  /////
-    //nueva pol
-    public void insertObjet2mapObjeto(Objeto objeto) {
-        mapObjeto.put(objeto.getNombreObjeto(), objeto);
-    }
-    // nueva pol
-    /*public Objeto getObjectFrommapObjeto(String microfono) {
-        return this.mapObjeto.get(microfono);
-    }*/
-
-    private void addUser (Usuario2 user){ this.mapPlayer.put(user.getNombre(), user); }
-
-    private Usuario2 getUser(String nombreUser) throws UsuarioNoExisteException{
-
-        if (!this.mapPlayer.containsKey(nombreUser)) throw new UsuarioNoExisteException();
-        return this.mapPlayer.get(nombreUser);
-    }
-
-
-    public boolean listUserIsEqual(List<Usuario2> listaUsuario){
-        int cont = 0;
-        for (Usuario2 p : listaUsuario){
-            String nombreUser = p.getNombre();
-            if(nombreUser.equals(this.mapPlayer.get(nombreUser).getNombre())){
-                cont = cont + 1;
-            }
-        }
-        if(cont == listaUsuario.size()) return true;
-        return false;
-    }
-
-    private void removeUser(String nombreUser) {
-        this.mapPlayer.remove(nombreUser);
-    }
-
-    private void removeObjet(Usuario2 user, Objeto objeto) {
-        //user.getMiNivel().getInventarioUser().getListaObjetos().remove(objeto);
-    }
-
-    private boolean isUser (String nombreUser) { return (mapPlayer.containsKey(nombreUser)); }
-
-    private void isUserVoid (String nombreUser) throws UsuarioNoExisteException {
-        if(!mapPlayer.containsKey(nombreUser)) throw new UsuarioNoExisteException();
-    }
-
-    private Mapa getMapa(int idMalla) throws MapaNoEncontradoException {
-        if(mapMapas.get(idMalla) == null) throw new MapaNoEncontradoException();
-        return mapMapas.get(idMalla);
     }
 
     public void reset() {
