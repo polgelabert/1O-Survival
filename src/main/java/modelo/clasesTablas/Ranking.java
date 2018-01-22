@@ -74,7 +74,7 @@ public class Ranking extends DAO{
 
 
     public void copyRank(Ranking2 rank2) {
-        this.setIdmapa(rank2.getIdMapa());
+        this.setIdmapa(rank2.getIdmapa());
         this.setVotos(rank2.getVotos());
         this.setSeguidores(rank2.getSeguidores());
         this.setPuntuaciontot(rank2.getPuntuaciontot());
