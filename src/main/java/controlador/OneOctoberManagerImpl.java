@@ -137,7 +137,7 @@ public class OneOctoberManagerImpl implements OneOctoberManager {
 
 
 
-    public List<Usuario2> consultarListaUsuariosOrdPuntTotal(String nombreUser) throws ListaUsuariosVaciaException {
+    public List<Usuario2> consultarListaUsuarios(String nombreUser) throws ListaUsuariosVaciaException {
         return selectListUser(nombreUser);
     }
 
@@ -177,7 +177,7 @@ public class OneOctoberManagerImpl implements OneOctoberManager {
         return listaU;
     }
 
-    public List<Ranking2> consultarListaRankingOrdPuntTotal(String nombreUser) throws ListaUsuariosVaciaException {
+    public List<Ranking2> consultarListaRanking(String nombreUser) throws ListaUsuariosVaciaException {
         return selectListRanking(nombreUser);
     }
 
@@ -202,7 +202,9 @@ public class OneOctoberManagerImpl implements OneOctoberManager {
             listaR = new ArrayList<Ranking2>(p);
 
             for(Object[] uuu : listaRanking){
+
                 if(uuu[1].equals(nombreUser)){
+
                     rank2 = new Ranking2 ((String) uuu[0], (String) uuu[1], (int) uuu[2], (int) uuu[3], (int) uuu[4]);
                     listaReturn.add(rank2);
                 }
@@ -216,7 +218,7 @@ public class OneOctoberManagerImpl implements OneOctoberManager {
         return listaReturn;
     }
 
-    public Usuario2 modificarUsuario (Usuario2 user) throws UsuarioNoExisteException {
+    public Usuario2 modificarUsuario (Usuario2 user) {
         return updateUser(user);
     }
     private Usuario2 updateUser (Usuario2 user){
@@ -238,6 +240,27 @@ public class OneOctoberManagerImpl implements OneOctoberManager {
         return user;
     }
 
+    public Ranking2 modificarRanking (Ranking2 rank) {
+        return updateRank(rank);
+    }
+    private Ranking2 updateRank (Ranking2 rank){
+
+        Ranking rankDAO = new Ranking(rank.getUsuario());
+        rankDAO.copyRank(rank);
+
+        try{
+            log.info("UpdateRank entra a DAO.");
+            if(!rankDAO.update()) throw new UsuarioNoActualizado();
+            log.info("UpdateRank surt de DAO.");
+
+        } catch (Exception e){
+            log.error(e.getMessage());
+            rank.setResponse(Integer.parseInt(e.getMessage()));
+            return rank;
+        }
+
+        return rank;
+    }
 
 
     public boolean eliminarUsuario (String nombreUser) throws UsuarioNoExisteException {
@@ -260,7 +283,6 @@ public class OneOctoberManagerImpl implements OneOctoberManager {
 
         return true;
     }
-
 
 
 

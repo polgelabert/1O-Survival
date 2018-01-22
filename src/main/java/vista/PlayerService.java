@@ -3,17 +3,12 @@ package vista;
 import controlador.*;
 import controlador.excepciones.*;
 import modelo.*;
-import modelo.clasesTablas.Ranking;
 import modelo.clasesTablas.Ranking2;
-import modelo.clasesTablas.Usuario;
 import modelo.clasesTablas.Usuario2;
 
 import javax.inject.Singleton;
 import javax.ws.rs.*;
-import javax.ws.rs.core.GenericEntity;
 import javax.ws.rs.core.MediaType;
-import javax.ws.rs.core.Response;
-import java.lang.reflect.Array;
 import java.lang.reflect.InvocationTargetException;
 import java.util.ArrayList;
 import java.util.List;
@@ -133,7 +128,7 @@ public class PlayerService {
 
         List<Usuario2> listaU= new ArrayList<>();
         try {
-            listaU = oneOct.consultarListaUsuariosOrdPuntTotal(nombreUser);
+            listaU = oneOct.consultarListaUsuarios(nombreUser);
 
         } catch (Exception e) {
             e.getCause();
@@ -146,11 +141,11 @@ public class PlayerService {
     @GET
     @Path("/{nombreUser}/ranking")
     @Produces({MediaType.APPLICATION_JSON})
-    public List<Ranking2> consultarListaUsuarios(@PathParam("nombreUser") String nombreUser) throws ListaUsuariosVaciaException {
+    public List<Ranking2> consultarListaRanking(@PathParam("nombreUser") String nombreUser) throws ListaUsuariosVaciaException {
 
         List<Ranking2> listaR= new ArrayList<>();
         try {
-            listaR = oneOct.consultarListaRankingOrdPuntTotal(nombreUser);
+            listaR = oneOct.consultarListaRanking(nombreUser);
 
         } catch (Exception e) {
             e.getCause();
@@ -164,21 +159,23 @@ public class PlayerService {
     @Path("/player/update")
     @Produces(MediaType.APPLICATION_JSON)
     @Consumes(MediaType.APPLICATION_JSON)
-    public Usuario2 modificarUsuario(Usuario2 user) throws UsuarioNoExisteException, UsuarioSinObjetosException {
-
+    public Usuario2 modificarUsuario(Usuario2 user) {
 
         return oneOct.modificarUsuario(user);
 
-        /*try {
+    }
 
-            if(oneOct.modificarUsuario(user)) return 1;
-            else return 0;
+    @POST
+    @Path("/player/updateRank")
+    @Produces(MediaType.APPLICATION_JSON)
+    @Consumes(MediaType.APPLICATION_JSON)
+    public Ranking2 modificarRanking(Ranking2 rank) {
 
-        } catch (Exception e) {
-            throw e;
-        }*/
+        return oneOct.modificarRanking(rank);
 
     }
+
+
 
     @DELETE
     @Path("/removePlayer/{nombreUser}")
@@ -192,7 +189,7 @@ public class PlayerService {
 
 
             //return Response.status(201).entity(1).build();
-            //return Response.status(201).entity(oneOct.consultarListaUsuarios().size()).build();
+            //return Response.status(201).entity(oneOct.consultarListaRanking().size()).build();
 
         } catch (Exception e) {
             throw e;

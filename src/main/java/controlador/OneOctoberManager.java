@@ -18,14 +18,18 @@ public interface OneOctoberManager {
 
     Usuario2 esUsuario(Usuario2 user) throws UsuarioNoExisteException;
 
-    List<Usuario2> consultarListaUsuariosOrdPuntTotal(String userName) throws ListaUsuariosVaciaException;
+    List<Usuario2> consultarListaUsuarios(String userName) throws ListaUsuariosVaciaException;
 
 
-    List<Ranking2> consultarListaRankingOrdPuntTotal(String userName) throws ListaUsuariosVaciaException;
+    List<Ranking2> consultarListaRanking(String userName) throws ListaUsuariosVaciaException;
 
 
     boolean eliminarUsuario (String nombreUser) throws UsuarioNoExisteException;
-    Usuario2 modificarUsuario (Usuario2 nombreUser) throws UsuarioNoExisteException;
+
+    Usuario2 modificarUsuario (Usuario2 nombreUser);
+
+    Ranking2 modificarRanking(Ranking2 rank);
+
     Niveltable seleccionarNivel (String idMapa);
 
 

@@ -6,7 +6,7 @@ public class Ranking2 extends DAO{
     private String usuario;
     private int votos,seguidores;
     private int puntuaciontot;
-
+    private int response;
 
 
     public Ranking2() {}
@@ -17,6 +17,7 @@ public class Ranking2 extends DAO{
         this.votos = 0;
         this.seguidores = 0;
         this.puntuaciontot = 0;
+        this.response = 0;
     }
 
     public Ranking2(String idMapa, String usuario, int votos, int seguidores, int puntuaciontot) {
@@ -25,11 +26,15 @@ public class Ranking2 extends DAO{
         this.votos = votos;
         this.seguidores = seguidores;
         this.puntuaciontot = puntuaciontot;
+        this.response = 0;
     }
 
     //GETTERS
 
 
+    public int getResponse() {
+        return response;
+    }
 
     public String getIdMapa() {
         return idMapa;
@@ -57,6 +62,10 @@ public class Ranking2 extends DAO{
 
     //SETTERS
 
+
+    public void setResponse(int response) {
+        this.response = response;
+    }
 
     public void setIdMapa(String idMapa) {
         this.idMapa = idMapa;
