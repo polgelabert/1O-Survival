@@ -250,7 +250,7 @@ public class OneOctoberManagerImpl implements OneOctoberManager {
 
         try{
             log.info("UpdateRank entra a DAO.");
-            if(!rankDAO.update()) throw new UsuarioNoActualizado();
+            if(!rankDAO.insert()) throw new UsuarioNoActualizado();
             log.info("UpdateRank surt de DAO.");
 
         } catch (Exception e){
